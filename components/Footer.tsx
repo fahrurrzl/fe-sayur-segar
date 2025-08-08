@@ -49,7 +49,7 @@ const Footer = () => {
               </li>
               <li>
                 <a
-                  href="#"
+                  href="#categories"
                   className="text-foreground-500 hover:text-success transition-colors"
                 >
                   Kategori
@@ -137,7 +137,7 @@ const Footer = () => {
           </div>
         </div>
 
-        <div className="border-t border-border mt-8 pt-8">
+        <div className="border-t border-gray-200 mt-8 pt-8">
           <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
             <p className="text-sm text-foreground">
               © 2024 SayurSegar. Semua hak cipta dilindungi.
