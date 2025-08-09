@@ -23,8 +23,12 @@ import {
   Avatar,
 } from "@heroui/react";
 import Cart from "./cart";
+import { useSession } from "next-auth/react";
 
 export const Navbar = () => {
+  const { data: session, status } = useSession();
+  console.log("session => ", session);
+  console.log(status);
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   return (
     <HeroUINavbar maxWidth="xl" position="sticky" isBlurred>
