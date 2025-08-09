@@ -33,7 +33,7 @@ const Footer = () => {
             <ul className="space-y-2 text-sm">
               <li>
                 <a
-                  href="/"
+                  href="#"
                   className="text-foreground-500 hover:text-success transition-colors"
                 >
                   Beranda
@@ -41,7 +41,7 @@ const Footer = () => {
               </li>
               <li>
                 <a
-                  href="#"
+                  href="#products"
                   className="text-foreground-500 hover:text-success transition-colors"
                 >
                   Produk
