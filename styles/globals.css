@@ -5,3 +5,7 @@
 * {
   scroll-behavior: smooth;
 }
+
+.bg-gradient {
+  @apply bg-gradient-to-br from-green-200/20 to-green-200/10;
+}

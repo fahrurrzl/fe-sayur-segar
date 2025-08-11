@@ -7,7 +7,7 @@ import Image from "next/image";
 
 const HeroSection = () => {
   return (
-    <section className="relative bg-gradient-to-br from-green-100 via-background to-green-50 py-16 overflow-hidden">
+    <section className="relative bg-gradient py-16 overflow-hidden">
       <div className="container mx-auto px-4">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           {/* Left Content */}

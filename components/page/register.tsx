@@ -8,9 +8,11 @@ import {
   CardHeader,
   Checkbox,
   Input,
+  Spinner,
   Textarea,
 } from "@heroui/react";
 import Link from "next/link";
+import { Controller } from "react-hook-form";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 const Register = () => {
@@ -21,6 +23,13 @@ const Register = () => {
     setIsVisibleConfirmPassword,
     agreeToTerms,
     setAgreeToTerms,
+
+    handleRegister,
+    isPendingRegister,
+
+    control,
+    handleSubmit,
+    errors,
   } = useRegister();
 
   return (
@@ -33,107 +42,166 @@ const Register = () => {
           </p>
         </CardHeader>
         <CardBody>
-          <form onSubmit={() => {}} className="space-y-3">
-            <div className="space-y-2">
-              <Input
-                isRequired
-                variant="bordered"
-                label="Nama Lengkap"
-                id="name"
-                type="text"
-                placeholder="Masukkan nama lengkap"
-                required
+          <form onSubmit={handleSubmit(handleRegister)} className="space-y-3">
+            <div className="space-y-1">
+              <Controller
+                name="name"
+                control={control}
+                render={({ field }) => (
+                  <Input
+                    {...field}
+                    variant="bordered"
+                    label="Nama Lengkap"
+                    type="text"
+                    placeholder="Masukkan nama lengkap"
+                    autoFocus
+                    isInvalid={!!errors.name}
+                  />
+                )}
               />
+              {errors.name && (
+                <p className="text-danger text-xs">{errors.name.message}</p>
+              )}
             </div>
 
-            <div className="space-y-2">
-              <Input
-                isRequired
-                variant="bordered"
-                label="Email"
-                id="email"
-                type="email"
-                placeholder="nama@email.com"
-                required
+            <div className="space-y-1">
+              <Controller
+                name="email"
+                control={control}
+                render={({ field }) => (
+                  <Input
+                    {...field}
+                    variant="bordered"
+                    label="Email"
+                    type="email"
+                    placeholder="example@email.com"
+                    isInvalid={!!errors.email}
+                  />
+                )}
               />
+              {errors.email && (
+                <p className="text-danger text-xs">{errors.email.message}</p>
+              )}
             </div>
 
-            <div className="space-y-2">
-              <Input
-                isRequired
-                variant="bordered"
-                label="Nomor Telepon"
-                id="phone"
-                type="tel"
-                placeholder="08xxxxxxxxxx"
-                required
+            <div className="space-y-1">
+              <Controller
+                name="phone"
+                control={control}
+                render={({ field }) => (
+                  <Input
+                    {...field}
+                    variant="bordered"
+                    label="Nomor Telepon"
+                    type="tel"
+                    placeholder="08xxxxxxxxxx"
+                    isInvalid={!!errors.phone}
+                  />
+                )}
               />
+              {errors.phone && (
+                <p className="text-danger text-xs">{errors.phone.message}</p>
+              )}
             </div>
 
-            <div className="space-y-2">
-              <Textarea
-                isRequired
-                variant="bordered"
-                label="Alamat"
-                id="address"
-                placeholder="Masukkan alamat"
-                required
-              ></Textarea>
+            <div className="space-y-1">
+              <Controller
+                name="address"
+                control={control}
+                render={({ field }) => (
+                  <Textarea
+                    {...field}
+                    variant="bordered"
+                    label="Alamat"
+                    placeholder="Masukkan alamat"
+                    isInvalid={!!errors.address}
+                  ></Textarea>
+                )}
+              />
+              {errors.address && (
+                <p className="text-danger text-xs">{errors.address.message}</p>
+              )}
             </div>
 
-            <div className="space-y-2">
+            <div className="space-y-1">
               <div className="relative">
-                <Input
-                  endContent={
-                    <button
-                      aria-label="toggle password visibility"
-                      className="focus:outline-solid outline-transparent"
-                      type="button"
-                      onClick={() => setIsVisiblePassword(!isVisiblePassword)}
-                    >
-                      {isVisiblePassword ? (
-                        <FaEyeSlash className="text-2xl text-default-400 pointer-events-none" />
-                      ) : (
-                        <FaEye className="text-2xl text-default-400 pointer-events-none" />
-                      )}
-                    </button>
-                  }
-                  label="Password"
-                  isRequired
-                  placeholder="Enter your password"
-                  type={isVisiblePassword ? "text" : "password"}
-                  variant="bordered"
-                />
-              </div>
-            </div>
-
-            <div className="space-y-2">
-              <div className="relative">
-                <Input
-                  className="w-full"
-                  endContent={
-                    <button
-                      aria-label="toggle password visibility"
-                      className="focus:outline-solid outline-transparent"
-                      type="button"
-                      onClick={() =>
-                        setIsVisibleConfirmPassword(!isVisibleConfirmPassword)
+                <Controller
+                  name="password"
+                  control={control}
+                  render={({ field }) => (
+                    <Input
+                      {...field}
+                      endContent={
+                        <button
+                          aria-label="toggle password visibility"
+                          className="focus:outline-solid outline-transparent"
+                          type="button"
+                          onClick={() =>
+                            setIsVisiblePassword(!isVisiblePassword)
+                          }
+                        >
+                          {isVisiblePassword ? (
+                            <FaEyeSlash className="text-2xl text-default-400 pointer-events-none" />
+                          ) : (
+                            <FaEye className="text-2xl text-default-400 pointer-events-none" />
+                          )}
+                        </button>
                       }
-                    >
-                      {isVisibleConfirmPassword ? (
-                        <FaEyeSlash className="text-2xl text-default-400 pointer-events-none" />
-                      ) : (
-                        <FaEye className="text-2xl text-default-400 pointer-events-none" />
-                      )}
-                    </button>
-                  }
-                  isRequired
-                  label="Konfirmasi Password"
-                  placeholder="Enter your password"
-                  type={isVisibleConfirmPassword ? "text" : "password"}
-                  variant="bordered"
+                      label="Password"
+                      placeholder="Enter your password"
+                      type={isVisiblePassword ? "text" : "password"}
+                      variant="bordered"
+                      isInvalid={!!errors.password}
+                    />
+                  )}
                 />
               </div>
+              {errors.password && (
+                <p className="text-danger text-xs">{errors.password.message}</p>
+              )}
+            </div>
+
+            <div className="space-y-1">
+              <div className="relative">
+                <Controller
+                  name="confirmPassword"
+                  control={control}
+                  render={({ field }) => (
+                    <Input
+                      {...field}
+                      className="w-full"
+                      endContent={
+                        <button
+                          aria-label="toggle password visibility"
+                          className="focus:outline-solid outline-transparent"
+                          type="button"
+                          onClick={() =>
+                            setIsVisibleConfirmPassword(
+                              !isVisibleConfirmPassword
+                            )
+                          }
+                        >
+                          {isVisibleConfirmPassword ? (
+                            <FaEyeSlash className="text-2xl text-default-400 pointer-events-none" />
+                          ) : (
+                            <FaEye className="text-2xl text-default-400 pointer-events-none" />
+                          )}
+                        </button>
+                      }
+                      label="Konfirmasi Password"
+                      placeholder="Enter your password"
+                      type={isVisibleConfirmPassword ? "text" : "password"}
+                      variant="bordered"
+                      isInvalid={!!errors.confirmPassword}
+                    />
+                  )}
+                />
+              </div>
+              {errors.confirmPassword && (
+                <p className="text-danger text-xs">
+                  {errors.confirmPassword.message}
+                </p>
+              )}
             </div>
 
             <div className="flex items-center space-x-2">
@@ -151,10 +219,11 @@ const Register = () => {
             </div>
 
             <Button
+              isLoading={isPendingRegister}
               type="submit"
-              className="w-full text-white disabled:bg-green-500/50 disabled:cursor-not-allowed"
+              className="w-full text-white disabled:bg-green-500/50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
               color="success"
-              disabled={!agreeToTerms}
+              disabled={!agreeToTerms || isPendingRegister}
             >
               Daftar
             </Button>

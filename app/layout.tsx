@@ -7,7 +7,6 @@ import { Providers } from "./providers";
 import { siteConfig } from "@/config/site";
 import { fontSans } from "@/config/fonts";
 import { getSession } from "@/lib/auth";
-import { headers } from "next/headers";
 import LayoutWrapper from "@/components/layout-wrapper";
 
 export const metadata: Metadata = {
@@ -34,9 +33,6 @@ export default async function RootLayout({
   children: React.ReactNode;
 }) {
   const session = await getSession();
-  // Ambil pathname dari header
-  const pathname = (await headers()).get("x-next-url") || "";
-  const hideLayout = pathname === "/auth/login"; // Kondisi untuk sembunyikan Navbar & Footer
 
   return (
     <html suppressHydrationWarning lang="en">
@@ -49,7 +45,7 @@ export default async function RootLayout({
       >
         <Providers
           session={session}
-          themeProps={{ attribute: "class", defaultTheme: "dark" }}
+          themeProps={{ attribute: "class", defaultTheme: "light" }}
         >
           <div className="relative flex flex-col h-screen">
             <LayoutWrapper>{children}</LayoutWrapper>

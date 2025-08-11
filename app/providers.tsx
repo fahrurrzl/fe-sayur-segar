@@ -8,6 +8,7 @@ import { useRouter } from "next/navigation";
 import { ThemeProvider as NextThemesProvider } from "next-themes";
 import { SessionProvider } from "next-auth/react";
 import { Session } from "next-auth";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 export interface ProvidersProps {
   children: React.ReactNode;
@@ -23,13 +24,23 @@ declare module "@react-types/shared" {
   }
 }
 
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      refetchOnWindowFocus: false,
+    },
+  },
+});
+
 export function Providers({ session, children, themeProps }: ProvidersProps) {
   const router = useRouter();
 
   return (
     <SessionProvider session={session}>
       <HeroUIProvider navigate={router.push}>
-        <NextThemesProvider {...themeProps}>{children}</NextThemesProvider>
+        <QueryClientProvider client={queryClient}>
+          <NextThemesProvider {...themeProps}>{children}</NextThemesProvider>
+        </QueryClientProvider>
       </HeroUIProvider>
     </SessionProvider>
   );

@@ -4,7 +4,11 @@ import { usePathname } from "next/navigation";
 import { Navbar } from "@/components/navbar";
 import Footer from "@/components/Footer";
 
-const noNavbarPaths = ["/auth/login", "/auth/register"];
+const noNavbarPaths = [
+  "/auth/login",
+  "/auth/register",
+  "/auth/register-success",
+];
 
 export default function LayoutWrapper({
   children,
