@@ -11,7 +11,12 @@ export const Logo = ({
   height?: number;
 }) => {
   return (
-    <Image src="/images/logo.png" alt="logo" width={width} height={height} />
+    <Image
+      src="/images/logo-sayur.png"
+      alt="logo"
+      width={width}
+      height={height}
+    />
   );
 };
 

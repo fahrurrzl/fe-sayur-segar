@@ -36,8 +36,13 @@ export const Navbar = () => {
     <HeroUINavbar maxWidth="xl" isBlurred shouldHideOnScroll position="sticky">
       <NavbarContent className="basis-1/5 sm:basis-full" justify="start">
         <NavbarBrand as="li" className="gap-3 max-w-fit">
-          <NextLink className="flex justify-start items-center" href="/">
-            <Image src="/images/logo.png" alt="logo" width={70} height={70} />
+          <NextLink className="flex justify-start items-center gap-2" href="/">
+            <Image
+              src="/images/logo-sayur.png"
+              alt="logo"
+              width={40}
+              height={40}
+            />
             <div>
               <p className="font-bold text-inherit">SayurSegar</p>
               <p className="text-xs text-default-500">
