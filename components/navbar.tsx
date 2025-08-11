@@ -24,12 +24,13 @@ import {
 } from "@heroui/react";
 import Cart from "./cart";
 import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 export const Navbar = () => {
   const { data: session, status } = useSession();
-  console.log("session => ", session);
-  console.log(status);
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
+  const router = useRouter();
+
   return (
     <HeroUINavbar maxWidth="xl" position="sticky" isBlurred>
       <NavbarContent className="basis-1/5 sm:basis-full" justify="start">
@@ -79,42 +80,54 @@ export const Navbar = () => {
           <ThemeSwitch />
         </NavbarItem> */}
 
-        <NavbarItem>
-          <Badge content={3} className="bg-success text-white">
-            <Button
-              isIconOnly
-              variant="light"
-              className="flex items-center p-2 justify-center cursor-pointer text-slate-600"
-              onPress={onOpen}
-            >
-              <MdOutlineShoppingCart size={22} />
-            </Button>
-          </Badge>
-          {/* Cart */}
-          <Cart isOpen={isOpen} onOpenChange={onOpenChange} />
-        </NavbarItem>
+        {status === "authenticated" ? (
+          <NavbarItem>
+            <Badge content={3} className="bg-success text-white">
+              <Button
+                isIconOnly
+                variant="light"
+                className="flex items-center p-2 justify-center cursor-pointer text-slate-600"
+                onPress={onOpen}
+              >
+                <MdOutlineShoppingCart size={22} />
+              </Button>
+            </Badge>
+            {/* Cart */}
+            <Cart isOpen={isOpen} onOpenChange={onOpenChange} />
+          </NavbarItem>
+        ) : null}
 
         <NavbarItem className="hidden md:flex">
-          <Dropdown placement="bottom-start" radius="sm">
-            <DropdownTrigger>
-              <User
-                as="button"
-                avatarProps={{
-                  isBordered: true,
-                  src: "https://i.pravatar.cc/150?u=a042581f4e29026024d",
-                }}
-                className="transition-transform"
-                description="@tonyreichert"
-                name="Tony Reichert"
-              />
-            </DropdownTrigger>
-            <DropdownMenu aria-label="User Actions" variant="flat">
-              <DropdownItem key="settings">My Settings</DropdownItem>
-              <DropdownItem key="logout" color="danger">
-                Log Out
-              </DropdownItem>
-            </DropdownMenu>
-          </Dropdown>
+          {status === "authenticated" ? (
+            <Dropdown placement="bottom-start" radius="sm">
+              <DropdownTrigger>
+                <User
+                  as="button"
+                  avatarProps={{
+                    isBordered: true,
+                    src: "https://i.pravatar.cc/150?u=a042581f4e29026024d",
+                  }}
+                  className="transition-transform"
+                  description="@tonyreichert"
+                  name="Tony Reichert"
+                />
+              </DropdownTrigger>
+              <DropdownMenu aria-label="User Actions" variant="flat">
+                <DropdownItem key="settings">My Settings</DropdownItem>
+                <DropdownItem key="logout" color="danger">
+                  Log Out
+                </DropdownItem>
+              </DropdownMenu>
+            </Dropdown>
+          ) : (
+            <Button
+              color="success"
+              className="text-white"
+              onPress={() => router.push("/auth/login")}
+            >
+              Login
+            </Button>
+          )}
         </NavbarItem>
       </NavbarContent>
 
@@ -123,32 +136,45 @@ export const Navbar = () => {
         {/* <NavbarItem>
           <ThemeSwitch />
         </NavbarItem> */}
+        {status === "authenticated" ? (
+          <NavbarItem>
+            <Badge content={3} className="bg-success text-white">
+              <Button
+                isIconOnly
+                variant="light"
+                className="flex items-center p-2 justify-center cursor-pointer text-slate-600"
+                onPress={onOpen}
+              >
+                <MdOutlineShoppingCart size={22} />
+              </Button>
+            </Badge>
+            {/* Cart */}
+            <Cart isOpen={isOpen} onOpenChange={onOpenChange} />
+          </NavbarItem>
+        ) : null}
+
         <NavbarItem>
-          <Badge content={3} className="bg-success text-white">
+          {status === "authenticated" ? (
+            <Dropdown placement="bottom-start" radius="sm">
+              <DropdownTrigger>
+                <Avatar src="https://i.pravatar.cc/150?u=a042581f4e29026024d" />
+              </DropdownTrigger>
+              <DropdownMenu aria-label="User Actions" variant="flat">
+                <DropdownItem key="settings">My Settings</DropdownItem>
+                <DropdownItem key="logout" color="danger">
+                  Log Out
+                </DropdownItem>
+              </DropdownMenu>
+            </Dropdown>
+          ) : (
             <Button
-              isIconOnly
-              variant="light"
-              className="flex items-center p-2 justify-center cursor-pointer text-slate-600"
-              onPress={onOpen}
+              color="success"
+              className="text-white"
+              onPress={() => router.push("/auth/login")}
             >
-              <MdOutlineShoppingCart size={22} />
+              Login
             </Button>
-          </Badge>
-          {/* Cart */}
-          <Cart isOpen={isOpen} onOpenChange={onOpenChange} />
-        </NavbarItem>
-        <NavbarItem>
-          <Dropdown placement="bottom-start" radius="sm">
-            <DropdownTrigger>
-              <Avatar src="https://i.pravatar.cc/150?u=a042581f4e29026024d" />
-            </DropdownTrigger>
-            <DropdownMenu aria-label="User Actions" variant="flat">
-              <DropdownItem key="settings">My Settings</DropdownItem>
-              <DropdownItem key="logout" color="danger">
-                Log Out
-              </DropdownItem>
-            </DropdownMenu>
-          </Dropdown>
+          )}
         </NavbarItem>
       </NavbarContent>
     </HeroUINavbar>
