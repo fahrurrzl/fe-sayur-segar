@@ -23,8 +23,9 @@ import {
   Avatar,
 } from "@heroui/react";
 import Cart from "./cart";
-import { useSession } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import { FiLogIn, FiLogOut } from "react-icons/fi";
 
 export const Navbar = () => {
   const { data: session, status } = useSession();
@@ -32,7 +33,7 @@ export const Navbar = () => {
   const router = useRouter();
 
   return (
-    <HeroUINavbar maxWidth="xl" position="sticky" isBlurred>
+    <HeroUINavbar maxWidth="xl" isBlurred shouldHideOnScroll position="sticky">
       <NavbarContent className="basis-1/5 sm:basis-full" justify="start">
         <NavbarBrand as="li" className="gap-3 max-w-fit">
           <NextLink className="flex justify-start items-center" href="/">
@@ -105,17 +106,20 @@ export const Navbar = () => {
                   as="button"
                   avatarProps={{
                     isBordered: true,
-                    src: "https://i.pravatar.cc/150?u=a042581f4e29026024d",
+                    src: `https://ui-avatars.com/api/?name=${session?.user.name}&background=random`,
                   }}
                   className="transition-transform"
-                  description="@tonyreichert"
-                  name="Tony Reichert"
+                  description={session?.user.email}
+                  name={session?.user.name}
                 />
               </DropdownTrigger>
               <DropdownMenu aria-label="User Actions" variant="flat">
                 <DropdownItem key="settings">My Settings</DropdownItem>
-                <DropdownItem key="logout" color="danger">
-                  Log Out
+                <DropdownItem key="logout" onClick={() => signOut()}>
+                  <span className="flex items-center gap-2 w-full">
+                    <FiLogOut />
+                    Keluar
+                  </span>
                 </DropdownItem>
               </DropdownMenu>
             </Dropdown>
@@ -125,7 +129,8 @@ export const Navbar = () => {
               className="text-white"
               onPress={() => router.push("/auth/login")}
             >
-              Login
+              <FiLogIn />
+              Masuk
             </Button>
           )}
         </NavbarItem>
@@ -157,12 +162,17 @@ export const Navbar = () => {
           {status === "authenticated" ? (
             <Dropdown placement="bottom-start" radius="sm">
               <DropdownTrigger>
-                <Avatar src="https://i.pravatar.cc/150?u=a042581f4e29026024d" />
+                <Avatar
+                  src={`https://ui-avatars.com/api/?name=${session?.user.name}&background=random`}
+                />
               </DropdownTrigger>
               <DropdownMenu aria-label="User Actions" variant="flat">
                 <DropdownItem key="settings">My Settings</DropdownItem>
-                <DropdownItem key="logout" color="danger">
-                  Log Out
+                <DropdownItem key="logout" onClick={() => signOut()}>
+                  <span className="flex items-center gap-2 w-full">
+                    <FiLogOut />
+                    Keluar
+                  </span>
                 </DropdownItem>
               </DropdownMenu>
             </Dropdown>
@@ -172,7 +182,8 @@ export const Navbar = () => {
               className="text-white"
               onPress={() => router.push("/auth/login")}
             >
-              Login
+              <FiLogIn />
+              Masuk
             </Button>
           )}
         </NavbarItem>

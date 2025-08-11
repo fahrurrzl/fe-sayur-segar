@@ -33,7 +33,7 @@ const Register = () => {
   } = useRegister();
 
   return (
-    <div className="min-h-screen flex justify-center bg-gradient-to-br from-green-500/20 via-background to-green-500/10 w-full p-4">
+    <div className="flex justify-center w-full p-4">
       <Card className="w-full max-w-md">
         <CardHeader className="flex flex-col items-center pt-8">
           <h2 className="text-2xl font-bold">Daftar</h2>
