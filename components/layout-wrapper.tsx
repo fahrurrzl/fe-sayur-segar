@@ -3,6 +3,7 @@
 import { usePathname } from "next/navigation";
 import { Navbar } from "@/components/navbar";
 import Footer from "@/components/Footer";
+import ScrollToTop from "./sroll-to-top";
 
 const noNavbarPaths = [
   "/auth/login",
@@ -23,6 +24,7 @@ export default function LayoutWrapper({
       {!hideLayout && <Navbar />}
       <main className="flex-grow">{children}</main>
       {!hideLayout && <Footer />}
+      <ScrollToTop />
     </>
   );
 }

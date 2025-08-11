@@ -25,7 +25,7 @@ import {
 import Cart from "./cart";
 import { signOut, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import { FiLogIn, FiLogOut } from "react-icons/fi";
+import { FiLogIn, FiLogOut, FiUser } from "react-icons/fi";
 
 export const Navbar = () => {
   const { data: session, status } = useSession();
@@ -119,7 +119,12 @@ export const Navbar = () => {
                 />
               </DropdownTrigger>
               <DropdownMenu aria-label="User Actions" variant="flat">
-                <DropdownItem key="settings">My Settings</DropdownItem>
+                <DropdownItem key="settings">
+                  <span className="flex items-center gap-2 w-full">
+                    <FiUser />
+                    Profil
+                  </span>
+                </DropdownItem>
                 <DropdownItem key="logout" onClick={() => signOut()}>
                   <span className="flex items-center gap-2 w-full">
                     <FiLogOut />
@@ -172,7 +177,12 @@ export const Navbar = () => {
                 />
               </DropdownTrigger>
               <DropdownMenu aria-label="User Actions" variant="flat">
-                <DropdownItem key="settings">My Settings</DropdownItem>
+                <DropdownItem key="settings">
+                  <span className="flex items-center gap-2 w-full">
+                    <FiUser />
+                    Profil
+                  </span>
+                </DropdownItem>
                 <DropdownItem key="logout" onClick={() => signOut()}>
                   <span className="flex items-center gap-2 w-full">
                     <FiLogOut />
