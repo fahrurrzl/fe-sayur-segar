@@ -1,15 +1,14 @@
 import "@/styles/globals.css";
 import { Metadata, Viewport } from "next";
-import { Link } from "@heroui/link";
 import clsx from "clsx";
 
 import { Providers } from "./providers";
 
 import { siteConfig } from "@/config/site";
 import { fontSans } from "@/config/fonts";
-import { Navbar } from "@/components/navbar";
-import Footer from "@/components/Footer";
 import { getSession } from "@/lib/auth";
+import { headers } from "next/headers";
+import LayoutWrapper from "@/components/layout-wrapper";
 
 export const metadata: Metadata = {
   title: {
@@ -18,7 +17,7 @@ export const metadata: Metadata = {
   },
   description: siteConfig.description,
   icons: {
-    icon: "/favicon.ico",
+    icon: "/images/logo.png",
   },
 };
 
@@ -35,6 +34,10 @@ export default async function RootLayout({
   children: React.ReactNode;
 }) {
   const session = await getSession();
+  // Ambil pathname dari header
+  const pathname = (await headers()).get("x-next-url") || "";
+  const hideLayout = pathname === "/auth/login"; // Kondisi untuk sembunyikan Navbar & Footer
+
   return (
     <html suppressHydrationWarning lang="en">
       <head />
@@ -49,9 +52,7 @@ export default async function RootLayout({
           themeProps={{ attribute: "class", defaultTheme: "dark" }}
         >
           <div className="relative flex flex-col h-screen">
-            <Navbar />
-            <main className="flex-grow">{children}</main>
-            <Footer />
+            <LayoutWrapper>{children}</LayoutWrapper>
           </div>
         </Providers>
       </body>
