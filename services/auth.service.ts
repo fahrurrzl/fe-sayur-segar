@@ -12,4 +12,10 @@ export default {
         Authorization: `Bearer ${token}`,
       },
     }),
+  getUserById: (token: string) =>
+    instance.get(`${endpoint.AUTH}/me`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }),
 };

@@ -30,7 +30,7 @@ const ScrollToTop = () => {
   return (
     <Button
       onPress={scrollToTop}
-      className="fixed bottom-8 right-8 z-50"
+      className="fixed bottom-8 right-8 z-50 text-white"
       isIconOnly
       aria-label="Scroll to top"
       color="success"

@@ -27,7 +27,8 @@ export default async function middleware(req: NextRequest) {
   const isProtected =
     pathname.startsWith("/dashboard") ||
     pathname.startsWith("/admin") ||
-    pathname.startsWith("/pricing");
+    pathname.startsWith("/pricing") ||
+    pathname.startsWith("/profile");
 
   // Jika belum login dan akses route proteksi -> redirect ke login + simpan callbackUrl
   if (!token && isProtected) {
@@ -59,6 +60,7 @@ export const config = {
     "/dashboard/:path*",
     "/admin/:path*",
     "/pricing/:path*",
+    "/profile/:path*",
     "/auth/login",
     "/auth/register",
   ],

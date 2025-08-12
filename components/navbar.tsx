@@ -119,7 +119,10 @@ export const Navbar = () => {
                 />
               </DropdownTrigger>
               <DropdownMenu aria-label="User Actions" variant="flat">
-                <DropdownItem key="settings">
+                <DropdownItem
+                  key="profile"
+                  onPress={() => router.push("/profile")}
+                >
                   <span className="flex items-center gap-2 w-full">
                     <FiUser />
                     Profil
@@ -177,7 +180,10 @@ export const Navbar = () => {
                 />
               </DropdownTrigger>
               <DropdownMenu aria-label="User Actions" variant="flat">
-                <DropdownItem key="settings">
+                <DropdownItem
+                  key="profile"
+                  onPress={() => router.push("/profile")}
+                >
                   <span className="flex items-center gap-2 w-full">
                     <FiUser />
                     Profil
