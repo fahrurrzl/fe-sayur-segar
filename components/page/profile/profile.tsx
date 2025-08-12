@@ -46,7 +46,7 @@ const Profile = () => {
                       onChange={() => {}}
                       label="Nama Lengkap"
                       placeholder="Masukkan nama lengkap"
-                      value={dataUser?.name}
+                      value={dataUser?.name ?? ""}
                       startContent={
                         <FaUser className="h-4 w-4 text-gray-400" />
                       }
@@ -69,7 +69,7 @@ const Profile = () => {
                       onChange={() => {}}
                       label="Alamat Email"
                       placeholder="Masukkan alamat email"
-                      value={dataUser?.email}
+                      value={dataUser?.email ?? ""}
                       startContent={
                         <FiMail className="h-4 w-4 text-gray-400" />
                       }
@@ -84,7 +84,7 @@ const Profile = () => {
                       onChange={() => {}}
                       label="Nomor Telepon"
                       placeholder="Masukkan nomor telepon"
-                      value={dataUser?.phone}
+                      value={dataUser?.phone ?? ""}
                       startContent={
                         <FiPhone className="h-4 w-4 text-gray-400" />
                       }
@@ -98,7 +98,7 @@ const Profile = () => {
                       label="Alamat Lengkap"
                       placeholder="Masukkan alamat lengkap"
                       minRows={3}
-                      value={dataUser?.address}
+                      value={dataUser?.address ?? ""}
                     />
                   </Skeleton>
                 </div>

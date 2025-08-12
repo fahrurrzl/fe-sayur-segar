@@ -121,6 +121,7 @@ export const Navbar = () => {
               <DropdownMenu aria-label="User Actions" variant="flat">
                 <DropdownItem
                   key="profile"
+                  textValue="Profil"
                   onPress={() => router.push("/profile")}
                 >
                   <span className="flex items-center gap-2 w-full">
@@ -128,7 +129,11 @@ export const Navbar = () => {
                     Profil
                   </span>
                 </DropdownItem>
-                <DropdownItem key="logout" onClick={() => signOut()}>
+                <DropdownItem
+                  key="logout"
+                  textValue="Keluar"
+                  onClick={() => signOut()}
+                >
                   <span className="flex items-center gap-2 w-full">
                     <FiLogOut />
                     Keluar
@@ -182,6 +187,7 @@ export const Navbar = () => {
               <DropdownMenu aria-label="User Actions" variant="flat">
                 <DropdownItem
                   key="profile"
+                  textValue="Profil"
                   onPress={() => router.push("/profile")}
                 >
                   <span className="flex items-center gap-2 w-full">
@@ -189,7 +195,11 @@ export const Navbar = () => {
                     Profil
                   </span>
                 </DropdownItem>
-                <DropdownItem key="logout" onClick={() => signOut()}>
+                <DropdownItem
+                  key="logout"
+                  textValue="Keluar"
+                  onClick={() => signOut()}
+                >
                   <span className="flex items-center gap-2 w-full">
                     <FiLogOut />
                     Keluar

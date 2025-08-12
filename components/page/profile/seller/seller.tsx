@@ -58,7 +58,7 @@ const Seller = () => {
                             {...field}
                             label="Nama Lapak"
                             placeholder="Masukkan nama lapak"
-                            value={dataSeller?.storeName}
+                            value={dataSeller?.storeName ?? ""}
                             startContent={
                               <FaStore className="h-4 w-4 text-gray-400" />
                             }
@@ -92,7 +92,7 @@ const Seller = () => {
                             {...field}
                             label="Nama Bank"
                             placeholder="Masukkan nama bank"
-                            value={dataSeller?.bankName}
+                            value={dataSeller?.bankName ?? ""}
                             startContent={
                               <FiCreditCard className="h-4 w-4 text-gray-400" />
                             }
@@ -118,7 +118,7 @@ const Seller = () => {
                             {...field}
                             label="Nomor Rekening"
                             placeholder="Masukkan nomor rekening"
-                            value={dataSeller?.bankAccount}
+                            value={dataSeller?.bankAccount ?? ""}
                             startContent={
                               <FiCreditCard className="h-4 w-4 text-gray-400" />
                             }
@@ -144,7 +144,7 @@ const Seller = () => {
                             {...field}
                             label="Lokasi Lapak"
                             placeholder="Masukkan lokasi lapak"
-                            value={dataSeller?.storeLocation}
+                            value={dataSeller?.storeLocation ?? ""}
                             startContent={
                               <FiMapPin className="h-4 w-4 text-gray-400" />
                             }

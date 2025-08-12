@@ -5,9 +5,11 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { sellerSchema } from "@/schemas/seller.schema";
 import { useSession } from "next-auth/react";
+import useProfile from "./useProfile";
 
 const useSeller = () => {
   const { data: session } = useSession();
+  const { dataUser } = useProfile();
 
   // form
   const {
@@ -58,7 +60,7 @@ const useSeller = () => {
   const { data: dataSeller, isLoading: isLoadingSeller } = useQuery({
     queryKey: ["seller"],
     queryFn: getSellerService,
-    enabled: !!session?.user?.token,
+    enabled: !!dataUser?.Seller?.length,
   });
 
   return {
