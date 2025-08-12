@@ -20,6 +20,7 @@ const Seller = () => {
     handleCreateSeller,
     isPendingCreateSeller,
     dataSeller,
+    isLoadingSeller,
   } = useSeller();
 
   return (
@@ -47,10 +48,7 @@ const Seller = () => {
                   Informasi Dasar
                 </h3>
                 <div className="grid grid-cols-1 gap-6">
-                  <Skeleton
-                    className="rounded-lg"
-                    isLoaded={!!dataSeller?.storeName}
-                  >
+                  <Skeleton className="rounded-lg" isLoaded={!isLoadingSeller}>
                     <div className="space-y-1">
                       <Controller
                         name="storeName"
@@ -84,10 +82,7 @@ const Seller = () => {
                   Informasi Kontak
                 </h3>
                 <div className="space-y-4">
-                  <Skeleton
-                    className="rounded-lg"
-                    isLoaded={!!dataSeller?.bankName}
-                  >
+                  <Skeleton className="rounded-lg" isLoaded={!isLoadingSeller}>
                     <div className="space-y-1">
                       <Controller
                         name="bankName"
@@ -113,10 +108,7 @@ const Seller = () => {
                     </div>
                   </Skeleton>
 
-                  <Skeleton
-                    className="rounded-lg"
-                    isLoaded={!!dataSeller?.bankAccount}
-                  >
+                  <Skeleton className="rounded-lg" isLoaded={!isLoadingSeller}>
                     <div className="space-y-1">
                       <Controller
                         name="bankAccount"
@@ -142,10 +134,7 @@ const Seller = () => {
                     </div>
                   </Skeleton>
 
-                  <Skeleton
-                    className="rounded-lg"
-                    isLoaded={!!dataSeller?.storeLocation}
-                  >
+                  <Skeleton className="rounded-lg" isLoaded={!isLoadingSeller}>
                     <div className="space-y-1">
                       <Controller
                         name="storeLocation"

@@ -5,7 +5,7 @@ import useProfile from "@/hooks/useProfile";
 import { Button } from "@heroui/button";
 import { Avatar, Card, CardBody, CardHeader } from "@heroui/react";
 import { useRouter } from "next/navigation";
-import { FaStore } from "react-icons/fa";
+import { FaAngleRight, FaStore } from "react-icons/fa";
 import { FiCamera, FiSettings, FiShield, FiUser } from "react-icons/fi";
 
 const ProfileLayout = ({ children }: { children: React.ReactNode }) => {
@@ -24,6 +24,14 @@ const ProfileLayout = ({ children }: { children: React.ReactNode }) => {
           {/* Profile Photo Section */}
           <div className="lg:col-span-1">
             <Card className="shadow-lg">
+              <button
+                className="bg-success text-white w-fit mb-4 py-2 pl-4 pr-8 rounded-r-full flex items-center gap-2 cursor-pointer hover:bg-success-600 transition-colors group"
+                onClick={() => router.push("/profile/seller")}
+              >
+                <FaStore className="h-4 w-4" />
+                {dataUser?.Seller.length > 0 ? "Lapak Saya" : "Menjadi Penjual"}
+                <FaAngleRight className="h-4 w-4 group-hover:translate-x-2 transition-transform" />
+              </button>
               <CardHeader className="flex flex-col items-center pb-6">
                 <div className="relative inline-block group">
                   <Avatar
@@ -48,21 +56,8 @@ const ProfileLayout = ({ children }: { children: React.ReactNode }) => {
                   <p className="text-gray-600 text-sm">{dataUser?.email}</p>
                 </div>
               </CardHeader>
-
               <CardBody>
                 <div className="space-y-3">
-                  <Button
-                    color="success"
-                    variant="bordered"
-                    className="w-full justify-start"
-                    onPress={() => router.push("/profile/seller")}
-                    startContent={<FaStore className="h-4 w-4" />}
-                  >
-                    {dataUser?.Seller.length > 0
-                      ? "Lapak Saya"
-                      : "Menjadi Penjual"}
-                  </Button>
-
                   <Button
                     variant="bordered"
                     className="w-full justify-start"
