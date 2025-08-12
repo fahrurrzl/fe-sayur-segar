@@ -17,3 +17,10 @@ export type TLogin = {
   email: string;
   password: string;
 };
+
+export type TSeller = {
+  storeName: string;
+  storeLocation: string;
+  bankAccount: string;
+  bankName: string;
+};

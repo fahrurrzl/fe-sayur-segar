@@ -1,22 +1,26 @@
 "use client";
 
 import useProfile from "@/hooks/useProfile";
+import useSeller from "@/hooks/useSeller";
 import { Button } from "@heroui/button";
-import {
-  Card,
-  CardBody,
-  CardHeader,
-  Input,
-  Skeleton,
-  Textarea,
-} from "@heroui/react";
+import { Card, CardBody, CardHeader, Input, Skeleton } from "@heroui/react";
 import { useRouter } from "next/navigation";
-import { FaStore, FaUser } from "react-icons/fa";
-import { FiCreditCard, FiMail, FiMapPin, FiPhone } from "react-icons/fi";
+import { Controller } from "react-hook-form";
+import { FaStore } from "react-icons/fa";
+import { FiCreditCard, FiMapPin } from "react-icons/fi";
 
 const Seller = () => {
   const router = useRouter();
+
   const { dataUser } = useProfile();
+  const {
+    control,
+    handleSubmit,
+    errors,
+    handleCreateSeller,
+    isPendingCreateSeller,
+    dataSeller,
+  } = useSeller();
 
   return (
     <div className="lg:col-span-2">
@@ -32,7 +36,10 @@ const Seller = () => {
         </CardHeader>
 
         <CardBody>
-          <form onSubmit={() => {}} className="space-y-8">
+          <form
+            onSubmit={handleSubmit(handleCreateSeller)}
+            className="space-y-8"
+          >
             {/* Basic Information */}
             <div className="space-y-6">
               <div>
@@ -40,14 +47,34 @@ const Seller = () => {
                   Informasi Dasar
                 </h3>
                 <div className="grid grid-cols-1 gap-6">
-                  <Input
-                    name="storeName"
-                    onChange={() => {}}
-                    label="Nama Lapak"
-                    placeholder="Masukkan nama lapak"
-                    startContent={<FaStore className="h-4 w-4 text-gray-400" />}
-                    isRequired
-                  />
+                  <Skeleton
+                    className="rounded-lg"
+                    isLoaded={!!dataSeller?.storeName}
+                  >
+                    <div className="space-y-1">
+                      <Controller
+                        name="storeName"
+                        control={control}
+                        render={({ field }) => (
+                          <Input
+                            {...field}
+                            label="Nama Lapak"
+                            placeholder="Masukkan nama lapak"
+                            value={dataSeller?.storeName}
+                            startContent={
+                              <FaStore className="h-4 w-4 text-gray-400" />
+                            }
+                            isInvalid={!!errors.storeName}
+                          />
+                        )}
+                      />
+                      {errors.storeName && (
+                        <p className="text-danger text-xs">
+                          {errors.storeName.message}
+                        </p>
+                      )}
+                    </div>
+                  </Skeleton>
                 </div>
               </div>
 
@@ -57,38 +84,92 @@ const Seller = () => {
                   Informasi Kontak
                 </h3>
                 <div className="space-y-4">
-                  <Input
-                    name="bankName"
-                    type="text"
-                    onChange={() => {}}
-                    label="Nama Bank"
-                    placeholder="Masukkan nama bank"
-                    startContent={
-                      <FiCreditCard className="h-4 w-4 text-gray-400" />
-                    }
-                  />
+                  <Skeleton
+                    className="rounded-lg"
+                    isLoaded={!!dataSeller?.bankName}
+                  >
+                    <div className="space-y-1">
+                      <Controller
+                        name="bankName"
+                        control={control}
+                        render={({ field }) => (
+                          <Input
+                            {...field}
+                            label="Nama Bank"
+                            placeholder="Masukkan nama bank"
+                            value={dataSeller?.bankName}
+                            startContent={
+                              <FiCreditCard className="h-4 w-4 text-gray-400" />
+                            }
+                            isInvalid={!!errors.bankName}
+                          />
+                        )}
+                      />
+                      {errors.bankName && (
+                        <p className="text-danger text-xs">
+                          {errors.bankName.message}
+                        </p>
+                      )}
+                    </div>
+                  </Skeleton>
 
-                  <Input
-                    name="bankAccount"
-                    type="text"
-                    onChange={() => {}}
-                    label="Nomor Rekening"
-                    placeholder="Masukkan nomor rekening"
-                    startContent={
-                      <FiCreditCard className="h-4 w-4 text-gray-400" />
-                    }
-                  />
+                  <Skeleton
+                    className="rounded-lg"
+                    isLoaded={!!dataSeller?.bankAccount}
+                  >
+                    <div className="space-y-1">
+                      <Controller
+                        name="bankAccount"
+                        control={control}
+                        render={({ field }) => (
+                          <Input
+                            {...field}
+                            label="Nomor Rekening"
+                            placeholder="Masukkan nomor rekening"
+                            value={dataSeller?.bankAccount}
+                            startContent={
+                              <FiCreditCard className="h-4 w-4 text-gray-400" />
+                            }
+                            isInvalid={!!errors.bankAccount}
+                          />
+                        )}
+                      />
+                      {errors.bankAccount && (
+                        <p className="text-danger text-xs">
+                          {errors.bankAccount.message}
+                        </p>
+                      )}
+                    </div>
+                  </Skeleton>
 
-                  <Textarea
-                    name="storeLocation"
-                    onChange={() => {}}
-                    label="Lokasi Lapak"
-                    placeholder="Masukkan lokasi lapak"
-                    minRows={3}
-                    startContent={
-                      <FiMapPin className="h-4 w-4 text-gray-400" />
-                    }
-                  />
+                  <Skeleton
+                    className="rounded-lg"
+                    isLoaded={!!dataSeller?.storeLocation}
+                  >
+                    <div className="space-y-1">
+                      <Controller
+                        name="storeLocation"
+                        control={control}
+                        render={({ field }) => (
+                          <Input
+                            {...field}
+                            label="Lokasi Lapak"
+                            placeholder="Masukkan lokasi lapak"
+                            value={dataSeller?.storeLocation}
+                            startContent={
+                              <FiMapPin className="h-4 w-4 text-gray-400" />
+                            }
+                            isInvalid={!!errors.storeLocation}
+                          />
+                        )}
+                      />
+                      {errors.storeLocation && (
+                        <p className="text-danger text-xs">
+                          {errors.storeLocation.message}
+                        </p>
+                      )}
+                    </div>
+                  </Skeleton>
                 </div>
               </div>
             </div>
@@ -107,8 +188,12 @@ const Seller = () => {
                 type="submit"
                 color="success"
                 className="flex-1 text-white"
+                isLoading={isPendingCreateSeller}
+                disabled={isPendingCreateSeller}
               >
-                Simpan Perubahan
+                {dataUser?.Seller?.length > 0
+                  ? "Simpan Perubahan"
+                  : "Buat Lapak"}
               </Button>
             </div>
           </form>

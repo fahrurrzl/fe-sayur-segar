@@ -17,7 +17,6 @@ import { FiMail, FiPhone } from "react-icons/fi";
 const Profile = () => {
   const router = useRouter();
   const { dataUser } = useProfile();
-  console.log({ dataUser });
 
   return (
     <div className="lg:col-span-2">

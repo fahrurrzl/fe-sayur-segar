@@ -1,0 +1,79 @@
+import sellerService from "@/services/seller.service";
+import { TSeller } from "@/types";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { sellerSchema } from "@/schemas/seller.schema";
+import { useSession } from "next-auth/react";
+
+const useSeller = () => {
+  const { data: session } = useSession();
+
+  // form
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    resolver: zodResolver(sellerSchema),
+    defaultValues: {
+      storeName: "",
+      storeLocation: "",
+      bankAccount: "",
+      bankName: "",
+    },
+  });
+
+  // create
+  const createSellerService = async (payload: TSeller) => {
+    const res = await sellerService.create(
+      payload,
+      session?.user?.token as string
+    );
+    return res.data;
+  };
+
+  const {
+    mutate: mutateCreateSeller,
+    isPending: isPendingCreateSeller,
+    isError: isErrorCreateSeller,
+  } = useMutation({
+    mutationFn: createSellerService,
+    onSuccess: (data) => {
+      console.log("data =", data);
+    },
+    onError: (error) => {
+      console.log("error =", error);
+    },
+  });
+
+  const handleCreateSeller = (payload: TSeller) => mutateCreateSeller(payload);
+
+  // show
+  const getSellerService = async () => {
+    const res = await sellerService.me(session?.user?.token as string);
+    return res?.data?.data;
+  };
+
+  const { data: dataSeller, isLoading: isLoadingSeller } = useQuery({
+    queryKey: ["seller"],
+    queryFn: getSellerService,
+    enabled: !!session?.user?.token,
+  });
+
+  return {
+    // form
+    control,
+    handleSubmit,
+    errors,
+    // mutation
+    handleCreateSeller,
+    isPendingCreateSeller,
+    isErrorCreateSeller,
+    // show
+    dataSeller,
+    isLoadingSeller,
+  };
+};
+
+export default useSeller;

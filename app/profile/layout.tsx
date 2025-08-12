@@ -11,6 +11,7 @@ import { FiCamera, FiSettings, FiShield, FiUser } from "react-icons/fi";
 const ProfileLayout = ({ children }: { children: React.ReactNode }) => {
   const { dataUser } = useProfile();
   const router = useRouter();
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-emerald-50 via-white to-emerald-50">
       <ProfileHeader
@@ -57,7 +58,9 @@ const ProfileLayout = ({ children }: { children: React.ReactNode }) => {
                     onPress={() => router.push("/profile/seller")}
                     startContent={<FaStore className="h-4 w-4" />}
                   >
-                    Menjadi Penjual
+                    {dataUser?.Seller.length > 0
+                      ? "Lapak Saya"
+                      : "Menjadi Penjual"}
                   </Button>
 
                   <Button
