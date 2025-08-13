@@ -2,15 +2,11 @@ import authService from "@/services/auth.service";
 import { AuthOptions, getServerSession, Session, User } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 
-// Contoh: Simulasi login manual (biasanya dari database)
-async function authenticateUser(email: string, password: string) {
-  if (email === "admin@mail.com" && password === "123456") {
-    return { id: "1", name: "Admin User", email: "admin@mail.com" };
-  }
-  return null;
-}
-
 export const authOptions: AuthOptions = {
+  session: {
+    strategy: "jwt",
+    maxAge: 60 * 60 * 24,
+  },
   providers: [
     CredentialsProvider({
       type: "credentials",
