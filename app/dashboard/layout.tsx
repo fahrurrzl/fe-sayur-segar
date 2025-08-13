@@ -2,10 +2,8 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
 import {
   Button,
-  Input,
   Avatar,
   Dropdown,
   DropdownTrigger,
@@ -17,39 +15,22 @@ import {
   Badge,
 } from "@heroui/react";
 import {
-  HiOutlineCube,
   HiOutlineMenu,
   HiOutlineX,
-  HiOutlineSearch,
   HiOutlineBell,
   HiOutlineLogout,
   HiOutlineCog,
   HiOutlineUser,
 } from "react-icons/hi";
-import { MdDashboard, MdStore } from "react-icons/md";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
+import { signOut, useSession } from "next-auth/react";
+import DashboardNavbar from "@/components/page/dashboard/navbar";
 
 const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
-  const pathname = usePathname();
-
-  const menuItems = [
-    {
-      name: "Dashboard",
-      href: "/dashboard",
-      icon: MdDashboard,
-    },
-    {
-      name: "Kelola Produk",
-      href: "/dashboard/products",
-      icon: HiOutlineCube,
-    },
-    {
-      name: "Info Lapak",
-      href: "/dashboard/store-info",
-      icon: MdStore,
-    },
-  ];
+  const router = useRouter();
+  const { data: session } = useSession();
 
   return (
     <div className="bg-gray-50/50 flex">
@@ -87,37 +68,7 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
           </div>
 
           {/* Navigation */}
-          <nav className="flex-1 p-4">
-            <div className="space-y-2">
-              {menuItems.map((item) => {
-                const isActive = pathname === item.href;
-                const IconComponent = item.icon;
-                return (
-                  <Button
-                    key={item.name}
-                    as={Link}
-                    href={item.href}
-                    variant={isActive ? "flat" : "light"}
-                    color={isActive ? "success" : "default"}
-                    className={`w-full justify-start h-12 ${
-                      isActive
-                        ? "bg-green-100 text-green-700 border-r-2 rounded-r-sm border-green-600"
-                        : "text-gray-600 hover:bg-gray-100"
-                    }`}
-                    startContent={
-                      <IconComponent
-                        className={`w-5 h-5 ${
-                          isActive ? "text-green-600" : "text-gray-400"
-                        }`}
-                      />
-                    }
-                  >
-                    {item.name}
-                  </Button>
-                );
-              })}
-            </div>
-          </nav>
+          <DashboardNavbar />
 
           <Divider />
 
@@ -134,10 +85,15 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
                       size="sm"
                       name="Admin"
                       className="bg-green-600 text-white"
+                      src={`https://ui-avatars.com/api/?name=${session?.user.name}&background=random`}
                     />
                     <div className="ml-3 text-left">
-                      <p className="text-sm font-medium text-gray-700">Admin</p>
-                      <p className="text-xs text-gray-500">Dashboard</p>
+                      <p className="text-sm font-medium text-gray-700">
+                        {session?.user.name}
+                      </p>
+                      <p className="text-xs text-gray-500">
+                        {session?.user.email}
+                      </p>
                     </div>
                   </div>
                 </Button>
@@ -146,23 +102,23 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
                 <DropdownItem
                   key="profile"
                   startContent={<HiOutlineUser className="w-4 h-4" />}
-                  as={Link}
-                  href="/profile"
+                  onPress={() => router.push("/profile")}
                 >
-                  Profile
+                  Profil
                 </DropdownItem>
                 <DropdownItem
                   key="settings"
                   startContent={<HiOutlineCog className="w-4 h-4" />}
                 >
-                  Settings
+                  Pengaturan
                 </DropdownItem>
                 <DropdownItem
                   key="logout"
                   color="danger"
                   startContent={<HiOutlineLogout className="w-4 h-4" />}
+                  onPress={() => signOut()}
                 >
-                  Logout
+                  Keluar
                 </DropdownItem>
               </DropdownMenu>
             </Dropdown>
