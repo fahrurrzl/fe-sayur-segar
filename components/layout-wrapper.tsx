@@ -9,6 +9,7 @@ const noNavbarPaths = [
   "/auth/login",
   "/auth/register",
   "/auth/register-success",
+  "/dashboard",
 ];
 
 export default function LayoutWrapper({
