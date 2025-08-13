@@ -26,7 +26,11 @@ const ProfileLayout = ({ children }: { children: React.ReactNode }) => {
             <Card className="shadow-lg">
               <button
                 className="bg-success text-white w-fit mb-4 py-2 pl-4 pr-8 rounded-r-full flex items-center gap-2 cursor-pointer hover:bg-success-600 transition-colors group"
-                onClick={() => router.push("/profile/seller")}
+                onClick={() =>
+                  dataUser?.Seller.length > 0
+                    ? router.push("/dashboard")
+                    : router.push("/profile/seller")
+                }
               >
                 <FaStore className="h-4 w-4" />
                 {dataUser?.Seller.length > 0 ? "Lapak Saya" : "Menjadi Penjual"}

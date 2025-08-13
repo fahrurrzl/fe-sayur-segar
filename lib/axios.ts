@@ -1,5 +1,5 @@
-import axios, { AxiosError } from "axios";
-import { getSession } from "next-auth/react";
+import axios from "axios";
+import { getSession, signOut } from "next-auth/react";
 
 const instance = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_BASE_URL,
@@ -27,5 +27,15 @@ instance.interceptors.request.use(async (config) => {
     config.headers["Authorization"] = `Bearer ${token}`;
   return config;
 });
+
+instance.interceptors.response.use(
+  (response) => response,
+  async (error) => {
+    if (error.response.status === 401) {
+      await signOut({ callbackUrl: "/auth/login" });
+    }
+    return Promise.reject(error);
+  }
+);
 
 export default instance;
