@@ -6,8 +6,11 @@ import { useMutation } from "@tanstack/react-query";
 import { useSession } from "next-auth/react";
 import { useForm } from "react-hook-form";
 import useMedia from "./useMedia";
+import { addToast } from "@heroui/react";
+import { useRouter } from "next/navigation";
 
 const useProduct = () => {
+  const router = useRouter();
   const { data: session } = useSession();
   const {
     handleUploadFile,
@@ -92,23 +95,23 @@ const useProduct = () => {
     useMutation({
       mutationFn: createProductService,
       onSuccess: () => {
+        addToast({
+          title: "Berhasil",
+          description: "Produk berhasil dibuat",
+          color: "success",
+        });
         reset();
+        router.push("/dashboard/product");
       },
       onError: (error) => {
         console.log(error);
+        addToast({
+          title: "Gagal",
+          description: "Produk gagal dibuat",
+          color: "danger",
+        });
       },
     });
-
-  // const { mutate: mutateUploadImage, isPending: isPendingUploadImage } =
-  //   useMutation({
-  //     mutationFn: uploadImage,
-  //     onSuccess: (payload) => {
-  //       mutateCreateProduct(payload);
-  //     },
-  //     onError: (error) => {
-  //       console.log(error);
-  //     },
-  //   });
 
   const handleCreateProduct = (data: TProduct) =>
     mutateCreateProduct({

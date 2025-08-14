@@ -14,14 +14,14 @@ export const renderCell = (
   const cellValue = product[columnKey as string];
 
   switch (columnKey) {
-    case "image":
+    case "imageUrl":
       return (
         <Image
-          src="/images/brokoli.jpg"
+          src={cellValue as string}
           alt="product"
           width={80}
           height={80}
-          className="object-contain aspect-square"
+          className="object-contain aspect-square rounded-md"
         />
       );
     case "price":

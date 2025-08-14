@@ -3,7 +3,14 @@
 import useProfile from "@/hooks/useProfile";
 import useSeller from "@/hooks/useSeller";
 import { Button } from "@heroui/button";
-import { Card, CardBody, CardHeader, Input, Skeleton } from "@heroui/react";
+import {
+  Alert,
+  Card,
+  CardBody,
+  CardHeader,
+  Input,
+  Skeleton,
+} from "@heroui/react";
 import { useRouter } from "next/navigation";
 import { Controller } from "react-hook-form";
 import { FaStore } from "react-icons/fa";
@@ -157,6 +164,11 @@ const Seller = () => {
                   </Skeleton>
                 </div>
               </div>
+              <Alert
+                title="Informasi Lapak"
+                description={`Catatan: Setelah mendaftar sebagai penjual, data Anda akan diverifikasi dalam 1-3 hari kerja.`}
+                color="warning"
+              />
             </div>
 
             {/* Action Buttons */}

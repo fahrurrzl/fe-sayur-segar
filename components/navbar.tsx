@@ -132,6 +132,7 @@ export const Navbar = () => {
                 <DropdownItem
                   key="logout"
                   textValue="Keluar"
+                  color="danger"
                   onClick={() => signOut()}
                 >
                   <span className="flex items-center gap-2 w-full">
@@ -198,6 +199,7 @@ export const Navbar = () => {
                 <DropdownItem
                   key="logout"
                   textValue="Keluar"
+                  color="danger"
                   onClick={() => signOut()}
                 >
                   <span className="flex items-center gap-2 w-full">

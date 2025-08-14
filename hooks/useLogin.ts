@@ -1,5 +1,6 @@
 import { loginSchema } from "@/schemas/login.schema";
 import { TLogin } from "@/types";
+import { addToast } from "@heroui/react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
 import { signIn } from "next-auth/react";
@@ -39,10 +40,20 @@ const useLogin = () => {
   const { mutate: mutateLogin, isPending: isPendingLogin } = useMutation({
     mutationFn: loginService,
     onSuccess: () => {
+      addToast({
+        title: "Berhasil",
+        description: "Anda berhasil login",
+        color: "success",
+      });
       router.push(callbackUrl);
     },
-    onError: (error: any) => {
-      console.log(error?.response.data);
+    // get error from axios
+    onError: () => {
+      addToast({
+        title: "Gagal",
+        description: "Email atau password salah",
+        color: "danger",
+      });
     },
   });
 
