@@ -33,12 +33,12 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
   const { data: session } = useSession();
 
   return (
-    <div className="bg-gray-50/50 flex">
+    <div className="h-screen bg-gray-50/50 flex overflow-hidden">
       {/* Sidebar */}
       <Card
-        className={`fixed inset-y-0 left-0 z-50 w-72 shadow-xl transform h-screen ${
+        className={`fixed inset-y-0 left-0 z-50 w-72 shadow-xl transform h-full ${
           isSidebarOpen ? "translate-x-0" : "-translate-x-full"
-        } transition-transform duration-300 ease-in-out lg:translate-x-0 lg:static lg:inset-0 rounded-none`}
+        } transition-transform duration-300 ease-in-out lg:translate-x-0 lg:relative lg:inset-0 rounded-none`}
       >
         <CardBody className="p-0 h-full flex flex-col">
           {/* Header */}
@@ -69,8 +69,6 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
 
           {/* Navigation */}
           <DashboardNavbar />
-
-          <Divider />
 
           {/* User Profile Section */}
           <div className="p-4">
@@ -127,9 +125,9 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
       </Card>
 
       {/* Main Content */}
-      <div className="flex-1 flex flex-col min-h-screen bg-gradient">
-        {/* Top Header */}
-        <Card className="rounded-none shadow-sm">
+      <div className="flex-1 flex flex-col h-full lg:ml-0">
+        {/* Top Header - Fixed */}
+        <Card className="rounded-none shadow-sm sticky top-0 z-40">
           <CardBody className="p-0">
             <div className="flex items-center justify-between h-16 px-6">
               <Button
@@ -165,8 +163,8 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
           </CardBody>
         </Card>
 
-        {/* Page Content */}
-        <main className="flex-1 p-6 bg-gray-50/50">
+        {/* Page Content - Scrollable */}
+        <main className="flex-1 p-6 bg-gray-50/50 overflow-y-auto">
           <div className="max-w-7xl mx-auto">{children}</div>
         </main>
       </div>

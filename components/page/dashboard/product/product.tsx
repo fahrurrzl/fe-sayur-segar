@@ -4,9 +4,11 @@ import DataTable from "@/components/data-table";
 import { columns } from "./columns";
 import { renderCell } from "./render-cell";
 import useSeller from "@/hooks/useSeller";
+import { useRouter } from "next/navigation";
 
 const Product = () => {
   const { dataSeller } = useSeller();
+  const router = useRouter();
 
   return (
     <DataTable
@@ -17,7 +19,7 @@ const Product = () => {
       renderCell={renderCell as any}
       addButton
       addButtonText="Tambah Produk"
-      onPressAddButton={() => {}}
+      onPressAddButton={() => router.push("/dashboard/product/create")}
       emptyContent="Belum ada produk yang ditambahkan"
     />
   );

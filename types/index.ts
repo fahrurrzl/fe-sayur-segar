@@ -1,4 +1,6 @@
+import { productSchema } from "@/schemas/product.schema";
 import { SVGProps } from "react";
+import { z } from "zod";
 
 export type IconSvgProps = SVGProps<SVGSVGElement> & {
   size?: number;
@@ -23,4 +25,13 @@ export type TSeller = {
   storeLocation: string;
   bankAccount: string;
   bankName: string;
+};
+
+export type TProduct = {
+  name: string;
+  price: number;
+  stock: number;
+  categoryId: string;
+  description: string;
+  imageUrl: string | FileList;
 };

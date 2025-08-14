@@ -18,12 +18,6 @@ const useSeller = () => {
     formState: { errors },
   } = useForm({
     resolver: zodResolver(sellerSchema),
-    defaultValues: {
-      storeName: "",
-      storeLocation: "",
-      bankAccount: "",
-      bankName: "",
-    },
   });
 
   // create
