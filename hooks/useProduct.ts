@@ -111,6 +111,12 @@ const useProduct = () => {
     queryFn: getProductsService,
   });
 
+  // get product by id
+  const getProductByIdService = async (id: string) => {
+    const res = await productService.getProductById(id);
+    return res.data;
+  };
+
   return {
     // form
     control,
@@ -129,6 +135,7 @@ const useProduct = () => {
     // query
     dataProducts,
     isLoadingProducts,
+    getProductByIdService,
   };
 };
 
