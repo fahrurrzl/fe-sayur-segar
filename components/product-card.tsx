@@ -4,6 +4,7 @@ import { TProductResponse } from "@/types";
 import { rupiahFormat } from "@/utils/rupiahFormat";
 import { Badge, Button, Card, CardBody, Chip } from "@heroui/react";
 import Image from "next/image";
+import Link from "next/link";
 import { FaMapPin, FaStar } from "react-icons/fa";
 import { FiShoppingCart } from "react-icons/fi";
 
@@ -12,7 +13,11 @@ const ProductCard = ({ product }: { product: TProductResponse }) => {
   // const discountedPrice = product.discount ? product.price - (product.price * product.discount) / 100 : product.price;
 
   return (
-    <Card className="group overflow-hidden border border-gray-200 hover:shadow-lg transition-all duration-300 hover:scale-105">
+    <Card
+      className="group overflow-hidden border border-gray-200 hover:shadow-lg transition-all duration-300 hover:scale-105"
+      as={Link}
+      href={`/product/${product.id}`}
+    >
       <div className="relative">
         <Image
           src={imageUrl}

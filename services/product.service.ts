@@ -9,4 +9,5 @@ export default {
       },
     }),
   getProducts: () => instance.get(endpoint.PRODUCT),
+  getProductById: (id: string) => instance.get(`${endpoint.PRODUCT}/${id}`),
 };
