@@ -8,4 +8,5 @@ export default {
         Authorization: `Bearer ${token}`,
       },
     }),
+  getProducts: () => instance.get(endpoint.PRODUCT),
 };

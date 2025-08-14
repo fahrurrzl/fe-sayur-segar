@@ -1,8 +1,8 @@
 import { productSchema } from "@/schemas/product.schema";
 import productService from "@/services/product.service";
-import { TProduct } from "@/types";
+import { TProductInput } from "@/types";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { useSession } from "next-auth/react";
 import { useForm } from "react-hook-form";
 import useMedia from "./useMedia";
@@ -62,28 +62,8 @@ const useProduct = () => {
     setValue("imageUrl", "");
   };
 
-  // const uploadImage = async (data: TProduct) => {
-  //   const formData = new FormData();
-  //   formData.append("image", data.imageUrl[0]);
-
-  //   const {
-  //     data: {
-  //       data: { secure_url: imageUrl },
-  //     },
-  //   } = await mediaService.upload(formData, session?.user.token as string);
-
-  //   return {
-  //     name: data.name,
-  //     price: data.price,
-  //     stock: data.stock,
-  //     categoryId: data.categoryId,
-  //     description: data.description,
-  //     imageUrl,
-  //   };
-  // };
-
   // create product
-  const createProductService = async (payload: TProduct) => {
+  const createProductService = async (payload: TProductInput) => {
     const res = await productService.create(
       payload,
       session?.user.token as string
@@ -113,12 +93,23 @@ const useProduct = () => {
       },
     });
 
-  const handleCreateProduct = (data: TProduct) =>
+  const handleCreateProduct = (data: TProductInput) =>
     mutateCreateProduct({
       ...data,
       price: Number(data.price),
       stock: Number(data.stock),
     });
+
+  // get products
+  const getProductsService = async () => {
+    const res = await productService.getProducts();
+    return res.data;
+  };
+
+  const { data: dataProducts, isLoading: isLoadingProducts } = useQuery({
+    queryKey: ["products"],
+    queryFn: getProductsService,
+  });
 
   return {
     // form
@@ -135,6 +126,9 @@ const useProduct = () => {
     handleDeleteImage,
     isPendingDeleteFile,
     preview,
+    // query
+    dataProducts,
+    isLoadingProducts,
   };
 };
 

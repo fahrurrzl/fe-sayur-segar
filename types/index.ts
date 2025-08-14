@@ -27,7 +27,7 @@ export type TSeller = {
   bankName: string;
 };
 
-export type TProduct = {
+export type TProductInput = {
   name: string;
   price: number;
   stock: number;
@@ -35,3 +35,17 @@ export type TProduct = {
   description: string;
   imageUrl: string | FileList;
 };
+
+export type TProduct = Omit<TProductInput, "imageUrl"> & {
+  id: string;
+  imageUrl: string;
+  createdAt: string;
+  updatedAt: string;
+  seller: {
+    sellerId: string;
+    storeLocation: string;
+    storeName: string;
+  };
+};
+
+export type TProductResponse = TProduct;
