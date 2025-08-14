@@ -6,8 +6,11 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { sellerSchema } from "@/schemas/seller.schema";
 import { useSession } from "next-auth/react";
 import useProfile from "./useProfile";
+import { addToast } from "@heroui/react";
+import { useRouter } from "next/navigation";
 
 const useSeller = () => {
+  const router = useRouter();
   const { data: session } = useSession();
   const { dataUser } = useProfile();
 
@@ -18,12 +21,6 @@ const useSeller = () => {
     formState: { errors },
   } = useForm({
     resolver: zodResolver(sellerSchema),
-    defaultValues: {
-      storeName: "",
-      storeLocation: "",
-      bankAccount: "",
-      bankName: "",
-    },
   });
 
   // create
@@ -41,11 +38,21 @@ const useSeller = () => {
     isError: isErrorCreateSeller,
   } = useMutation({
     mutationFn: createSellerService,
-    onSuccess: (data) => {
-      console.log("data =", data);
+    onSuccess: ({ data }) => {
+      router.push(`/dashboard`);
+      addToast({
+        title: "Berhasil",
+        description: `Lapak ${data?.storeName} berhasil dibuat`,
+        color: "success",
+      });
     },
     onError: (error) => {
-      console.log("error =", error);
+      console.log(error);
+      addToast({
+        title: "Gagal",
+        description: "Lapak gagal dibuat",
+        color: "danger",
+      });
     },
   });
 

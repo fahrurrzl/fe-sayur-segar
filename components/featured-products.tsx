@@ -1,6 +1,9 @@
 "use client";
 
+import useProduct from "@/hooks/useProduct";
 import ProductCard from "./product-card";
+import { TProduct, TProductResponse } from "@/types";
+import { Skeleton } from "@heroui/react";
 
 const featuredProducts = [
   {
@@ -81,6 +84,8 @@ const featuredProducts = [
 ];
 
 const FeatureProduct = () => {
+  const { dataProducts, isLoadingProducts } = useProduct();
+
   return (
     <section id="products" className="py-12 bg-background">
       <div className="container mx-auto px-4">
@@ -99,8 +104,15 @@ const FeatureProduct = () => {
         </div>
 
         <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-          {featuredProducts.map((product) => (
-            <ProductCard key={product.id} {...(product as any)} />
+          {isLoadingProducts && (
+            <>
+              {Array.from({ length: 4 }, (_, index) => (
+                <Skeleton key={index} className="w-full h-[360px] rounded-lg" />
+              ))}
+            </>
+          )}
+          {dataProducts?.data.map((product: TProduct) => (
+            <ProductCard key={product.id} product={product} />
           ))}
         </div>
       </div>

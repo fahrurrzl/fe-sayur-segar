@@ -9,6 +9,7 @@ import { ThemeProvider as NextThemesProvider } from "next-themes";
 import { SessionProvider } from "next-auth/react";
 import { Session } from "next-auth";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { ToastProvider } from "@heroui/react";
 
 export interface ProvidersProps {
   children: React.ReactNode;
@@ -38,6 +39,7 @@ export function Providers({ session, children, themeProps }: ProvidersProps) {
   return (
     <SessionProvider session={session}>
       <HeroUIProvider navigate={router.push}>
+        <ToastProvider placement="top-center" toastProps={{ timeout: 3000 }} />
         <QueryClientProvider client={queryClient}>
           <NextThemesProvider {...themeProps}>{children}</NextThemesProvider>
         </QueryClientProvider>
