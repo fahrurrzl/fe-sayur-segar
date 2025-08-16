@@ -73,7 +73,7 @@ const ProductCard = ({ product }: { product: TProductResponse }) => {
             </div>
           </div>
 
-          <button
+          {/* <button
             className="w-full mt-3 text-white bg-success hover:bg-success-400 transition-colors duration-300 rounded-lg cursor-pointer flex items-center justify-center py-2 px-4 gap-1"
             disabled={isPendingAddToCart}
             onClick={(e) => {
@@ -94,7 +94,7 @@ const ProductCard = ({ product }: { product: TProductResponse }) => {
               <FiShoppingCart className="w-4 h-4 mr-2" />
             )}
             Tambah ke Keranjang
-          </button>
+          </button> */}
         </div>
       </CardBody>
     </Card>

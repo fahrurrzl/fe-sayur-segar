@@ -90,10 +90,21 @@ export const Navbar = () => {
 
         {status === "authenticated" ? (
           <NavbarItem>
-            <Badge
-              content={dataCarts?.data?._count.items}
-              className="bg-success text-white"
-            >
+            {dataCarts?.data?._count.items > 0 ? (
+              <Badge
+                content={dataCarts?.data?._count.items}
+                className="bg-success text-white"
+              >
+                <Button
+                  isIconOnly
+                  variant="light"
+                  className="flex items-center p-2 justify-center cursor-pointer text-slate-600"
+                  onPress={onOpen}
+                >
+                  <MdOutlineShoppingCart size={22} />
+                </Button>
+              </Badge>
+            ) : (
               <Button
                 isIconOnly
                 variant="light"
@@ -102,7 +113,7 @@ export const Navbar = () => {
               >
                 <MdOutlineShoppingCart size={22} />
               </Button>
-            </Badge>
+            )}
             {/* Cart */}
             <Cart
               isOpen={isOpen}
@@ -171,10 +182,21 @@ export const Navbar = () => {
         </NavbarItem> */}
         {status === "authenticated" ? (
           <NavbarItem>
-            <Badge
-              content={dataCarts?.data?._count.items}
-              className="bg-success text-white"
-            >
+            {dataCarts?.data?._count.items > 0 ? (
+              <Badge
+                content={dataCarts?.data?._count.items}
+                className="bg-success text-white"
+              >
+                <Button
+                  isIconOnly
+                  variant="light"
+                  className="flex items-center p-2 justify-center cursor-pointer text-slate-600"
+                  onPress={onOpen}
+                >
+                  <MdOutlineShoppingCart size={22} />
+                </Button>
+              </Badge>
+            ) : (
               <Button
                 isIconOnly
                 variant="light"
@@ -183,12 +205,13 @@ export const Navbar = () => {
               >
                 <MdOutlineShoppingCart size={22} />
               </Button>
-            </Badge>
+            )}
+
             {/* Cart */}
             <Cart
               isOpen={isOpen}
               onOpenChange={onOpenChange}
-              items={dataCarts?.data?.items || []}
+              items={dataCarts?.data?.items}
             />
           </NavbarItem>
         ) : null}

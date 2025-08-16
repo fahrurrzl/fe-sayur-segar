@@ -50,7 +50,7 @@ const useCart = () => {
   // get carts
   const getCartsService = async () => {
     const res = await cartService.getCarts(session?.user.token as string);
-    return res.data;
+    return res.data || null;
   };
 
   const { data: dataCarts, isLoading: isLoadingCarts } = useQuery({
@@ -59,6 +59,38 @@ const useCart = () => {
     enabled: !!session?.user,
   });
 
+  // delete item in cart
+  const deleteItemService = async (itemId: string) => {
+    const res = await cartService.deleteItem(
+      itemId,
+      session?.user.token as string
+    );
+    return res.data;
+  };
+
+  const { mutate: mutateDeleteItem, isPending: isPendingDeleteItem } =
+    useMutation({
+      mutationFn: (variables: { itemId: string }) =>
+        deleteItemService(variables.itemId),
+      onSuccess: () => {
+        queryClient.invalidateQueries({ queryKey: ["carts"], exact: true });
+
+        addToast({
+          title: "Berhasil",
+          description: "Produk berhasil dihapus dari keranjang",
+          color: "success",
+        });
+      },
+      onError: (error) => {
+        console.log(error);
+        addToast({
+          title: "Gagal",
+          description: "Produk gagal dihapus dari keranjang" + error,
+          color: "danger",
+        });
+      },
+    });
+
   return {
     // mutate
     mutateAddToCart,
@@ -66,6 +98,9 @@ const useCart = () => {
     // query
     dataCarts,
     isLoadingCarts,
+    // mutate delete item
+    mutateDeleteItem,
+    isPendingDeleteItem,
   };
 };
 

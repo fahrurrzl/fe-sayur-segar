@@ -15,4 +15,13 @@ export default {
         Authorization: `Bearer ${token}`,
       },
     }),
+  deleteItem: (itemId: string, token: string) =>
+    instance.delete(endpoint.CART, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      data: {
+        itemId,
+      },
+    }),
 };
