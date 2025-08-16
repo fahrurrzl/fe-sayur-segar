@@ -7,11 +7,14 @@ import { useSession } from "next-auth/react";
 import { useForm } from "react-hook-form";
 import useMedia from "./useMedia";
 import { addToast } from "@heroui/react";
-import { useRouter } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 
 const useProduct = () => {
   const router = useRouter();
   const { data: session } = useSession();
+  const params = useParams();
+  const { id } = params;
+
   const {
     handleUploadFile,
     isPendingUploadFile,
@@ -32,8 +35,8 @@ const useProduct = () => {
     resolver: zodResolver(productSchema),
     defaultValues: {
       name: "",
-      price: "",
-      stock: "",
+      price: 0,
+      stock: 0,
       categoryId: "",
       description: "",
       imageUrl: "",
@@ -117,12 +120,56 @@ const useProduct = () => {
     return res.data;
   };
 
+  // update
+  const updateProductService = async (id: string, payload: TProductInput) => {
+    const res = await productService.update(
+      id,
+      payload,
+      session?.user.token as string
+    );
+    return res.data;
+  };
+
+  const { mutate: mutateUpdateProduct, isPending: isPendingUpdateProduct } =
+    useMutation({
+      mutationFn: (variables: { id: string; payload: TProductInput }) =>
+        updateProductService(variables.id, variables.payload),
+      onSuccess: () => {
+        addToast({
+          title: "Berhasil",
+          description: "Produk berhasil diubah",
+          color: "success",
+        });
+        reset();
+        router.push("/dashboard/product");
+      },
+      onError: (error) => {
+        console.log(error);
+        addToast({
+          title: "Gagal",
+          description: "Produk gagal diubah",
+          color: "danger",
+        });
+      },
+    });
+
+  const handleUpdateProduct = (data: TProductInput) =>
+    mutateUpdateProduct({
+      id: id as string,
+      payload: {
+        ...data,
+        price: Number(data.price),
+        stock: Number(data.stock),
+      },
+    });
+
   return {
     // form
     control,
     handleSubmit,
     errors,
     reset,
+    setValue,
     // mutation
     handleCreateProduct,
     isPendingCreateProduct,
@@ -136,6 +183,9 @@ const useProduct = () => {
     dataProducts,
     isLoadingProducts,
     getProductByIdService,
+    // mutation
+    handleUpdateProduct,
+    isPendingUpdateProduct,
   };
 };
 

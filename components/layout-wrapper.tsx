@@ -5,20 +5,24 @@ import { Navbar } from "@/components/navbar";
 import Footer from "@/components/Footer";
 import ScrollToTop from "./sroll-to-top";
 
-const noNavbarPaths = [
-  "/auth/login",
-  "/auth/register",
-  "/auth/register-success",
-  "/dashboard",
-  "/dashboard/product",
-  "/dashboard/product/create",
-];
-
 export default function LayoutWrapper({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const params = usePathname();
+  const id = params.split("/").pop();
+
+  const noNavbarPaths = [
+    "/auth/login",
+    "/auth/register",
+    "/auth/register-success",
+    "/dashboard",
+    "/dashboard/product",
+    "/dashboard/product/create",
+    `/dashboard/product/edit/${id}`,
+  ];
+
   const pathname = usePathname();
   const hideLayout = noNavbarPaths.includes(pathname);
 

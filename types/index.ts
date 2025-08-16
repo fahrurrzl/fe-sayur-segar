@@ -28,12 +28,13 @@ export type TSeller = {
 };
 
 export type TProductInput = {
+  id?: string;
   name: string;
   price: number;
   stock: number;
   categoryId: string;
   description: string;
-  imageUrl: string | FileList;
+  imageUrl: string;
 };
 
 export type TProduct = Omit<TProductInput, "imageUrl"> & {
@@ -54,4 +55,23 @@ export type TCart = {
   productId: string;
   quantity: number;
   price: number;
+};
+
+export type TCartItem = {
+  cartId: string;
+  createdAt: string; // ISO date string
+  id: string;
+  price: number;
+  product: {
+    imageUrl: string;
+    name: string;
+    seller: {
+      storeLocation: string;
+      storeName: string;
+    };
+    stock: number;
+  };
+  productId: string;
+  quantity: number;
+  updatedAt: string; // ISO date string
 };
