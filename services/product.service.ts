@@ -17,4 +17,10 @@ export default {
         Authorization: `Bearer ${token}`,
       },
     }),
+  destroy: (id: string, token: string) =>
+    instance.delete(`${endpoint.PRODUCT}/${id}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }),
 };
