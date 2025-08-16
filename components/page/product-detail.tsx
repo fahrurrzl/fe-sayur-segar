@@ -1,5 +1,6 @@
 "use client";
 
+import useCart from "@/hooks/useCart";
 import { TProduct } from "@/types";
 import { rupiahFormat } from "@/utils/rupiahFormat";
 import {
@@ -9,21 +10,23 @@ import {
   CardHeader,
   Chip,
   Divider,
+  Spinner,
 } from "@heroui/react";
 import { useRouter } from "next/navigation";
+import { FaShieldAlt } from "react-icons/fa";
 import {
-  FaArrowLeft,
-  FaClock,
-  FaMapPin,
-  FaShieldAlt,
-  FaShoppingCart,
-  FaStar,
-  FaTruck,
-} from "react-icons/fa";
+  FiArrowLeft,
+  FiClock,
+  FiMapPin,
+  FiShoppingCart,
+  FiStar,
+  FiTruck,
+} from "react-icons/fi";
 
 const ProductDetail = ({ product }: { product: TProduct }) => {
   const { name, price, stock, imageUrl, seller, description } = product;
   const router = useRouter();
+  const { mutateAddToCart, isPendingAddToCart } = useCart();
 
   return (
     <main className="container mx-auto px-4 py-8">
@@ -32,7 +35,7 @@ const ProductDetail = ({ product }: { product: TProduct }) => {
         variant="light"
         className="mb-6"
         onPress={() => router.push("/")}
-        startContent={<FaArrowLeft className="w-4 h-4" />}
+        startContent={<FiArrowLeft className="w-4 h-4" />}
       >
         Kembali
       </Button>
@@ -76,14 +79,14 @@ const ProductDetail = ({ product }: { product: TProduct }) => {
 
             <div className="flex items-center space-x-4 mb-4">
               <div className="flex items-center space-x-1">
-                <FaStar className="w-5 h-5 fill-yellow-400 text-yellow-400" />
+                <FiStar className="w-5 h-5 fill-yellow-400 text-yellow-400" />
                 <span className="text-lg font-medium">{4.8}</span>
                 <span className="text-muted-foreground">(124 ulasan)</span>
               </div>
             </div>
 
             <div className="flex items-center space-x-2 text-muted-foreground mb-6">
-              <FaMapPin className="w-4 h-4" />
+              <FiMapPin className="w-4 h-4" />
               <span>
                 {seller.storeName} • {seller.storeLocation}
               </span>
@@ -110,7 +113,23 @@ const ProductDetail = ({ product }: { product: TProduct }) => {
             className="w-full text-white"
             size="lg"
             color="success"
-            startContent={<FaShoppingCart className="w-5 h-5" />}
+            startContent={
+              isPendingAddToCart ? (
+                <Spinner size="sm" color="white" />
+              ) : (
+                <FiShoppingCart className="w-5 h-5" />
+              )
+            }
+            disabled={isPendingAddToCart}
+            onPress={() =>
+              mutateAddToCart({
+                payload: {
+                  productId: product.id,
+                  quantity: 1,
+                  price: product.price,
+                },
+              })
+            }
           >
             Tambah ke Keranjang
           </Button>
@@ -118,7 +137,7 @@ const ProductDetail = ({ product }: { product: TProduct }) => {
           {/* Features */}
           <div className="grid grid-cols-3 gap-4 pt-6">
             <div className="text-center">
-              <FaTruck className="w-6 h-6 mx-auto mb-2 text-success" />
+              <FiTruck className="w-6 h-6 mx-auto mb-2 text-success" />
               <span className="text-sm text-muted-foreground">
                 Gratis Ongkir
               </span>
@@ -130,7 +149,7 @@ const ProductDetail = ({ product }: { product: TProduct }) => {
               </span>
             </div>
             <div className="text-center">
-              <FaClock className="w-6 h-6 mx-auto mb-2 text-success" />
+              <FiClock className="w-6 h-6 mx-auto mb-2 text-success" />
               <span className="text-sm text-muted-foreground">Same Day</span>
             </div>
           </div>

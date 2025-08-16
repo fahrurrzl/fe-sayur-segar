@@ -49,3 +49,9 @@ export type TProduct = Omit<TProductInput, "imageUrl"> & {
 };
 
 export type TProductResponse = TProduct;
+
+export type TCart = {
+  productId: string;
+  quantity: number;
+  price: number;
+};

@@ -1,8 +1,13 @@
 import ProductDetail from "@/components/page/product-detail";
 import productService from "@/services/product.service";
 
-const ProductDetailPage = async ({ params }: { params: { id: string } }) => {
-  const { data: product } = await productService.getProductById(params?.id);
+const ProductDetailPage = async ({
+  params,
+}: {
+  params: Promise<{ id: string }>;
+}) => {
+  const { id } = await params;
+  const { data: product } = await productService.getProductById(id);
 
   return <ProductDetail product={product?.data} />;
 };
