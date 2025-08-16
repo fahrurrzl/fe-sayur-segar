@@ -2,7 +2,7 @@ import { productSchema } from "@/schemas/product.schema";
 import productService from "@/services/product.service";
 import { TProductInput } from "@/types";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useSession } from "next-auth/react";
 import { useForm } from "react-hook-form";
 import useMedia from "./useMedia";
@@ -109,7 +109,11 @@ const useProduct = () => {
     return res.data;
   };
 
-  const { data: dataProducts, isLoading: isLoadingProducts } = useQuery({
+  const {
+    data: dataProducts,
+    isLoading: isLoadingProducts,
+    refetch,
+  } = useQuery({
     queryKey: ["products"],
     queryFn: getProductsService,
   });
@@ -163,6 +167,43 @@ const useProduct = () => {
       },
     });
 
+  const queryClient = useQueryClient();
+
+  // delete
+  const deleteProductService = async (id: string) => {
+    const res = await productService.destroy(id, session?.user.token as string);
+    return res.data;
+  };
+
+  const {
+    mutate: mutateDeleteProduct,
+    isPending: isPendingDeleteProduct,
+    isSuccess: isSuccessDeleteProduct,
+  } = useMutation({
+    mutationFn: deleteProductService,
+    onSuccess: (data) => {
+      handleDeleteFile(data.data.imageUrl, () => {
+        addToast({
+          title: "Berhasil",
+          description: "Produk berhasil dihapus",
+          color: "success",
+        });
+      });
+
+      queryClient.invalidateQueries({ queryKey: ["seller"] });
+    },
+    onError: (error) => {
+      console.log(error);
+      addToast({
+        title: "Gagal",
+        description: "Produk gagal dihapus",
+        color: "danger",
+      });
+    },
+  });
+
+  const handleDeleteProduct = (id: string) => mutateDeleteProduct(id);
+
   return {
     // form
     control,
@@ -183,9 +224,14 @@ const useProduct = () => {
     dataProducts,
     isLoadingProducts,
     getProductByIdService,
+    refetch,
     // mutation
     handleUpdateProduct,
     isPendingUpdateProduct,
+    // delete
+    handleDeleteProduct,
+    isPendingDeleteProduct,
+    isSuccessDeleteProduct,
   };
 };
 

@@ -9,6 +9,7 @@ import {
   CardBody,
   CardHeader,
   Button,
+  Skeleton,
 } from "@heroui/react";
 import React, { Key, ReactNode } from "react";
 import { FiPlus } from "react-icons/fi";
@@ -23,6 +24,7 @@ interface PropTypes {
   addButtonText?: string;
   onPressAddButton?: () => void;
   emptyContent?: string;
+  isLoading?: boolean;
 }
 
 const DataTable = ({
@@ -35,6 +37,7 @@ const DataTable = ({
   addButtonText = "Tambah",
   onPressAddButton,
   emptyContent,
+  isLoading,
 }: PropTypes) => {
   return (
     <div>
@@ -56,33 +59,35 @@ const DataTable = ({
           )}
         </CardHeader>
         <CardBody>
-          <Table aria-label="Example table with custom cells">
-            <TableHeader columns={columns}>
-              {(column) => (
-                <TableColumn
-                  key={column.uid as Key}
-                  align={column.uid === "actions" ? "center" : "start"}
-                >
-                  {`${column.name}`}
-                </TableColumn>
-              )}
-            </TableHeader>
-            {data.length > 0 ? (
-              <TableBody items={data}>
-                {(item) => (
-                  <TableRow key={item.id as Key}>
-                    {(columnKey) => (
-                      <TableCell>
-                        {renderCell(item, columnKey as Key)}
-                      </TableCell>
-                    )}
-                  </TableRow>
+          <Skeleton className="min-h-[250px] rounded-lg" isLoaded={!isLoading}>
+            <Table aria-label="Example table with custom cells">
+              <TableHeader columns={columns}>
+                {(column) => (
+                  <TableColumn
+                    key={column.uid as Key}
+                    align={column.uid === "actions" ? "center" : "start"}
+                  >
+                    {`${column.name}`}
+                  </TableColumn>
                 )}
-              </TableBody>
-            ) : (
-              <TableBody emptyContent={emptyContent}>{[]}</TableBody>
-            )}
-          </Table>
+              </TableHeader>
+              {data.length > 0 ? (
+                <TableBody items={data}>
+                  {(item) => (
+                    <TableRow key={item.id as Key}>
+                      {(columnKey) => (
+                        <TableCell>
+                          {renderCell(item, columnKey as Key)}
+                        </TableCell>
+                      )}
+                    </TableRow>
+                  )}
+                </TableBody>
+              ) : (
+                <TableBody emptyContent={emptyContent}>{[]}</TableBody>
+              )}
+            </Table>
+          </Skeleton>
         </CardBody>
       </Card>
     </div>
