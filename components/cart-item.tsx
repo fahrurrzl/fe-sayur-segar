@@ -1,3 +1,4 @@
+import useCart from "@/hooks/useCart";
 import { rupiahFormat } from "@/utils/rupiahFormat";
 import { Button, Card, CardBody } from "@heroui/react";
 import Image from "next/image";
@@ -8,7 +9,8 @@ interface PropTypes {
 }
 
 const CartItem = ({ item }: PropTypes) => {
-  console.log(item);
+  const { mutateDeleteItem, isPendingDeleteItem } = useCart();
+  console.log(item?.id);
   return (
     <Card radius="sm" shadow="sm">
       <CardBody className="flex gap-3 justify-between flex-row">
@@ -43,7 +45,15 @@ const CartItem = ({ item }: PropTypes) => {
               <FaPlus className="w-3 h-3" />
             </Button>
           </div>
-          <Button color="danger" isIconOnly size="md" variant="light">
+          <Button
+            color="danger"
+            isIconOnly
+            size="md"
+            variant="light"
+            disabled={isPendingDeleteItem}
+            isLoading={isPendingDeleteItem}
+            onPress={() => mutateDeleteItem({ itemId: item?.id })}
+          >
             <FaRegTrashAlt />
           </Button>
         </div>
