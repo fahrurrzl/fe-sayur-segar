@@ -4,4 +4,5 @@ export default {
   CATEGORY: "/category",
   MEDIA: "/media",
   PRODUCT: "/product",
+  CART: "/cart",
 };

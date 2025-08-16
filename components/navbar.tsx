@@ -26,11 +26,13 @@ import Cart from "./cart";
 import { signOut, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { FiLogIn, FiLogOut, FiUser } from "react-icons/fi";
+import useCart from "@/hooks/useCart";
 
 export const Navbar = () => {
-  const { data: session, status } = useSession();
-  const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const router = useRouter();
+  const { data: session, status } = useSession();
+  const { dataCarts } = useCart();
+  const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
   return (
     <HeroUINavbar maxWidth="xl" isBlurred shouldHideOnScroll position="sticky">
@@ -88,7 +90,10 @@ export const Navbar = () => {
 
         {status === "authenticated" ? (
           <NavbarItem>
-            <Badge content={3} className="bg-success text-white">
+            <Badge
+              content={dataCarts?.data?._count.items}
+              className="bg-success text-white"
+            >
               <Button
                 isIconOnly
                 variant="light"
@@ -99,7 +104,11 @@ export const Navbar = () => {
               </Button>
             </Badge>
             {/* Cart */}
-            <Cart isOpen={isOpen} onOpenChange={onOpenChange} />
+            <Cart
+              isOpen={isOpen}
+              onOpenChange={onOpenChange}
+              items={dataCarts?.data?.items}
+            />
           </NavbarItem>
         ) : null}
 
@@ -162,7 +171,10 @@ export const Navbar = () => {
         </NavbarItem> */}
         {status === "authenticated" ? (
           <NavbarItem>
-            <Badge content={3} className="bg-success text-white">
+            <Badge
+              content={dataCarts?.data?._count.items}
+              className="bg-success text-white"
+            >
               <Button
                 isIconOnly
                 variant="light"
@@ -173,7 +185,11 @@ export const Navbar = () => {
               </Button>
             </Badge>
             {/* Cart */}
-            <Cart isOpen={isOpen} onOpenChange={onOpenChange} />
+            <Cart
+              isOpen={isOpen}
+              onOpenChange={onOpenChange}
+              items={dataCarts?.data?.items || []}
+            />
           </NavbarItem>
         ) : null}
 

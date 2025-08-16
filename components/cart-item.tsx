@@ -1,23 +1,33 @@
+import { rupiahFormat } from "@/utils/rupiahFormat";
 import { Button, Card, CardBody } from "@heroui/react";
 import Image from "next/image";
 import { FaMinus, FaPlus, FaRegTrashAlt } from "react-icons/fa";
 
-const CartItem = () => {
+interface PropTypes {
+  item: any;
+}
+
+const CartItem = ({ item }: PropTypes) => {
+  console.log(item);
   return (
     <Card radius="sm" shadow="sm">
       <CardBody className="flex gap-3 justify-between flex-row">
         <div className="flex gap-2 items-center">
           <Image
-            src="/images/logo.png"
-            alt="product image"
+            src={item?.product?.imageUrl}
+            alt={item?.product?.name}
             width={80}
             height={80}
             className="aspect-square object-cover"
           />
           <div>
-            <h3 className="font-medium">Sayur Segar</h3>
-            <p className="text-xs text-foreground-500">Pak Budi</p>
-            <p className="font-medium text-success">Rp. 5.000 / kg</p>
+            <h3 className="font-medium">{item?.product?.name}</h3>
+            <p className="text-xs text-foreground-500">
+              {item?.product?.seller?.storeName}
+            </p>
+            <p className="font-medium text-success">
+              {rupiahFormat(item?.price)} / kg
+            </p>
           </div>
         </div>
         <div className="flex flex-col justify-between items-end">
@@ -26,7 +36,9 @@ const CartItem = () => {
             <Button isIconOnly variant="bordered" size="sm" onPress={() => {}}>
               <FaMinus className="w-3 h-3" />
             </Button>
-            <span className="text-sm font-medium w-8 text-center">{3}</span>
+            <span className="text-sm font-medium w-8 text-center">
+              {item?.quantity}
+            </span>
             <Button isIconOnly variant="bordered" size="sm" onPress={() => {}}>
               <FaPlus className="w-3 h-3" />
             </Button>

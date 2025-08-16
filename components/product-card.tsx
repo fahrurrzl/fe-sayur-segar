@@ -1,8 +1,9 @@
 "use client";
 
+import useCart from "@/hooks/useCart";
 import { TProductResponse } from "@/types";
 import { rupiahFormat } from "@/utils/rupiahFormat";
-import { Badge, Button, Card, CardBody, Chip } from "@heroui/react";
+import { Badge, Button, Card, CardBody, Chip, Spinner } from "@heroui/react";
 import Image from "next/image";
 import Link from "next/link";
 import { FaMapPin, FaStar } from "react-icons/fa";
@@ -10,6 +11,7 @@ import { FiShoppingCart } from "react-icons/fi";
 
 const ProductCard = ({ product }: { product: TProductResponse }) => {
   const { name, price, imageUrl, seller } = product;
+  const { mutateAddToCart, isPendingAddToCart } = useCart();
   // const discountedPrice = product.discount ? product.price - (product.price * product.discount) / 100 : product.price;
 
   return (
@@ -71,10 +73,28 @@ const ProductCard = ({ product }: { product: TProductResponse }) => {
             </div>
           </div>
 
-          <Button color="success" className="w-full mt-3 text-white" size="sm">
-            <FiShoppingCart className="w-4 h-4 mr-2" />
+          <button
+            className="w-full mt-3 text-white bg-success hover:bg-success-400 transition-colors duration-300 rounded-lg cursor-pointer flex items-center justify-center py-2 px-4 gap-1"
+            disabled={isPendingAddToCart}
+            onClick={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              mutateAddToCart({
+                payload: {
+                  productId: product.id,
+                  quantity: 1,
+                  price: product.price,
+                },
+              });
+            }}
+          >
+            {isPendingAddToCart ? (
+              <Spinner size="sm" color="white" />
+            ) : (
+              <FiShoppingCart className="w-4 h-4 mr-2" />
+            )}
             Tambah ke Keranjang
-          </Button>
+          </button>
         </div>
       </CardBody>
     </Card>
