@@ -20,8 +20,15 @@ import useCategory from "@/hooks/useCateogry";
 import useProduct from "@/hooks/useProduct";
 import { Controller } from "react-hook-form";
 import cn from "@/utils/cn";
+import { useEffect } from "react";
+import { TProductResponse } from "@/types";
 
-const CreateForm = () => {
+interface PropTypes {
+  type: "create" | "edit";
+  data?: TProductResponse;
+}
+
+const ProductForm = ({ type, data }: PropTypes) => {
   const router = useRouter();
   const { dataCategories: categories } = useCategory();
   const {
@@ -33,31 +40,48 @@ const CreateForm = () => {
     // mutation
     handleCreateProduct,
     isPendingCreateProduct,
+    handleUpdateProduct,
+    isPendingUpdateProduct,
     // handle image
     handleUploadImage,
     isPendingUploadFile,
     handleDeleteImage,
     isPendingDeleteFile,
     preview,
+    setValue,
   } = useProduct();
+
+  useEffect(() => {
+    if (type === "edit") {
+      setValue("name", data?.name || "");
+      setValue("price", data?.price || 0);
+      setValue("stock", data?.stock || 0);
+      setValue("categoryId", data?.categoryId || "");
+      setValue("description", data?.description || "");
+      setValue("imageUrl", data?.imageUrl || "");
+    }
+  }, [type, data]);
 
   return (
     <div>
       {/* Header */}
       <div className="flex items-center mb-4">
-        <Link href="/dashboard/product" className="mr-2">
-          <Button isIconOnly variant="light">
-            <FaArrowLeft />
-          </Button>
-        </Link>
+        <Button isIconOnly variant="light" as={Link} href="/dashboard/product">
+          <FaArrowLeft />
+        </Button>
+
         <div className="flex items-center gap-2">
           <FiPackage className="h-6 w-6 text-success" />
-          <h1 className="text-2xl font-bold">Buat Produk Baru</h1>
+          <h1 className="text-2xl font-bold">
+            {type === "create" ? "Buat Produk Baru" : "Ubah Produk"}
+          </h1>
         </div>
       </div>
       <div>
         <form
-          onSubmit={handleSubmit(handleCreateProduct)}
+          onSubmit={handleSubmit(
+            type === "create" ? handleCreateProduct : handleUpdateProduct
+          )}
           className="space-y-4"
         >
           <Card>
@@ -132,6 +156,10 @@ const CreateForm = () => {
                     render={({ field }) => (
                       <Input
                         {...field}
+                        value={field.value?.toString() || ""}
+                        onChange={(e) =>
+                          field.onChange(Number(e.target.value) || 0)
+                        }
                         label="Harga Produk"
                         variant="bordered"
                         type="number"
@@ -152,6 +180,10 @@ const CreateForm = () => {
                     render={({ field }) => (
                       <Input
                         {...field}
+                        value={field.value?.toString() || ""}
+                        onChange={(e) =>
+                          field.onChange(Number(e.target.value) || 0)
+                        }
                         label="Stok Produk"
                         variant="bordered"
                         type="number"
@@ -165,38 +197,37 @@ const CreateForm = () => {
                     </p>
                   )}
                 </div>
-                <Skeleton
-                  className="rounded-md"
-                  isLoaded={!!categories?.length}
-                >
-                  <div className="space-y-1">
-                    <Controller
-                      name="categoryId"
-                      control={control}
-                      render={({ field }) => (
-                        <Select
-                          {...field}
-                          variant="bordered"
-                          items={categories || []}
-                          label="Kategori Produk"
-                          placeholder="Pilih Kategori"
-                          isInvalid={!!errors.categoryId}
-                        >
-                          {(category: { id: string; name: string }) => (
-                            <SelectItem key={category.id}>
-                              {category.name}
-                            </SelectItem>
-                          )}
-                        </Select>
-                      )}
-                    />
-                    {errors.categoryId && (
-                      <p className="text-red-500 text-sm">
-                        {errors.categoryId.message}
-                      </p>
+
+                <div className="space-y-1">
+                  <Controller
+                    name="categoryId"
+                    control={control}
+                    render={({ field }) => (
+                      <Select
+                        {...field}
+                        selectedKeys={field.value ? [field.value] : []}
+                        variant="bordered"
+                        items={categories || []}
+                        label="Kategori Produk"
+                        placeholder="Pilih Kategori"
+                        isInvalid={!!errors.categoryId}
+                        isLoading={!categories?.length}
+                        disabled={!categories?.length}
+                      >
+                        {(category: { id: string; name: string }) => (
+                          <SelectItem key={category.id}>
+                            {category.name}
+                          </SelectItem>
+                        )}
+                      </Select>
                     )}
-                  </div>
-                </Skeleton>
+                  />
+                  {errors.categoryId && (
+                    <p className="text-red-500 text-sm">
+                      {errors.categoryId.message}
+                    </p>
+                  )}
+                </div>
                 <div className="space-y-1">
                   <Controller
                     name="description"
@@ -230,10 +261,18 @@ const CreateForm = () => {
               type="submit"
               color="success"
               className="text-white"
-              isLoading={isPendingCreateProduct || isPendingUploadFile}
-              disabled={isPendingCreateProduct || isPendingUploadFile}
+              isLoading={
+                isPendingCreateProduct ||
+                isPendingUploadFile ||
+                isPendingUpdateProduct
+              }
+              disabled={
+                isPendingCreateProduct ||
+                isPendingUploadFile ||
+                isPendingUpdateProduct
+              }
             >
-              Buat Produk
+              {type === "create" ? "Buat Produk" : "Ubah Produk"}
             </Button>
           </div>
         </form>
@@ -242,4 +281,4 @@ const CreateForm = () => {
   );
 };
 
-export default CreateForm;
+export default ProductForm;

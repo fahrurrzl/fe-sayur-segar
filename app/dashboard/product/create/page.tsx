@@ -1,7 +1,7 @@
-import CreateForm from "@/components/page/dashboard/product/create";
+import ProductForm from "@/components/page/dashboard/product/product-form";
 
 const CreatePage = () => {
-  return <CreateForm />;
+  return <ProductForm type="create" />;
 };
 
 export default CreatePage;

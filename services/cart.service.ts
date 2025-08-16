@@ -24,4 +24,24 @@ export default {
         itemId,
       },
     }),
+  increaseQuantity: (itemId: string, token: string) =>
+    instance.put(
+      `${endpoint.CART}/increase`,
+      { itemId },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    ),
+  decreaseQuantity: (itemId: string, token: string) =>
+    instance.put(
+      `${endpoint.CART}/decrease`,
+      { itemId },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    ),
 };

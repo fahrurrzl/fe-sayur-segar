@@ -1,16 +1,24 @@
 import useCart from "@/hooks/useCart";
+import { TCartItem } from "@/types";
 import { rupiahFormat } from "@/utils/rupiahFormat";
 import { Button, Card, CardBody } from "@heroui/react";
 import Image from "next/image";
 import { FaMinus, FaPlus, FaRegTrashAlt } from "react-icons/fa";
 
 interface PropTypes {
-  item: any;
+  item: TCartItem;
 }
 
 const CartItem = ({ item }: PropTypes) => {
-  const { mutateDeleteItem, isPendingDeleteItem } = useCart();
-  console.log(item?.id);
+  const {
+    mutateDeleteItem,
+    isPendingDeleteItem,
+    mutateIncreaseQuantity,
+    isPendingIncreaseQuantity,
+    mutateDecreaseQuantity,
+    isPendingDecreaseQuantity,
+  } = useCart();
+
   return (
     <Card radius="sm" shadow="sm">
       <CardBody className="flex gap-3 justify-between flex-row">
@@ -35,13 +43,27 @@ const CartItem = ({ item }: PropTypes) => {
         <div className="flex flex-col justify-between items-end">
           {/* Counter */}
           <div className="flex items-center space-x-2">
-            <Button isIconOnly variant="bordered" size="sm" onPress={() => {}}>
+            <Button
+              isIconOnly
+              variant="bordered"
+              size="sm"
+              disabled={isPendingDecreaseQuantity}
+              isLoading={isPendingDecreaseQuantity}
+              onPress={() => mutateDecreaseQuantity({ itemId: item?.id })}
+            >
               <FaMinus className="w-3 h-3" />
             </Button>
             <span className="text-sm font-medium w-8 text-center">
               {item?.quantity}
             </span>
-            <Button isIconOnly variant="bordered" size="sm" onPress={() => {}}>
+            <Button
+              isIconOnly
+              variant="bordered"
+              size="sm"
+              disabled={isPendingIncreaseQuantity}
+              isLoading={isPendingIncreaseQuantity}
+              onPress={() => mutateIncreaseQuantity({ itemId: item?.id })}
+            >
               <FaPlus className="w-3 h-3" />
             </Button>
           </div>
@@ -50,7 +72,11 @@ const CartItem = ({ item }: PropTypes) => {
             isIconOnly
             size="md"
             variant="light"
-            disabled={isPendingDeleteItem}
+            disabled={
+              isPendingDeleteItem ||
+              isPendingIncreaseQuantity ||
+              isPendingDecreaseQuantity
+            }
             isLoading={isPendingDeleteItem}
             onPress={() => mutateDeleteItem({ itemId: item?.id })}
           >

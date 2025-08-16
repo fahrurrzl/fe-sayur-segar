@@ -91,6 +91,62 @@ const useCart = () => {
       },
     });
 
+  // increase quantity
+  const increaseService = async (itemId: string) => {
+    const res = await cartService.increaseQuantity(
+      itemId,
+      session?.user?.token as string
+    );
+    return res.data;
+  };
+
+  const {
+    mutate: mutateIncreaseQuantity,
+    isPending: isPendingIncreaseQuantity,
+  } = useMutation({
+    mutationFn: (variables: { itemId: string }) =>
+      increaseService(variables.itemId),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["carts"], exact: true });
+    },
+    onError: (error) => {
+      console.log(error);
+      addToast({
+        title: "Gagal",
+        description: "Jumlah produk gagal ditambahkan" + error,
+        color: "danger",
+      });
+    },
+  });
+
+  // decrese quantity
+  const decreaseService = async (itemId: string) => {
+    const res = await cartService.decreaseQuantity(
+      itemId,
+      session?.user?.token as string
+    );
+    return res.data;
+  };
+
+  const {
+    mutate: mutateDecreaseQuantity,
+    isPending: isPendingDecreaseQuantity,
+  } = useMutation({
+    mutationFn: (variables: { itemId: string }) =>
+      decreaseService(variables.itemId),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["carts"], exact: true });
+    },
+    onError: (error) => {
+      console.log(error);
+      addToast({
+        title: "Gagal",
+        description: "Jumlah produk gagal dikurangi" + error,
+        color: "danger",
+      });
+    },
+  });
+
   return {
     // mutate
     mutateAddToCart,
@@ -101,6 +157,12 @@ const useCart = () => {
     // mutate delete item
     mutateDeleteItem,
     isPendingDeleteItem,
+    // mutate increase quantity
+    mutateIncreaseQuantity,
+    isPendingIncreaseQuantity,
+    // mutate decrease quantity
+    mutateDecreaseQuantity,
+    isPendingDecreaseQuantity,
   };
 };
 

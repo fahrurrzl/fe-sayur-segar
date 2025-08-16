@@ -6,6 +6,7 @@ import { FiEdit, FiTrash } from "react-icons/fi";
 import Image from "next/image";
 import { rupiahFormat } from "@/utils/rupiahFormat";
 import { Button } from "@heroui/button";
+import Link from "next/link";
 
 export const renderCell = (
   product: Record<string, unknown>,
@@ -35,6 +36,8 @@ export const renderCell = (
               variant="light"
               color="primary"
               className="text-lg cursor-pointer active:opacity-50"
+              as={Link}
+              href={`/dashboard/product/edit/${product.id}`}
             >
               <FiEdit />
             </Button>
