@@ -18,7 +18,7 @@ const Dashboard = () => {
         />
       ) : (
         <div>
-          <h1>Dashboard</h1>
+          <h1>Welcome back, {dataUser?.name}</h1>
         </div>
       )}
     </div>
