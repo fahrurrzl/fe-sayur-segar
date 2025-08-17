@@ -39,7 +39,7 @@ const useSeller = () => {
   } = useMutation({
     mutationFn: createSellerService,
     onSuccess: ({ data }) => {
-      router.push(`/dashboard`);
+      router.push(`/dashboard/store-info`);
       addToast({
         title: "Berhasil",
         description: `Lapak ${data?.storeName} berhasil dibuat`,

@@ -29,12 +29,12 @@ const DashboardNavbar = () => {
   const pathname = usePathname();
   const { dataUser } = useProfile();
   const isSellerVerified =
-    dataUser?.Seller[0].verified || dataUser?.Seller[0].length > 0;
+    dataUser?.Seller[0]?.verified && dataUser?.Seller?.length;
 
   return (
     <nav className="flex-1 p-4">
       <div className="space-y-2">
-        {isSellerVerified &&
+        {isSellerVerified ? (
           menuItems.map((item) => {
             const isActive = pathname === item.href;
             const IconComponent = item.icon;
@@ -61,7 +61,20 @@ const DashboardNavbar = () => {
                 {item.name}
               </Button>
             );
-          })}
+          })
+        ) : (
+          // button navigation store info
+          <Button
+            as={Link}
+            href="/dashboard/store-info"
+            variant="flat"
+            color="default"
+            className={`w-full justify-start h-12`}
+            startContent={<MdStore className={`w-5 h-5`} />}
+          >
+            Info Lapak
+          </Button>
+        )}
       </div>
     </nav>
   );
