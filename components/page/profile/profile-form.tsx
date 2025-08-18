@@ -14,7 +14,7 @@ import { useRouter } from "next/navigation";
 import { FaUser } from "react-icons/fa";
 import { FiMail, FiPhone } from "react-icons/fi";
 
-const Profile = () => {
+const ProfileForm = () => {
   const router = useRouter();
   const { dataUser } = useProfile();
 
@@ -238,4 +238,4 @@ const Profile = () => {
   );
 };
 
-export default Profile;
+export default ProfileForm;

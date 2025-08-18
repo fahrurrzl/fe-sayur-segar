@@ -9,6 +9,12 @@ export default {
         Authorization: `Bearer ${token}`,
       },
     }),
+  update: (payload: TSeller, token: string) =>
+    instance.put(endpoint.SELLER, payload, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }),
   me: (token: string) =>
     instance.get(`${endpoint.SELLER}/me`, {
       headers: {

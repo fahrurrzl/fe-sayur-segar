@@ -11,6 +11,8 @@ import { FiCamera, FiSettings, FiShield, FiUser } from "react-icons/fi";
 const ProfileLayout = ({ children }: { children: React.ReactNode }) => {
   const { dataUser } = useProfile();
   const router = useRouter();
+  const isSellerVerified =
+    dataUser?.Seller[0]?.verified && dataUser?.Seller?.length;
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-emerald-50 via-white to-emerald-50">
@@ -24,29 +26,20 @@ const ProfileLayout = ({ children }: { children: React.ReactNode }) => {
           {/* Profile Photo Section */}
           <div className="lg:col-span-1">
             <Card className="shadow-lg">
-              <Tooltip
-                content={
-                  dataUser?.Seller[0]?.verified
-                    ? "Lapak Saya"
-                    : "Lapak kamu belum terverifikasi"
+              <button
+                className="bg-success text-white w-fit mb-4 py-2 pl-4 pr-8 rounded-r-full flex items-center gap-2 cursor-pointer hover:bg-success-600 transition-colors group disabled:opacity-50 disabled:cursor-not-allowed"
+                onClick={() =>
+                  dataUser?.Seller.length > 0
+                    ? isSellerVerified
+                      ? router.push("/dashboard")
+                      : router.push("/dashboard/store-info")
+                    : router.push("/profile/seller")
                 }
               >
-                <button
-                  className="bg-success text-white w-fit mb-4 py-2 pl-4 pr-8 rounded-r-full flex items-center gap-2 cursor-pointer hover:bg-success-600 transition-colors group disabled:opacity-50 disabled:cursor-not-allowed"
-                  onClick={() =>
-                    dataUser?.Seller.length > 0
-                      ? router.push("/dashboard")
-                      : router.push("/profile/seller")
-                  }
-                  disabled={dataUser?.Seller[0]?.verified === false}
-                >
-                  <FaStore className="h-4 w-4" />
-                  {dataUser?.Seller.length > 0
-                    ? "Lapak Saya"
-                    : "Menjadi Penjual"}
-                  <FaAngleRight className="h-4 w-4 group-hover:translate-x-2 transition-transform" />
-                </button>
-              </Tooltip>
+                <FaStore className="h-4 w-4" />
+                {dataUser?.Seller.length > 0 ? "Lapak Saya" : "Menjadi Penjual"}
+                <FaAngleRight className="h-4 w-4 group-hover:translate-x-2 transition-transform" />
+              </button>
               <CardHeader className="flex flex-col items-center pb-6">
                 <div className="relative inline-block group">
                   <Avatar

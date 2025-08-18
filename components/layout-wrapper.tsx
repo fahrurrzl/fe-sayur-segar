@@ -21,6 +21,8 @@ export default function LayoutWrapper({
     "/dashboard/product",
     "/dashboard/product/create",
     `/dashboard/product/edit/${id}`,
+    "/dashboard/store-info",
+    `/dashboard/store-info/edit/${id}`,
   ];
 
   const pathname = usePathname();

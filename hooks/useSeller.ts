@@ -19,6 +19,7 @@ const useSeller = () => {
     control,
     handleSubmit,
     formState: { errors },
+    setValue,
   } = useForm({
     resolver: zodResolver(sellerSchema),
   });
@@ -39,7 +40,7 @@ const useSeller = () => {
   } = useMutation({
     mutationFn: createSellerService,
     onSuccess: ({ data }) => {
-      router.push(`/dashboard`);
+      router.push(`/dashboard/store-info`);
       addToast({
         title: "Berhasil",
         description: `Lapak ${data?.storeName} berhasil dibuat`,
@@ -70,15 +71,50 @@ const useSeller = () => {
     enabled: !!dataUser?.Seller?.length,
   });
 
+  // update
+  const updateSellerService = async (payload: TSeller) => {
+    const res = await sellerService.update(
+      payload,
+      session?.user?.token as string
+    );
+    return res.data;
+  };
+
+  const { mutate: mutateUpdateSeller, isPending: isPendingUpdateSeller } =
+    useMutation({
+      mutationFn: updateSellerService,
+      onSuccess: () => {
+        router.push(`/dashboard/store-info`);
+        addToast({
+          title: "Berhasil",
+          description: `Lapak berhasil diubah`,
+          color: "success",
+        });
+      },
+      onError: (error) => {
+        console.log(error);
+        addToast({
+          title: "Gagal",
+          description: "Lapak gagal diubah",
+          color: "danger",
+        });
+      },
+    });
+
+  const handleUpdateStore = (payload: TSeller) => mutateUpdateSeller(payload);
+
   return {
     // form
     control,
     handleSubmit,
+    setValue,
     errors,
     // mutation
     handleCreateSeller,
     isPendingCreateSeller,
     isErrorCreateSeller,
+    handleUpdateStore,
+    isPendingUpdateSeller,
     // show
     dataSeller,
     isLoadingSeller,

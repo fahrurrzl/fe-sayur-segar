@@ -9,10 +9,12 @@ import {
   Checkbox,
   Input,
   Textarea,
+  useDisclosure,
 } from "@heroui/react";
 import Link from "next/link";
 import { Controller } from "react-hook-form";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
+import ModalTerms from "./modal-terms";
 
 const Register = () => {
   const {
@@ -30,6 +32,7 @@ const Register = () => {
     handleSubmit,
     errors,
   } = useRegister();
+  const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
   return (
     <div className="flex justify-center w-full p-4">
@@ -211,12 +214,16 @@ const Register = () => {
               />
               <label htmlFor="terms" className="text-sm">
                 Saya setuju dengan{" "}
-                <Link href="/terms" className="text-primary hover:underline">
+                <button
+                  type="button"
+                  onClick={onOpenChange}
+                  className="text-primary hover:underline cursor-pointer"
+                >
                   syarat dan ketentuan
-                </Link>
+                </button>
               </label>
             </div>
-
+            <ModalTerms isOpen={isOpen} onOpenChange={onOpenChange} />
             <Button
               isLoading={isPendingRegister}
               type="submit"

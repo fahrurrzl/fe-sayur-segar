@@ -47,9 +47,7 @@ export const Navbar = () => {
             />
             <div>
               <p className="font-bold text-inherit">SayurSegar</p>
-              <p className="text-xs text-default-500">
-                Sayur Segar dari Petani
-              </p>
+              <p className="text-xs text-default-500">Langsung dari petani</p>
             </div>
           </NextLink>
         </NavbarBrand>

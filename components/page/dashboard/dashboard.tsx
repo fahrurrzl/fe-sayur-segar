@@ -2,11 +2,20 @@
 
 import useProfile from "@/hooks/useProfile";
 import { Alert } from "@heroui/react";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 
 const Dashboard = () => {
   const { dataUser } = useProfile();
+  const router = useRouter();
   const isSellerVerified =
-    dataUser?.Seller[0].verified || dataUser?.Seller[0].length > 0;
+    dataUser?.Seller[0]?.verified && dataUser?.Seller?.length;
+
+  useEffect(() => {
+    if (!dataUser?.Seller?.length) {
+      router.push("/profile");
+    }
+  }, [dataUser]);
 
   return (
     <div className="p-4">
@@ -18,7 +27,7 @@ const Dashboard = () => {
         />
       ) : (
         <div>
-          <h1>Dashboard</h1>
+          <h1>Welcome back, {dataUser?.name}</h1>
         </div>
       )}
     </div>
