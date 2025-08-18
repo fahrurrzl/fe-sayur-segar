@@ -69,7 +69,7 @@ const StoreInfo = () => {
       <Card>
         <CardBody className="grid md:grid-cols-2 grid-cols-1 p-6 gap-8">
           {/* Left Column */}
-          <div className="space-y-8">
+          <div className="space-y-4">
             {/* Nama Lapak */}
             <div className="bg-success/10 p-4 rounded-md flex items-center gap-4">
               <div className="p-2 rounded-sm bg-success w-16 h-16 flex items-center justify-center text-white">
@@ -102,15 +102,26 @@ const StoreInfo = () => {
               </div>
             </div>
 
-            <div className="flex items-start space-x-3">
+            <div className="flex items-start space-x-3 p-2 bg-foreground-200/40 rounded-md">
               <FiPhone className="w-5 h-5 text-gray-400 mt-0.5" />
               <div>
                 <p className="text-sm font-medium text-gray-900">Telepon</p>
                 <p className="text-sm text-gray-600">{dataUser?.phone}</p>
               </div>
+              <Button
+                isIconOnly
+                variant="bordered"
+                color="primary"
+                size="sm"
+                as={Link}
+                href="/profile"
+                className="ml-auto"
+              >
+                <FiEdit />
+              </Button>
             </div>
 
-            <div className="flex items-start space-x-3">
+            <div className="flex items-start space-x-3 p-2 bg-foreground-200/40 rounded-md">
               <FiMail className="w-5 h-5 text-gray-400 mt-0.5" />
               <div>
                 <p className="text-sm font-medium text-gray-900">Email</p>

@@ -75,3 +75,10 @@ export type TCartItem = {
   quantity: number;
   updatedAt: string; // ISO date string
 };
+
+export type TUpdateUser = {
+  name: string;
+  email: string;
+  address: string;
+  phone: string;
+};

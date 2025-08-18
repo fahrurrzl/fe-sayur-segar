@@ -11,12 +11,31 @@ import {
   Textarea,
 } from "@heroui/react";
 import { useRouter } from "next/navigation";
+import { useEffect } from "react";
+import { Controller } from "react-hook-form";
 import { FaUser } from "react-icons/fa";
 import { FiMail, FiPhone } from "react-icons/fi";
 
 const ProfileForm = () => {
   const router = useRouter();
-  const { dataUser } = useProfile();
+  const {
+    dataUser,
+    isPendingUpdateUser,
+    handleSubmit,
+    handleUpdateUser,
+    control,
+    errors,
+    setValue,
+  } = useProfile();
+
+  useEffect(() => {
+    if (dataUser) {
+      setValue("name", dataUser?.name || "");
+      setValue("email", dataUser?.email || "");
+      setValue("address", dataUser?.address || "");
+      setValue("phone", dataUser?.phone || "");
+    }
+  }, [dataUser]);
 
   return (
     <div className="lg:col-span-2">
@@ -32,7 +51,7 @@ const ProfileForm = () => {
         </CardHeader>
 
         <CardBody>
-          <form onSubmit={() => {}} className="space-y-8">
+          <form onSubmit={handleSubmit(handleUpdateUser)} className="space-y-8">
             {/* Basic Information */}
             <div className="space-y-6">
               <div>
@@ -41,16 +60,21 @@ const ProfileForm = () => {
                 </h3>
                 <div className="grid grid-cols-1 gap-6">
                   <Skeleton className="rounded-lg" isLoaded={!!dataUser}>
-                    <Input
+                    <Controller
                       name="name"
-                      onChange={() => {}}
-                      label="Nama Lengkap"
-                      placeholder="Masukkan nama lengkap"
-                      value={dataUser?.name ?? ""}
-                      startContent={
-                        <FaUser className="h-4 w-4 text-gray-400" />
-                      }
-                      isRequired
+                      control={control}
+                      render={({ field }) => (
+                        <Input
+                          {...field}
+                          label="Nama Lengkap"
+                          placeholder="Masukkan nama lengkap"
+                          variant="bordered"
+                          startContent={
+                            <FaUser className="h-4 w-4 text-gray-400" />
+                          }
+                          isRequired
+                        />
+                      )}
                     />
                   </Skeleton>
                 </div>
@@ -63,42 +87,55 @@ const ProfileForm = () => {
                 </h3>
                 <div className="space-y-4">
                   <Skeleton className="rounded-lg" isLoaded={!!dataUser}>
-                    <Input
+                    <Controller
                       name="email"
-                      type="email"
-                      onChange={() => {}}
-                      label="Alamat Email"
-                      placeholder="Masukkan alamat email"
-                      value={dataUser?.email ?? ""}
-                      startContent={
-                        <FiMail className="h-4 w-4 text-gray-400" />
-                      }
-                      isRequired
+                      control={control}
+                      render={({ field }) => (
+                        <Input
+                          {...field}
+                          label="Alamat Email"
+                          placeholder="Masukkan alamat email"
+                          disabled
+                          startContent={
+                            <FiMail className="h-4 w-4 text-gray-400" />
+                          }
+                          isRequired
+                        />
+                      )}
                     />
                   </Skeleton>
 
                   <Skeleton className="rounded-lg" isLoaded={!!dataUser}>
-                    <Input
+                    <Controller
                       name="phone"
-                      type="tel"
-                      onChange={() => {}}
-                      label="Nomor Telepon"
-                      placeholder="Masukkan nomor telepon"
-                      value={dataUser?.phone ?? ""}
-                      startContent={
-                        <FiPhone className="h-4 w-4 text-gray-400" />
-                      }
+                      control={control}
+                      render={({ field }) => (
+                        <Input
+                          {...field}
+                          label="Nomor Telepon"
+                          placeholder="Masukkan nomor telepon"
+                          variant="bordered"
+                          startContent={
+                            <FiPhone className="h-4 w-4 text-gray-400" />
+                          }
+                        />
+                      )}
                     />
                   </Skeleton>
 
                   <Skeleton className="rounded-lg" isLoaded={!!dataUser}>
-                    <Textarea
+                    <Controller
                       name="address"
-                      onChange={() => {}}
-                      label="Alamat Lengkap"
-                      placeholder="Masukkan alamat lengkap"
-                      minRows={3}
-                      value={dataUser?.address ?? ""}
+                      control={control}
+                      render={({ field }) => (
+                        <Textarea
+                          {...field}
+                          label="Alamat Lengkap"
+                          placeholder="Masukkan alamat lengkap"
+                          minRows={3}
+                          variant="bordered"
+                        />
+                      )}
                     />
                   </Skeleton>
                 </div>
@@ -227,6 +264,8 @@ const ProfileForm = () => {
                 type="submit"
                 color="success"
                 className="flex-1 text-white"
+                isLoading={isPendingUpdateUser}
+                disabled={isPendingUpdateUser}
               >
                 Simpan Perubahan
               </Button>
