@@ -3,6 +3,7 @@
 import useProfile from "@/hooks/useProfile";
 import { Button } from "@heroui/button";
 import { Alert, Card, CardBody, Spinner } from "@heroui/react";
+import Link from "next/link";
 import { FaStore } from "react-icons/fa";
 import {
   FiCreditCard,
@@ -47,7 +48,12 @@ const StoreInfo = () => {
             </p>
           </div>
           <div>
-            <Button color="success" className="text-white">
+            <Button
+              color="success"
+              className="text-white"
+              as={Link}
+              href={`/dashboard/store-info/edit/${dataUser?.Seller[0].id}`}
+            >
               <FiEdit />
               Edit Info
             </Button>

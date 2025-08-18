@@ -1,3 +1,3 @@
-import Edit from "./page";
+import ProductEdit from "./product-edit";
 
-export default Edit;
+export default ProductEdit;

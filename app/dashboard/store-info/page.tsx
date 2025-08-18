@@ -1,4 +1,4 @@
-import StoreInfo from "@/components/page/dashboard/store-info/StoreInfo";
+import StoreInfo from "@/components/page/dashboard/store-info";
 
 const StoreInfoPage = () => {
   return <StoreInfo />;
