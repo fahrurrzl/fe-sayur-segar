@@ -20,7 +20,7 @@ const CartItem = ({ item }: PropTypes) => {
   } = useCart();
 
   return (
-    <Card radius="sm" shadow="sm">
+    <Card radius="sm" shadow="sm" className="w-full">
       <CardBody className="flex gap-3 justify-between flex-row">
         <div className="flex gap-2 items-center">
           <Image

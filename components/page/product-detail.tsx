@@ -29,7 +29,7 @@ const ProductDetail = ({ product }: { product: TProduct }) => {
   const { mutateAddToCart, isPendingAddToCart } = useCart();
 
   return (
-    <main className="container mx-auto px-4 py-8">
+    <div className="container mx-auto px-4 py-8">
       {/* Back button */}
       <Button
         variant="light"
@@ -106,33 +106,38 @@ const ProductDetail = ({ product }: { product: TProduct }) => {
                 </span>
               )}
             </div>
+            <p className="text-foreground-500">Stok: {stock}</p>
           </div>
 
           {/* Add to Cart */}
-          <Button
-            className="w-full text-white"
-            size="lg"
-            color="success"
-            startContent={
-              isPendingAddToCart ? (
-                <Spinner size="sm" color="white" />
-              ) : (
-                <FiShoppingCart className="w-5 h-5" />
-              )
-            }
-            disabled={isPendingAddToCart}
-            onPress={() =>
-              mutateAddToCart({
-                payload: {
-                  productId: product.id,
-                  quantity: 1,
-                  price: product.price,
-                },
-              })
-            }
-          >
-            Tambah ke Keranjang
-          </Button>
+          {stock > 0 ? (
+            <Button
+              className="w-full text-white"
+              size="lg"
+              color="success"
+              startContent={
+                isPendingAddToCart ? (
+                  <Spinner size="sm" color="white" />
+                ) : (
+                  <FiShoppingCart className="w-5 h-5" />
+                )
+              }
+              disabled={isPendingAddToCart}
+              onPress={() =>
+                mutateAddToCart({
+                  payload: {
+                    productId: product.id,
+                    quantity: 1,
+                    price: product.price,
+                  },
+                })
+              }
+            >
+              Tambah ke Keranjang
+            </Button>
+          ) : (
+            <p>Stock habbis</p>
+          )}
 
           {/* Features */}
           <div className="grid grid-cols-3 gap-4 pt-6">
@@ -223,7 +228,7 @@ const ProductDetail = ({ product }: { product: TProduct }) => {
           </Card>
         </div>
       </div>
-    </main>
+    </div>
   );
 };
 

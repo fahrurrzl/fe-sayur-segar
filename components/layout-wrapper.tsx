@@ -30,10 +30,11 @@ export default function LayoutWrapper({
 
   return (
     <>
-      {!hideLayout && <Navbar />}
-      <main className="flex-grow">{children}</main>
-      {!hideLayout && <Footer />}
-      <ScrollToTop />
+      <main className="flex-grow">
+        {!hideLayout && <Navbar />}
+        {children}
+        {!hideLayout && <Footer />}
+      </main>
     </>
   );
 }

@@ -5,7 +5,7 @@ import React from "react";
 import { FiArrowLeft } from "react-icons/fi";
 import { useRouter } from "next/navigation";
 
-const ProfileHeader = ({
+const PageHeader = ({
   title,
   description,
 }: {
@@ -38,4 +38,4 @@ const ProfileHeader = ({
   );
 };
 
-export default ProfileHeader;
+export default PageHeader;
