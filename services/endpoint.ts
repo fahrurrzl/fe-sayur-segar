@@ -5,4 +5,5 @@ export default {
   MEDIA: "/media",
   PRODUCT: "/product",
   CART: "/cart",
+  ORDER: "/order",
 };

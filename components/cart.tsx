@@ -9,6 +9,8 @@ import { Badge, Button, Divider } from "@heroui/react";
 import { MdOutlineShoppingCart } from "react-icons/md";
 import CartItem from "./cart-item";
 import { rupiahFormat } from "@/utils/rupiahFormat";
+import { useRouter } from "next/navigation";
+import useProfile from "@/hooks/useProfile";
 
 interface PropTypes {
   isOpen: boolean;
@@ -17,9 +19,11 @@ interface PropTypes {
 }
 
 const Cart = ({ isOpen, onOpenChange, items }: PropTypes) => {
+  const router = useRouter();
+  const { dataUser } = useProfile();
   const subTotal = items?.reduce((total, item) => total + item.price, 0);
-  const ongkir = 5000;
-  const total = subTotal + ongkir;
+  // const ongkir = 5000;
+  const total = subTotal;
 
   return (
     <Drawer isOpen={isOpen} onOpenChange={onOpenChange} size="xl">
@@ -56,10 +60,10 @@ const Cart = ({ isOpen, onOpenChange, items }: PropTypes) => {
                     <p className="text-slate-600">Subtotal</p>
                     <p className="text-slate-600">{rupiahFormat(subTotal)}</p>
                   </div>
-                  <div className="flex justify-between items-center mt-2">
+                  {/* <div className="flex justify-between items-center mt-2">
                     <p className="text-slate-600">Ongkos Kirim</p>
                     <p className="text-slate-600">{rupiahFormat(ongkir)}</p>
-                  </div>
+                  </div> */}
 
                   <Divider />
                   <div className="flex justify-between items-center mt-2">
@@ -80,7 +84,10 @@ const Cart = ({ isOpen, onOpenChange, items }: PropTypes) => {
                 <Button
                   color="success"
                   className="w-full text-white"
-                  onPress={onClose}
+                  onPress={() => {
+                    router.push(`/checkout/${dataUser?.id}`);
+                    onClose();
+                  }}
                 >
                   Lanjut ke Pembayaran
                 </Button>

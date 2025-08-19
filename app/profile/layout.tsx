@@ -1,6 +1,6 @@
 "use client";
 
-import ProfileHeader from "@/components/page/profile/profile-header";
+import PageHeader from "@/components/page/profile/page-header";
 import useProfile from "@/hooks/useProfile";
 import { Button } from "@heroui/button";
 import { Avatar, Card, CardBody, CardHeader, Tooltip } from "@heroui/react";
@@ -16,7 +16,7 @@ const ProfileLayout = ({ children }: { children: React.ReactNode }) => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-emerald-50 via-white to-emerald-50">
-      <ProfileHeader
+      <PageHeader
         title="Profile Saya"
         description="Kelola profil Anda di sini"
       />

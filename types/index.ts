@@ -82,3 +82,7 @@ export type TUpdateUser = {
   address: string;
   phone: string;
 };
+
+export type TOrderInput = {
+  address: string;
+};
