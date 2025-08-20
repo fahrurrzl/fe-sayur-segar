@@ -62,10 +62,24 @@ const useOrder = () => {
     return res.data;
   };
 
-  const { data: orderUser, isLoading: isLoadingOrderUser } = useQuery({
+  const { data: dataOrderUser, isLoading: isLoadingDataOrderUser } = useQuery({
     queryKey: ["order-user"],
     queryFn: getOrderUserService,
   });
+
+  // get order seller
+  const getOrderSellerService = async () => {
+    const res = await orderService.getOrderSeller(
+      session?.user?.token as string
+    );
+    return res.data;
+  };
+
+  const { data: dataOrderSeller, isLoading: isLoadingDataOrderSeller } =
+    useQuery({
+      queryKey: ["order-seller"],
+      queryFn: getOrderSellerService,
+    });
 
   return {
     // form
@@ -77,8 +91,11 @@ const useOrder = () => {
     handleCreateOrder,
     isPendingCreateOrder,
     // get order user
-    orderUser,
-    isLoadingOrderUser,
+    dataOrderUser,
+    isLoadingDataOrderUser,
+    // get order seller
+    dataOrderSeller,
+    isLoadingDataOrderSeller,
   };
 };
 

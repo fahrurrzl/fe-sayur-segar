@@ -1,17 +1,16 @@
 "use client";
 
 import DataTable from "@/components/data-table";
-import useOrder from "@/hooks/useOrder";
-import { rupiahFormat } from "@/utils/rupiahFormat";
-import { Badge, Button, Chip, Tooltip } from "@heroui/react";
-import { Key, useCallback } from "react";
 import { columns } from "./columns";
+import useOrder from "@/hooks/useOrder";
+import { Key, useCallback } from "react";
+import { rupiahFormat } from "@/utils/rupiahFormat";
+import { Button, Chip } from "@heroui/react";
 import { FiEye } from "react-icons/fi";
 import { formatDate } from "@/utils/dateFormat";
 
-const OrderUser = () => {
-  const { dataOrderUser, isLoadingDataOrderUser } = useOrder();
-  console.log(dataOrderUser);
+const OrderSeller = () => {
+  const { dataOrderSeller, isLoadingDataOrderSeller } = useOrder();
 
   const renderCell = useCallback(
     (product: Record<string, unknown>, columnKey: Key) => {
@@ -20,14 +19,17 @@ const OrderUser = () => {
       switch (columnKey) {
         case "orderId":
           return <p className="font-medium">{cellValue as string}</p>;
-        case "seller":
+        case "user":
           return (
             <div>
               <p className="font-semibold">
-                {(cellValue as { storeName: string })?.storeName}
+                {(cellValue as { name: string })?.name}
               </p>
               <p className="text-foreground-500 text-sm">
-                {(cellValue as { storeLocation: string })?.storeLocation}
+                {(cellValue as { email: string })?.email}
+              </p>
+              <p className="text-foreground-500 text-sm">
+                {(cellValue as { phone: string })?.phone}
               </p>
             </div>
           );
@@ -69,18 +71,15 @@ const OrderUser = () => {
   );
 
   return (
-    <>
-      <DataTable
-        columns={columns}
-        title="Order Saya"
-        description="Kelola order Anda"
-        renderCell={renderCell as any}
-        data={dataOrderUser?.data || []}
-        isLoading={isLoadingDataOrderUser}
-        emptyContent="Belum ada order yang dibuat"
-      />
-    </>
+    <DataTable
+      columns={columns}
+      data={dataOrderSeller?.data || []}
+      isLoading={isLoadingDataOrderSeller}
+      title="Kelola Pesanan"
+      description="Kelola pesanan lapak Anda"
+      renderCell={renderCell as any}
+    />
   );
 };
 
-export default OrderUser;
+export default OrderSeller;
