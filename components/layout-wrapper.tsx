@@ -23,6 +23,7 @@ export default function LayoutWrapper({
     `/dashboard/product/edit/${id}`,
     "/dashboard/store-info",
     `/dashboard/store-info/edit/${id}`,
+    "/dashboard/my-order",
   ];
 
   const pathname = usePathname();

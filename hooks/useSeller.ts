@@ -8,6 +8,7 @@ import { useSession } from "next-auth/react";
 import useProfile from "./useProfile";
 import { addToast } from "@heroui/react";
 import { useRouter } from "next/navigation";
+import walletService from "@/services/wallet.service";
 
 const useSeller = () => {
   const router = useRouter();
@@ -33,6 +34,19 @@ const useSeller = () => {
     return res.data;
   };
 
+  // create wallet
+  const createWalletService = async () => {
+    const res = await walletService.create(session?.user?.token as string);
+    return res.data;
+  };
+
+  const { mutate: mutateCreateWallet } = useMutation({
+    mutationFn: createWalletService,
+    onError: (error) => {
+      console.log(error);
+    },
+  });
+
   const {
     mutate: mutateCreateSeller,
     isPending: isPendingCreateSeller,
@@ -40,12 +54,13 @@ const useSeller = () => {
   } = useMutation({
     mutationFn: createSellerService,
     onSuccess: ({ data }) => {
-      router.push(`/dashboard/store-info`);
+      mutateCreateWallet();
       addToast({
         title: "Berhasil",
         description: `Lapak ${data?.storeName} berhasil dibuat`,
         color: "success",
       });
+      router.push(`/dashboard/store-info`);
     },
     onError: (error) => {
       console.log(error);

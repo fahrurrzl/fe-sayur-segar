@@ -18,7 +18,8 @@ import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import { Controller } from "react-hook-form";
 import { FaArrowLeft, FaStore } from "react-icons/fa";
-import { FiCreditCard } from "react-icons/fi";
+import { FiCreditCard, FiMapPin } from "react-icons/fi";
+import { MdOutlineDescription } from "react-icons/md";
 
 const StoreForm = () => {
   const {
@@ -36,8 +37,7 @@ const StoreForm = () => {
     if (dataSeller) {
       setValue("storeName", dataSeller?.storeName || "");
       setValue("storeLocation", dataSeller?.storeLocation || "");
-      setValue("bankAccount", dataSeller?.bankAccount || "");
-      setValue("bankName", dataSeller?.bankName || "");
+      setValue("description", dataSeller?.description || "");
     }
   }, [dataSeller]);
 
@@ -77,6 +77,9 @@ const StoreForm = () => {
                         <Input
                           label="Nama Lapak"
                           variant="bordered"
+                          startContent={
+                            <FaStore className="h-4 w-4 text-gray-400" />
+                          }
                           {...field}
                           isInvalid={!!errors.storeName}
                         />
@@ -103,6 +106,9 @@ const StoreForm = () => {
                           {...field}
                           label="Lokasi Lapak"
                           variant="bordered"
+                          startContent={
+                            <FiMapPin className="h-4 w-4 text-gray-400" />
+                          }
                           isInvalid={!!errors.storeLocation}
                         />
                       )}
@@ -117,66 +123,28 @@ const StoreForm = () => {
 
                 <Skeleton
                   className="rounded-lg"
-                  isLoaded={!!dataSeller?.bankName}
+                  isLoaded={!!dataSeller?.description}
                 >
                   <div className="space-y-1">
                     <Controller
-                      name="bankName"
+                      name="description"
                       control={control}
                       render={({ field }) => (
-                        <Select
+                        <Textarea
                           {...field}
-                          selectedKeys={field.value ? [field.value] : []}
-                          variant="bordered"
-                          items={[
-                            { id: "BCA", name: "BCA - Bank Central Asia" },
-                            { id: "BNI", name: "BNI - Bank Negara Indonesia" },
-                            { id: "BRI", name: "BRI - Bank Rakyat Indonesia" },
-                          ]}
-                          label="Nama Bank"
-                          placeholder="Pilih Bank"
-                          isInvalid={!!errors.bankName}
-                        >
-                          {(category: { id: string; name: string }) => (
-                            <SelectItem key={category.id}>
-                              {category.name}
-                            </SelectItem>
-                          )}
-                        </Select>
-                      )}
-                    />
-                    {errors.bankName && (
-                      <p className="text-red-500 text-sm">
-                        {errors.bankName.message}
-                      </p>
-                    )}
-                  </div>
-                </Skeleton>
-
-                <Skeleton
-                  className="rounded-lg"
-                  isLoaded={!!dataSeller?.bankAccount}
-                >
-                  <div className="space-y-1">
-                    <Controller
-                      name="bankAccount"
-                      control={control}
-                      render={({ field }) => (
-                        <Input
-                          {...field}
-                          label="Nomor Rekening"
-                          placeholder="Masukkan nomor rekening"
+                          label="Deskripsi"
+                          placeholder="Masukkan deskripsi lapak Anda"
                           variant="bordered"
                           startContent={
-                            <FiCreditCard className="h-4 w-4 text-gray-400" />
+                            <MdOutlineDescription className="h-5 w-5 text-gray-400" />
                           }
-                          isInvalid={!!errors.bankAccount}
+                          isInvalid={!!errors.description}
                         />
                       )}
                     />
-                    {errors.bankAccount && (
+                    {errors.description && (
                       <p className="text-red-500 text-sm">
-                        {errors.bankAccount.message}
+                        {errors.description.message}
                       </p>
                     )}
                   </div>

@@ -6,4 +6,5 @@ export default {
   PRODUCT: "/product",
   CART: "/cart",
   ORDER: "/order",
+  WALLET: "/wallet",
 };
