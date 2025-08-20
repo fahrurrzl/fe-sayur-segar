@@ -9,19 +9,27 @@ import {
   CardBody,
   CardHeader,
   Divider,
+  RadioGroup,
   Skeleton,
   Textarea,
 } from "@heroui/react";
 import React, { useEffect } from "react";
-import { FiMapPin, FiShoppingCart } from "react-icons/fi";
+import {
+  FiCreditCard,
+  FiMapPin,
+  FiShoppingCart,
+  FiTruck,
+} from "react-icons/fi";
 import CartItem from "../cart-item";
 import { TCartItem } from "@/types";
 import { useRouter } from "next/navigation";
 import { FaCheck } from "react-icons/fa";
 import useOrder from "@/hooks/useOrder";
 import { Controller } from "react-hook-form";
+import { CustomRadio } from "../custom-radio";
+import PaymentMethodSelector from "../payment-method-selector";
 
-const Checkout = ({ id }: { id: string }) => {
+const Checkout = () => {
   const router = useRouter();
   const { dataUser } = useProfile();
   const { dataCarts, isLoadingCarts } = useCart();
@@ -48,13 +56,12 @@ const Checkout = ({ id }: { id: string }) => {
     }
   }, [dataUser]);
 
-  console.log(dataCarts?.data?.items?.length);
-
   return (
     <form onSubmit={handleSubmit(handleCreateOrder)}>
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Left */}
         <div className="col-span-2 space-y-4">
+          {/* Alamat */}
           <Card radius="sm" shadow="sm">
             <CardHeader>
               <FiMapPin className="w-5 h-5 text-success mr-2" />
@@ -72,6 +79,8 @@ const Checkout = ({ id }: { id: string }) => {
                         label="Alamat"
                         placeholder="Masukkan alamat"
                         variant="bordered"
+                        isInvalid={!!errors.address}
+                        errorMessage={errors.address?.message}
                       />
                     )}
                   />
@@ -80,6 +89,7 @@ const Checkout = ({ id }: { id: string }) => {
             </CardBody>
           </Card>
 
+          {/* Keranjang Belanja */}
           <Card radius="sm" shadow="sm">
             <CardHeader>
               <FiShoppingCart className="w-5 h-5 text-success mr-2" />
@@ -124,6 +134,61 @@ const Checkout = ({ id }: { id: string }) => {
               </div>
             </CardBody>
           </Card>
+
+          {/* Metode Pembayaran - Tidak diperlukan lagi */}
+          {/* <Card className="shadow-card">
+            <CardHeader>
+              <FiCreditCard className="w-5 h-5 text-success mr-2" />
+              <h2 className="text-xl lg:text-2xl font-semibold">
+                Metode Pembayaran
+              </h2>
+            </CardHeader>
+            <CardBody>
+              <Controller
+                name="sellerPaymentMethodId"
+                control={control}
+                render={({ field }) => {
+                  // ambil seller unik dari data cart
+                  const uniqueSellers = Array.from(
+                    new Map(
+                      dataCarts?.data?.items?.map((item: TCartItem) => [
+                        item.product.seller.id,
+                        item.product.seller,
+                      ])
+                    ).values()
+                  ) as TCartItem["product"]["seller"][];
+
+                  return (
+                    <RadioGroup
+                      value={field.value}
+                      onValueChange={field.onChange}
+                      isInvalid={!!errors.sellerPaymentMethodId}
+                      errorMessage={errors.sellerPaymentMethodId?.message}
+                    >
+                      {uniqueSellers?.map((seller) =>
+                        seller?.SellerPaymentMethod?.map((pm: any) => (
+                          <CustomRadio
+                            key={pm.id}
+                            value={pm.id}
+                            description={`Metode dari ${seller.storeName}`}
+                          >
+                            <div className="flex items-center gap-2">
+                              <p>
+                                {pm.accountName
+                                  ? `${pm.accountName} (${pm.accountNumber})`
+                                  : "COD / Transfer"}
+                              </p>
+                              <FiCreditCard className="w-5 h-5 text-success mr-2" />
+                            </div>
+                          </CustomRadio>
+                        ))
+                      )}
+                    </RadioGroup>
+                  );
+                }}
+              />
+            </CardBody>
+          </Card> */}
         </div>
 
         {/* Right */}
@@ -150,7 +215,7 @@ const Checkout = ({ id }: { id: string }) => {
                     {isLoadingCarts ? (
                       <Skeleton className="w-32 h-6 rounded-md" />
                     ) : (
-                      rupiahFormat(5000)
+                      rupiahFormat(20000)
                     )}
                   </span>
                 </div>

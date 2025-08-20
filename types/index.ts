@@ -23,8 +23,10 @@ export type TLogin = {
 export type TSeller = {
   storeName: string;
   storeLocation: string;
-  bankAccount: string;
+  description?: string;
   bankName: string;
+  accountName: string;
+  accountNumber: string;
 };
 
 export type TProductInput = {
@@ -46,6 +48,7 @@ export type TProduct = Omit<TProductInput, "imageUrl"> & {
     sellerId: string;
     storeLocation: string;
     storeName: string;
+    userId: string;
   };
 };
 
@@ -66,8 +69,14 @@ export type TCartItem = {
     imageUrl: string;
     name: string;
     seller: {
+      id?: string;
       storeLocation: string;
       storeName: string;
+      SellerPaymentMethod?: {
+        id: string;
+        paymentMethodId: string;
+        [key: string]: any;
+      }[];
     };
     stock: number;
   };

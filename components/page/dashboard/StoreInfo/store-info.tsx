@@ -12,7 +12,7 @@ import {
   FiMapPin,
   FiPhone,
 } from "react-icons/fi";
-import { MdVerified } from "react-icons/md";
+import { MdOutlineDescription, MdVerified } from "react-icons/md";
 
 const StoreInfo = () => {
   const { dataUser, isLoadingUser } = useProfile();
@@ -147,7 +147,7 @@ const StoreInfo = () => {
                 <div className="flex justify-between">
                   <span className="text-sm text-gray-600">No. Rekening:</span>
                   <span className="text-sm font-medium text-gray-900">
-                    {dataUser?.Seller[0]?.bankAccount}
+                    {dataUser?.Seller[0]?.accountNumber}
                   </span>
                 </div>
               </div>
@@ -155,12 +155,14 @@ const StoreInfo = () => {
 
             {/* Deskripsi Toko */}
             <div>
-              <h4 className="text-sm font-medium text-gray-900 mb-2">
-                Deskripsi Toko
-              </h4>
+              <div className="flex gap-2">
+                <MdOutlineDescription className="w-5 h-5 text-gray-400 mt-0.5" />
+                <h4 className="text-sm font-medium text-gray-900 mb-2">
+                  Deskripsi Toko
+                </h4>
+              </div>
               <p className="text-sm text-gray-600 leading-relaxed">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Voluptatibus, quod.
+                {dataUser?.Seller[0]?.description}
               </p>
             </div>
           </div>

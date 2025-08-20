@@ -12,6 +12,7 @@ import {
   Divider,
   Spinner,
 } from "@heroui/react";
+import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { FaShieldAlt } from "react-icons/fa";
 import {
@@ -24,6 +25,8 @@ import {
 } from "react-icons/fi";
 
 const ProductDetail = ({ product }: { product: TProduct }) => {
+  console.log(product);
+  const { data: session } = useSession();
   const { name, price, stock, imageUrl, seller, description } = product;
   const router = useRouter();
   const { mutateAddToCart, isPendingAddToCart } = useCart();
@@ -34,7 +37,7 @@ const ProductDetail = ({ product }: { product: TProduct }) => {
       <Button
         variant="light"
         className="mb-6"
-        onPress={() => router.push("/")}
+        onPress={() => router.back()}
         startContent={<FiArrowLeft className="w-4 h-4" />}
       >
         Kembali
@@ -106,11 +109,15 @@ const ProductDetail = ({ product }: { product: TProduct }) => {
                 </span>
               )}
             </div>
-            <p className="text-foreground-500">Stok: {stock}</p>
+            <p
+              className={`${stock > 0 ? "text-foreground-500" : "text-danger"}`}
+            >
+              Stok: {stock}
+            </p>
           </div>
 
           {/* Add to Cart */}
-          {stock > 0 ? (
+          {stock > 0 && seller?.userId !== session?.user.id ? (
             <Button
               className="w-full text-white"
               size="lg"
@@ -135,9 +142,7 @@ const ProductDetail = ({ product }: { product: TProduct }) => {
             >
               Tambah ke Keranjang
             </Button>
-          ) : (
-            <p>Stock habbis</p>
-          )}
+          ) : null}
 
           {/* Features */}
           <div className="grid grid-cols-3 gap-4 pt-6">

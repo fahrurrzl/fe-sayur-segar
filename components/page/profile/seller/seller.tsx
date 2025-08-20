@@ -10,11 +10,14 @@ import {
   CardHeader,
   Input,
   Skeleton,
+  Textarea,
 } from "@heroui/react";
 import { useRouter } from "next/navigation";
 import { Controller } from "react-hook-form";
-import { FaStore } from "react-icons/fa";
+import { BsBank, BsCreditCard } from "react-icons/bs";
+import { FaParagraph, FaStore } from "react-icons/fa";
 import { FiCreditCard, FiMapPin } from "react-icons/fi";
+import { MdOutlineDescription } from "react-icons/md";
 
 const Seller = () => {
   const router = useRouter();
@@ -46,10 +49,10 @@ const Seller = () => {
         <CardBody>
           <form
             onSubmit={handleSubmit(handleCreateSeller)}
-            className="space-y-8"
+            className="space-y-4"
           >
             {/* Basic Information */}
-            <div className="space-y-6">
+            <div className="space-y-4">
               <div>
                 <h3 className="text-lg font-semibold mb-4 text-gray-900">
                   Informasi Dasar
@@ -65,6 +68,7 @@ const Seller = () => {
                             {...field}
                             label="Nama Lapak"
                             placeholder="Masukkan nama lapak"
+                            variant="bordered"
                             startContent={
                               <FaStore className="h-4 w-4 text-gray-400" />
                             }
@@ -75,6 +79,32 @@ const Seller = () => {
                       {errors.storeName && (
                         <p className="text-danger text-xs">
                           {errors.storeName.message}
+                        </p>
+                      )}
+                    </div>
+                  </Skeleton>
+
+                  <Skeleton className="rounded-lg" isLoaded={!isLoadingSeller}>
+                    <div className="space-y-1">
+                      <Controller
+                        name="description"
+                        control={control}
+                        render={({ field }) => (
+                          <Textarea
+                            {...field}
+                            label="Deskripsi"
+                            placeholder="Masukkan deskripsi lapak Anda"
+                            variant="bordered"
+                            startContent={
+                              <MdOutlineDescription className="h-5 w-5 text-gray-400" />
+                            }
+                            isInvalid={!!errors.description}
+                          />
+                        )}
+                      />
+                      {errors.description && (
+                        <p className="text-danger text-xs">
+                          {errors.description.message}
                         </p>
                       )}
                     </div>
@@ -91,15 +121,42 @@ const Seller = () => {
                   <Skeleton className="rounded-lg" isLoaded={!isLoadingSeller}>
                     <div className="space-y-1">
                       <Controller
+                        name="storeLocation"
+                        control={control}
+                        render={({ field }) => (
+                          <Input
+                            {...field}
+                            label="Lokasi Lapak"
+                            variant="bordered"
+                            placeholder="Masukkan lokasi lapak"
+                            startContent={
+                              <FiMapPin className="h-4 w-4 text-gray-400" />
+                            }
+                            isInvalid={!!errors.storeLocation}
+                          />
+                        )}
+                      />
+                      {errors.storeLocation && (
+                        <p className="text-danger text-xs">
+                          {errors.storeLocation.message}
+                        </p>
+                      )}
+                    </div>
+                  </Skeleton>
+
+                  <Skeleton className="rounded-lg" isLoaded={!isLoadingSeller}>
+                    <div className="space-y-1">
+                      <Controller
                         name="bankName"
                         control={control}
                         render={({ field }) => (
                           <Input
                             {...field}
                             label="Nama Bank"
+                            variant="bordered"
                             placeholder="Masukkan nama bank"
                             startContent={
-                              <FiCreditCard className="h-4 w-4 text-gray-400" />
+                              <BsBank className="h-4 w-4 text-gray-400" />
                             }
                             isInvalid={!!errors.bankName}
                           />
@@ -116,23 +173,24 @@ const Seller = () => {
                   <Skeleton className="rounded-lg" isLoaded={!isLoadingSeller}>
                     <div className="space-y-1">
                       <Controller
-                        name="bankAccount"
+                        name="accountName"
                         control={control}
                         render={({ field }) => (
                           <Input
                             {...field}
-                            label="Nomor Rekening"
-                            placeholder="Masukkan nomor rekening"
+                            label="Nama Rekening"
+                            variant="bordered"
+                            placeholder="Masukkan nama rekening"
                             startContent={
-                              <FiCreditCard className="h-4 w-4 text-gray-400" />
+                              <BsCreditCard className="h-4 w-4 text-gray-400" />
                             }
-                            isInvalid={!!errors.bankAccount}
+                            isInvalid={!!errors.accountName}
                           />
                         )}
                       />
-                      {errors.bankAccount && (
+                      {errors.accountName && (
                         <p className="text-danger text-xs">
-                          {errors.bankAccount.message}
+                          {errors.accountName.message}
                         </p>
                       )}
                     </div>
@@ -141,23 +199,24 @@ const Seller = () => {
                   <Skeleton className="rounded-lg" isLoaded={!isLoadingSeller}>
                     <div className="space-y-1">
                       <Controller
-                        name="storeLocation"
+                        name="accountNumber"
                         control={control}
                         render={({ field }) => (
                           <Input
                             {...field}
-                            label="Lokasi Lapak"
-                            placeholder="Masukkan lokasi lapak"
+                            label="Nomor Rekening"
+                            variant="bordered"
+                            placeholder="Masukkan nomor rekening"
                             startContent={
-                              <FiMapPin className="h-4 w-4 text-gray-400" />
+                              <BsCreditCard className="h-4 w-4 text-gray-400" />
                             }
-                            isInvalid={!!errors.storeLocation}
+                            isInvalid={!!errors.accountNumber}
                           />
                         )}
                       />
-                      {errors.storeLocation && (
+                      {errors.accountNumber && (
                         <p className="text-danger text-xs">
-                          {errors.storeLocation.message}
+                          {errors.accountNumber.message}
                         </p>
                       )}
                     </div>

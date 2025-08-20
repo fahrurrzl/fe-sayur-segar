@@ -5,6 +5,8 @@ import { ThemeSwitch } from "@/components/theme-switch";
 import Image from "next/image";
 import { SearchIcon } from "./icons";
 import { MdOutlineShoppingCart } from "react-icons/md";
+import { siteConfig } from "@/config/site";
+import { clsx } from "clsx";
 
 import {
   Navbar as HeroUINavbar,
@@ -21,22 +23,26 @@ import {
   useDisclosure,
   Badge,
   Avatar,
+  NavbarMenu,
+  NavbarMenuItem,
 } from "@heroui/react";
+import { link as linkStyles } from "@heroui/theme";
 import Cart from "./cart";
 import { signOut, useSession } from "next-auth/react";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { FiLogIn, FiLogOut, FiUser } from "react-icons/fi";
 import useCart from "@/hooks/useCart";
 
 export const Navbar = () => {
   const router = useRouter();
+  const pathname = usePathname();
   const { data: session, status } = useSession();
   const { dataCarts } = useCart();
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
   return (
     <HeroUINavbar maxWidth="xl" isBlurred shouldHideOnScroll position="sticky">
-      <NavbarContent className="basis-1/5 sm:basis-full" justify="start">
+      <NavbarContent className="" justify="start">
         <NavbarBrand as="li" className="gap-3 max-w-fit">
           <NextLink className="flex justify-start items-center gap-2" href="/">
             <Image
@@ -51,28 +57,33 @@ export const Navbar = () => {
             </div>
           </NextLink>
         </NavbarBrand>
-        {/* <ul className="hidden lg:flex gap-4 justify-start ml-2">
-          {siteConfig.navItems.map((item) => (
-            <NavbarItem key={item.href}>
-              <NextLink
-                className={clsx(
-                  linkStyles({ color: "foreground" }),
-                  "data-[active=true]:text-primary data-[active=true]:font-medium"
-                )}
-                color="foreground"
-                href={item.href}
-              >
-                {item.label}
-              </NextLink>
-            </NavbarItem>
-          ))}
-        </ul> */}
+        <ul className="hidden lg:flex gap-4 justify-start ml-2">
+          {siteConfig.navItems
+            .filter((item) => {
+              // Hide Dashboard if user is not authenticated
+              if (item.href === "/dashboard" && status !== "authenticated") {
+                return false;
+              }
+              return true;
+            })
+            .map((item) => (
+              <NavbarItem key={item.href}>
+                <NextLink
+                  className={clsx(
+                    linkStyles({ color: "foreground" }),
+                    pathname === item.href && "text-success font-medium"
+                  )}
+                  color="foreground"
+                  href={item.href}
+                >
+                  {item.label}
+                </NextLink>
+              </NavbarItem>
+            ))}
+        </ul>
       </NavbarContent>
 
-      <NavbarContent
-        className="hidden sm:flex basis-1/5 sm:basis-full"
-        justify="end"
-      >
+      <NavbarContent className="hidden sm:flex" justify="end">
         <NavbarItem>
           <Input
             placeholder="Cari sayur segar..."
@@ -82,9 +93,9 @@ export const Navbar = () => {
           />
         </NavbarItem>
 
-        {/* <NavbarItem className="hidden sm:flex gap-2">
+        <NavbarItem className="hidden sm:flex gap-2">
           <ThemeSwitch />
-        </NavbarItem> */}
+        </NavbarItem>
 
         {status === "authenticated" ? (
           <NavbarItem>
@@ -121,7 +132,7 @@ export const Navbar = () => {
           </NavbarItem>
         ) : null}
 
-        <NavbarItem className="hidden md:flex">
+        <NavbarItem className="md:flex">
           {status === "authenticated" ? (
             <Dropdown placement="bottom-start" radius="sm">
               <DropdownTrigger>
@@ -174,7 +185,7 @@ export const Navbar = () => {
       </NavbarContent>
 
       {/* Mobile */}
-      <NavbarContent className="sm:hidden basis-1 pl-4" justify="end">
+      <NavbarContent className="sm:hidden flex pl-4" justify="end">
         {/* <NavbarItem>
           <ThemeSwitch />
         </NavbarItem> */}

@@ -3,11 +3,13 @@ import orderService from "@/services/order.service";
 import { TOrderInput } from "@/types";
 import { addToast } from "@heroui/react";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 
 const useOrder = () => {
+  const router = useRouter();
   const { data: session } = useSession();
   const {
     control,
@@ -39,8 +41,10 @@ const useOrder = () => {
           description: "Pesanan berhasil dibuat",
           color: "success",
         });
+        router.push("/dashboard/my-order");
       },
-      onError: () => {
+      onError: (error) => {
+        console.log(error);
         addToast({
           title: "Gagal",
           description: "Gagal membuat order",
@@ -52,6 +56,17 @@ const useOrder = () => {
   const handleCreateOrder = (payload: TOrderInput) =>
     mutateCreateOrder(payload);
 
+  // get order user
+  const getOrderUserService = async () => {
+    const res = await orderService.getOrderUser(session?.user?.token as string);
+    return res.data;
+  };
+
+  const { data: orderUser, isLoading: isLoadingOrderUser } = useQuery({
+    queryKey: ["order-user"],
+    queryFn: getOrderUserService,
+  });
+
   return {
     // form
     control,
@@ -61,6 +76,9 @@ const useOrder = () => {
     // create order
     handleCreateOrder,
     isPendingCreateOrder,
+    // get order user
+    orderUser,
+    isLoadingOrderUser,
   };
 };
 

@@ -55,7 +55,7 @@ const ProductCard = ({ product }: { product: TProductResponse }) => {
           <div className="flex items-center space-x-1 text-sm text-foreground-500">
             <FaMapPin className="w-3 h-3" />
             <span className="truncate">
-              {seller.storeName} • {seller.storeLocation}
+              {seller?.storeName} • {seller?.storeLocation}
             </span>
           </div>
 
