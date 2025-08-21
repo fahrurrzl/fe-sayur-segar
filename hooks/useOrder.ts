@@ -5,10 +5,12 @@ import { addToast } from "@heroui/react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { useSession } from "next-auth/react";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useForm } from "react-hook-form";
 
 const useOrder = () => {
+  const searchParams = useSearchParams();
+  const invoiceId = searchParams.get("invoiceId");
   const router = useRouter();
   const { data: session } = useSession();
   const {
@@ -77,6 +79,24 @@ const useOrder = () => {
       queryFn: getOrderSellerService,
     });
 
+  // get order by invoice id
+  const getOrderByInvoiceIdService = async (invoiceId: string) => {
+    const res = await orderService.getOrderByInvoiceId(
+      invoiceId,
+      session?.user?.token as string
+    );
+    return res.data;
+  };
+
+  const {
+    data: dataOrderByInvoiceId,
+    isLoading: isLoadingDataOrderByInvoiceId,
+  } = useQuery({
+    queryKey: ["order-by-invoice-id", invoiceId],
+    queryFn: () => getOrderByInvoiceIdService(invoiceId as string),
+    enabled: !!invoiceId,
+  });
+
   return {
     // form
     control,
@@ -92,6 +112,9 @@ const useOrder = () => {
     // get order seller
     dataOrderSeller,
     isLoadingDataOrderSeller,
+    // get order by invoice id
+    dataOrderByInvoiceId,
+    isLoadingDataOrderByInvoiceId,
   };
 };
 

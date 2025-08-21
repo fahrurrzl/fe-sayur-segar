@@ -21,4 +21,16 @@ export default {
         Authorization: `Bearer ${token}`,
       },
     }),
+  getOrderById: (id: string, token: string) =>
+    instance.get(`${endpoint.ORDER}/${id}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }),
+  getOrderByInvoiceId: (invoiceId: string, token: string) =>
+    instance.get(`${endpoint.ORDER}/invoice/${invoiceId}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }),
 };
