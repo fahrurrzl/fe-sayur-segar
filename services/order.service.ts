@@ -33,4 +33,22 @@ export default {
         Authorization: `Bearer ${token}`,
       },
     }),
+  isProcessing: (id: string, token: string) =>
+    instance.put(`${endpoint.ORDER}/process/${id}`, undefined, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }),
+  isDelivered: (id: string, token: string) =>
+    instance.put(`${endpoint.ORDER}/delivered/${id}`, undefined, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }),
+  isCompleted: (id: string, token: string) =>
+    instance.put(`${endpoint.ORDER}/completed/${id}`, undefined, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }),
 };

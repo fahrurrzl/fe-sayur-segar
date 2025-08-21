@@ -1,6 +1,4 @@
-import { productSchema } from "@/schemas/product.schema";
 import { SVGProps } from "react";
-import { z } from "zod";
 
 export type IconSvgProps = SVGProps<SVGSVGElement> & {
   size?: number;
@@ -95,3 +93,49 @@ export type TUpdateUser = {
 export type TOrderInput = {
   address: string;
 };
+
+export interface OrderResponse {
+  id: string;
+  orderId: string;
+  invoiceId: string;
+  paymentUrl: string;
+  payment_method: "BANK_TRANSFER" | "EWALLET" | "QRIS" | string;
+  status: "PENDING" | "PAID" | "FAILED" | "EXPIRED" | string;
+  totalPrice: number;
+  shippingFee: number;
+  address: string;
+  createdAt: string;
+  updatedAt: string;
+  sellerId: string;
+  userId: string;
+
+  items: OrderItem[];
+  seller: Seller;
+  user: User;
+}
+
+export interface OrderItem {
+  id: string;
+  quantity: number;
+  price: number;
+  product: {
+    name: string;
+    imageUrl: string;
+  };
+}
+
+export interface Seller {
+  id: string;
+  userId: string;
+  storeName: string;
+  storeLocation: string;
+  verified: boolean;
+  // kalau ada field lain tambahin di sini
+}
+
+export interface User {
+  id: string;
+  name: string;
+  email: string;
+  phone: string;
+}

@@ -6,7 +6,15 @@ import { rupiahFormat } from "@/utils/rupiahFormat";
 import { Badge, Button, Chip, Tooltip } from "@heroui/react";
 import { Key, useCallback } from "react";
 import { columns } from "./columns";
-import { FiEye } from "react-icons/fi";
+import {
+  FiBox,
+  FiCheck,
+  FiClock,
+  FiCreditCard,
+  FiEye,
+  FiTruck,
+  FiX,
+} from "react-icons/fi";
 import { formatDate } from "@/utils/dateFormat";
 
 const OrderUser = () => {
@@ -36,6 +44,21 @@ const OrderUser = () => {
         case "status":
           return (
             <Chip
+              startContent={
+                cellValue === "PENDING" ? (
+                  <FiClock />
+                ) : cellValue === "PAID" ? (
+                  <FiCreditCard />
+                ) : cellValue === "FAILED" ? (
+                  <FiX />
+                ) : cellValue === "PROCESSING" ? (
+                  <FiBox />
+                ) : cellValue === "DELIVERED" ? (
+                  <FiTruck />
+                ) : cellValue === "COMPLETED" ? (
+                  <FiCheck />
+                ) : null
+              }
               variant="bordered"
               size="sm"
               color={
@@ -43,14 +66,23 @@ const OrderUser = () => {
                   ? "warning"
                   : cellValue === "PAID"
                     ? "success"
-                    : cellValue === "COMPLETED"
-                      ? "default"
-                      : cellValue === "SHIPPED"
-                        ? "primary"
-                        : "danger"
+                    : cellValue === "FAILED"
+                      ? "danger"
+                      : cellValue == "PROCESSING"
+                        ? "secondary"
+                        : cellValue == "DELIVERED"
+                          ? "primary"
+                          : cellValue === "COMPLETED"
+                            ? "default"
+                            : "danger"
               }
             >
-              {`${cellValue}`.toLowerCase()}
+              {cellValue === "PENDING" && "Pending"}
+              {cellValue === "PAID" && "Dibayar"}
+              {cellValue === "FAILED" && "Gagal"}
+              {cellValue === "PROCESSING" && "Diproses"}
+              {cellValue === "DELIVERED" && "Dikirim"}
+              {cellValue === "COMPLETED" && "Diterima"}
             </Chip>
           );
         case "createdAt":
