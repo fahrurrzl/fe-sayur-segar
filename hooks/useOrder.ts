@@ -35,13 +35,9 @@ const useOrder = () => {
   const { mutate: mutateCreateOrder, isPending: isPendingCreateOrder } =
     useMutation({
       mutationFn: createOrderService,
-      onSuccess: () => {
-        addToast({
-          title: "Success",
-          description: "Pesanan berhasil dibuat",
-          color: "success",
-        });
-        router.push("/dashboard/my-order");
+      onSuccess: (order) => {
+        const paymentUrl = order?.data[0].paymentUrl;
+        router.push(paymentUrl);
       },
       onError: (error) => {
         console.log(error);
