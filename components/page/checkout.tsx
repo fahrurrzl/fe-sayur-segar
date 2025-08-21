@@ -245,7 +245,7 @@ const Checkout = () => {
                 type="submit"
                 color="success"
                 className="text-white"
-                startContent={<FaCheck />}
+                startContent={!isPendingCreateOrder && <FaCheck />}
                 disabled={isPendingCreateOrder}
                 isLoading={isPendingCreateOrder}
               >
