@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import NextLink from "next/link";
 import { ThemeSwitch } from "@/components/theme-switch";
 import Image from "next/image";
@@ -13,6 +14,9 @@ import {
   NavbarContent,
   NavbarBrand,
   NavbarItem,
+  NavbarMenuToggle,
+  NavbarMenu,
+  NavbarMenuItem,
   Dropdown,
   DropdownItem,
   DropdownMenu,
@@ -23,8 +27,6 @@ import {
   useDisclosure,
   Badge,
   Avatar,
-  NavbarMenu,
-  NavbarMenuItem,
 } from "@heroui/react";
 import { link as linkStyles } from "@heroui/theme";
 import Cart from "./cart";
@@ -39,9 +41,18 @@ export const Navbar = () => {
   const { data: session, status } = useSession();
   const { dataCarts } = useCart();
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  console.log(isMenuOpen);
 
   return (
-    <HeroUINavbar maxWidth="xl" isBlurred shouldHideOnScroll position="sticky">
+    <HeroUINavbar
+      maxWidth="xl"
+      isBlurred
+      shouldHideOnScroll
+      position="sticky"
+      isMenuOpen={isMenuOpen}
+      onMenuOpenChange={setIsMenuOpen}
+    >
       <NavbarContent className="" justify="start">
         <NavbarBrand as="li" className="gap-3 max-w-fit">
           <NextLink className="flex justify-start items-center gap-2" href="/">
@@ -186,12 +197,9 @@ export const Navbar = () => {
 
       {/* Mobile */}
       <NavbarContent className="sm:hidden flex pl-4" justify="end">
-        {/* <NavbarItem>
-          <ThemeSwitch />
-        </NavbarItem> */}
-        {status === "authenticated" ? (
-          <NavbarItem>
-            {dataCarts?.data?._count.items > 0 ? (
+        <NavbarItem>
+          {status === "authenticated" ? (
+            dataCarts?.data?._count.items > 0 ? (
               <Badge
                 content={dataCarts?.data?._count.items}
                 className="bg-success text-white"
@@ -214,49 +222,7 @@ export const Navbar = () => {
               >
                 <MdOutlineShoppingCart size={22} />
               </Button>
-            )}
-
-            {/* Cart */}
-            <Cart
-              isOpen={isOpen}
-              onOpenChange={onOpenChange}
-              items={dataCarts?.data?.items}
-            />
-          </NavbarItem>
-        ) : null}
-
-        <NavbarItem>
-          {status === "authenticated" ? (
-            <Dropdown placement="bottom-start" radius="sm">
-              <DropdownTrigger>
-                <Avatar
-                  src={`https://ui-avatars.com/api/?name=${session?.user.name}&background=random`}
-                />
-              </DropdownTrigger>
-              <DropdownMenu aria-label="User Actions" variant="flat">
-                <DropdownItem
-                  key="profile"
-                  textValue="Profil"
-                  onPress={() => router.push("/profile")}
-                >
-                  <span className="flex items-center gap-2 w-full">
-                    <FiUser />
-                    Profil
-                  </span>
-                </DropdownItem>
-                <DropdownItem
-                  key="logout"
-                  textValue="Keluar"
-                  color="danger"
-                  onClick={() => signOut()}
-                >
-                  <span className="flex items-center gap-2 w-full">
-                    <FiLogOut />
-                    Keluar
-                  </span>
-                </DropdownItem>
-              </DropdownMenu>
-            </Dropdown>
+            )
           ) : (
             <Button
               color="success"
@@ -268,7 +234,122 @@ export const Navbar = () => {
             </Button>
           )}
         </NavbarItem>
+        <NavbarMenuToggle
+          aria-label={isMenuOpen ? "Close menu" : "Open menu"}
+          className="sm:hidden"
+        />
       </NavbarContent>
+
+      {/* Mobile Menu */}
+      <NavbarMenu className="z-50">
+        <div className="mx-4 mt-2 flex flex-col gap-2">
+          {/* Search in mobile menu */}
+          <NavbarMenuItem>
+            <Input
+              placeholder="Cari sayur segar..."
+              startContent={
+                <SearchIcon className="text-default-400 pointer-events-none flex-shrink-0" />
+              }
+              className="w-full"
+            />
+          </NavbarMenuItem>
+
+          {/* Navigation items */}
+          {siteConfig.navItems
+            .filter((item) => {
+              // Hide Dashboard if user is not authenticated
+              if (item.href === "/dashboard" && status !== "authenticated") {
+                return false;
+              }
+              return true;
+            })
+            .map((item, index) => (
+              <NavbarMenuItem key={`${item.href}-${index}`}>
+                <NextLink
+                  className={clsx(
+                    "w-full",
+                    linkStyles({ color: "foreground" }),
+                    pathname === item.href && "text-success font-medium"
+                  )}
+                  href={item.href}
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  {item.label}
+                </NextLink>
+              </NavbarMenuItem>
+            ))}
+
+          {/* Theme Switch */}
+          <NavbarMenuItem>
+            <div className="flex items-center gap-2">
+              <span className="text-sm">Theme:</span>
+              <ThemeSwitch />
+            </div>
+          </NavbarMenuItem>
+
+          {/* Authentication */}
+          <NavbarMenuItem>
+            {status === "authenticated" ? (
+              <div className="flex flex-col gap-2 w-full">
+                <div className="flex items-center gap-2 py-2">
+                  <Avatar
+                    size="sm"
+                    src={`https://ui-avatars.com/api/?name=${session?.user.name}&background=random`}
+                  />
+                  <div className="flex flex-col">
+                    <span className="text-sm font-medium">
+                      {session?.user.name}
+                    </span>
+                    <span className="text-xs text-default-500">
+                      {session?.user.email}
+                    </span>
+                  </div>
+                </div>
+
+                <Button
+                  variant="light"
+                  className="justify-start"
+                  onPress={() => {
+                    router.push("/profile");
+                    setIsMenuOpen(false);
+                  }}
+                >
+                  <span className="flex items-center gap-2">
+                    <FiUser />
+                    Profil
+                  </span>
+                </Button>
+                <Button
+                  variant="light"
+                  color="danger"
+                  className="justify-start"
+                  onPress={() => {
+                    signOut();
+                    setIsMenuOpen(false);
+                  }}
+                >
+                  <span className="flex items-center gap-2">
+                    <FiLogOut />
+                    Keluar
+                  </span>
+                </Button>
+              </div>
+            ) : (
+              <Button
+                color="success"
+                className="text-white w-full"
+                onPress={() => {
+                  router.push("/auth/login");
+                  setIsMenuOpen(false);
+                }}
+              >
+                <FiLogIn />
+                Masuk
+              </Button>
+            )}
+          </NavbarMenuItem>
+        </div>
+      </NavbarMenu>
     </HeroUINavbar>
   );
 };
