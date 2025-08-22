@@ -123,11 +123,11 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
       </Card>
 
       {/* Main Content */}
-      <div className="flex-1 flex flex-col h-full lg:ml-0">
+      <div className="flex-1 flex flex-col h-full lg:ml-0 min-w-0">
         {/* Top Header - Fixed */}
-        <Card className="rounded-none shadow-sm sticky top-0 z-40">
+        <Card className="rounded-none shadow-sm sticky top-0 z-40 flex-shrink-0">
           <CardBody className="p-0">
-            <div className="flex items-center justify-between h-16 px-6">
+            <div className="flex items-center justify-between h-16 px-4 sm:px-6">
               <Button
                 isIconOnly
                 variant="light"
@@ -137,15 +137,17 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
                 <HiOutlineMenu className="w-5 h-5" />
               </Button>
 
-              <div className="flex items-center space-x-4 justify-between w-full">
-                <div className="flex flex-col">
-                  <h1 className="text-lg font-semibold">Kelola Lapak Anda</h1>
-                  <p className="text-xs text-gray-500">
+              <div className="flex items-center space-x-2 sm:space-x-4 justify-between w-full min-w-0">
+                <div className="flex flex-col min-w-0">
+                  <h1 className="text-sm sm:text-lg font-semibold truncate">
+                    Kelola Lapak Anda
+                  </h1>
+                  <p className="text-xs text-gray-500 truncate hidden sm:block">
                     Pantau dan kelola produk yang anda jual
                   </p>
                 </div>
 
-                <div className="flex items-center space-x-4">
+                <div className="flex items-center space-x-2 sm:space-x-4 flex-shrink-0">
                   <Badge content="3" color="danger" size="sm">
                     <Button
                       isIconOnly
@@ -162,8 +164,14 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
         </Card>
 
         {/* Page Content - Scrollable */}
-        <main className="flex-1 p-6 bg-gray-50/50 overflow-y-auto">
-          <div className="max-w-7xl mx-auto">{children}</div>
+        <main className="flex-1 bg-gray-50/50 overflow-hidden">
+          <div className="h-full overflow-auto">
+            <div className="p-4 sm:p-6">
+              <div className="overflow-x-auto">
+                <div className="min-w-max">{children}</div>
+              </div>
+            </div>
+          </div>
         </main>
       </div>
 
