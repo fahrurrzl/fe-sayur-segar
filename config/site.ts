@@ -16,6 +16,10 @@ export const siteConfig = {
       label: "Dashboard",
       href: "/dashboard",
     },
+    {
+      label: "Admin Dashboard",
+      href: "/admin/dashboard",
+    },
   ],
   links: {
     github: "https://github.com/heroui-inc/heroui",
