@@ -41,7 +41,7 @@ const useRegister = () => {
       router.push("/auth/register-success");
     },
     onError: (error) => {
-      console.log("error => ", error);
+      console.log(error);
     },
   });
 

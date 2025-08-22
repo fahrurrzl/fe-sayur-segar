@@ -3,12 +3,13 @@
 import DataTable from "@/components/data-table";
 import { columns } from "./columns";
 import useOrder from "@/hooks/useOrder";
-import { Key, useCallback, useState } from "react";
+import { Key, useCallback } from "react";
 import { rupiahFormat } from "@/utils/rupiahFormat";
 import { Button, Chip, useDisclosure } from "@heroui/react";
 import {
   FiBox,
   FiCheck,
+  FiCheckCircle,
   FiClock,
   FiCreditCard,
   FiEye,
@@ -24,10 +25,11 @@ const OrderSeller = () => {
     isLoadingDataOrderSeller,
     dataOrderById,
     isLoadingDataOrderById,
-    orderId,
+    mutateIsCompleted,
+    isPendingIsCompleted,
     setOrderId,
   } = useOrder();
-  const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
+  const { isOpen, onOpen, onClose } = useDisclosure();
 
   const renderCell = useCallback(
     (order: Record<string, unknown>, columnKey: Key) => {
@@ -100,18 +102,35 @@ const OrderSeller = () => {
           return formatDate(cellValue as string);
         case "actions":
           return (
-            <Button
-              isIconOnly
-              size="sm"
-              color="primary"
-              variant="light"
-              onPress={() => {
-                onOpen();
-                setOrderId(order?.id as string);
-              }}
-            >
-              <FiEye />
-            </Button>
+            <div>
+              <Button
+                isIconOnly
+                size="sm"
+                color="primary"
+                variant="light"
+                onPress={() => {
+                  onOpen();
+                  setOrderId(order?.id as string);
+                }}
+              >
+                <FiEye />
+              </Button>
+              {order?.status !== "PENDING" && order.status !== "COMPLETED" ? (
+                <Button
+                  isIconOnly
+                  size="sm"
+                  color="success"
+                  variant="light"
+                  isLoading={isPendingIsCompleted}
+                  isDisabled={isPendingIsCompleted}
+                  onPress={() => {
+                    mutateIsCompleted(order?.id as string);
+                  }}
+                >
+                  <FiCheckCircle />
+                </Button>
+              ) : null}
+            </div>
           );
         default:
           return cellValue;
@@ -125,11 +144,10 @@ const OrderSeller = () => {
     setOrderId("");
   };
 
-  console.log(dataOrderById?.data);
-
   return (
     <>
       <ModalOrderDetail
+        type="seller"
         isOpen={isOpen}
         onClose={handleOnClose}
         order={dataOrderById?.data || {}}

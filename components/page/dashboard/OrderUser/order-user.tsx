@@ -3,7 +3,7 @@
 import DataTable from "@/components/data-table";
 import useOrder from "@/hooks/useOrder";
 import { rupiahFormat } from "@/utils/rupiahFormat";
-import { Badge, Button, Chip, Tooltip } from "@heroui/react";
+import { Badge, Button, Chip, Tooltip, useDisclosure } from "@heroui/react";
 import { Key, useCallback } from "react";
 import { columns } from "./columns";
 import {
@@ -16,14 +16,16 @@ import {
   FiX,
 } from "react-icons/fi";
 import { formatDate } from "@/utils/dateFormat";
+import ModalOrderDetail from "../modal-order-detail";
 
 const OrderUser = () => {
-  const { dataOrderUser, isLoadingDataOrderUser } = useOrder();
-  console.log(dataOrderUser);
+  const { dataOrderUser, isLoadingDataOrderUser, setOrderId, dataOrderById } =
+    useOrder();
+  const { isOpen, onOpen, onClose } = useDisclosure();
 
   const renderCell = useCallback(
-    (product: Record<string, unknown>, columnKey: Key) => {
-      const cellValue = product[columnKey as string];
+    (order: Record<string, unknown>, columnKey: Key) => {
+      const cellValue = order[columnKey as string];
 
       switch (columnKey) {
         case "orderId":
@@ -89,7 +91,16 @@ const OrderUser = () => {
           return formatDate(cellValue as string);
         case "actions":
           return (
-            <Button isIconOnly size="sm" color="primary" variant="light">
+            <Button
+              isIconOnly
+              size="sm"
+              color="primary"
+              variant="light"
+              onPress={() => {
+                onOpen();
+                setOrderId(order?.id as string);
+              }}
+            >
               <FiEye />
             </Button>
           );
@@ -100,8 +111,19 @@ const OrderUser = () => {
     []
   );
 
+  const handleOnClose = () => {
+    onClose();
+    setOrderId("");
+  };
+
   return (
     <>
+      <ModalOrderDetail
+        type="user"
+        isOpen={isOpen}
+        onClose={handleOnClose}
+        order={dataOrderById?.data || {}}
+      />
       <DataTable
         columns={columns}
         title="Order Saya"
