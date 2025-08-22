@@ -142,7 +142,7 @@ const useOrder = () => {
         });
       },
       onError: (error) => {
-        console.log("error gaes => ", error);
+        console.log(error);
         addToast({
           title: "Gagal",
           description: "Gagal mengupdate order",

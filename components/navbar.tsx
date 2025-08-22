@@ -42,7 +42,6 @@ export const Navbar = () => {
   const { dataCarts } = useCart();
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  console.log(isMenuOpen);
 
   return (
     <HeroUINavbar

@@ -25,7 +25,6 @@ import {
 } from "react-icons/fi";
 
 const ProductDetail = ({ product }: { product: TProduct }) => {
-  console.log(product);
   const { data: session } = useSession();
   const { name, price, stock, imageUrl, seller, description } = product;
   const router = useRouter();

@@ -2,8 +2,6 @@
 
 import { Button } from "@heroui/button";
 import {
-  Card,
-  CardBody,
   Divider,
   Modal,
   ModalBody,
@@ -11,7 +9,6 @@ import {
   ModalHeader,
 } from "@heroui/react";
 import Link from "next/link";
-import { FiArrowLeft } from "react-icons/fi";
 
 const ModalTerms = ({
   isOpen,

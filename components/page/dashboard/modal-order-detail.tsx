@@ -5,6 +5,7 @@ import {
   Button,
   Card,
   CardBody,
+  Chip,
   Divider,
   Modal,
   ModalBody,
@@ -13,16 +14,19 @@ import {
   ModalHeader,
 } from "@heroui/react";
 import Image from "next/image";
+import Link from "next/link";
 import { FiBox, FiCheck, FiClock, FiCreditCard, FiTruck } from "react-icons/fi";
 
 const ModalOrderDetail = ({
   isOpen,
   onClose,
   order,
+  type,
 }: {
   isOpen: boolean;
   onClose: () => void;
   order: OrderResponse;
+  type: "user" | "seller";
 }) => {
   const {
     mutateIsProcessing,
@@ -34,12 +38,43 @@ const ModalOrderDetail = ({
   } = useOrder();
 
   return (
-    <Modal isOpen={isOpen} size="2xl" onClose={onClose}>
+    <Modal
+      isOpen={isOpen}
+      size="2xl"
+      onClose={onClose}
+      scrollBehavior="outside"
+      backdrop="blur"
+    >
       <ModalContent>
         {(onClose) => (
           <>
-            <ModalHeader className="flex flex-col gap-1 border-b border-b-foreground-300">
-              Detail Pesanan #{order?.orderId}
+            <ModalHeader className="flex items-center justify-between gap-1 border-b border-b-foreground-300 pr-10">
+              <p>Detail Pesanan #{order?.orderId}</p>
+              <Chip
+                variant="shadow"
+                color={
+                  order?.status === "PENDING"
+                    ? "warning"
+                    : order?.status === "PAID"
+                      ? "success"
+                      : order?.status === "FAILED"
+                        ? "danger"
+                        : order?.status === "PROCESSING"
+                          ? "secondary"
+                          : order?.status === "DELIVERED"
+                            ? "primary"
+                            : order?.status === "COMPLETED"
+                              ? "default"
+                              : "danger"
+                }
+              >
+                {order?.status === "PENDING" && "Pending"}
+                {order?.status === "PAID" && "Dibayar"}
+                {order?.status === "FAILED" && "Gagal"}
+                {order?.status === "PROCESSING" && "Diproses"}
+                {order?.status === "DELIVERED" && "Dikirim"}
+                {order?.status === "COMPLETED" && "Diterima"}
+              </Chip>
             </ModalHeader>
             <ModalBody>
               <div>
@@ -68,9 +103,23 @@ const ModalOrderDetail = ({
 
               <div>
                 {/* Product item */}
-                <h2 className="my-3 font-semibold">Produk yang Dipesan</h2>
+                <div className="flex items-center justify-between">
+                  <h2 className="my-3 font-semibold">Produk yang Dipesan</h2>
+                  {order.status === "PENDING" && type === "user" ? (
+                    <Button
+                      color="primary"
+                      size="sm"
+                      startContent={<FiCreditCard />}
+                      as={Link}
+                      target="_blank"
+                      href={`${order?.paymentUrl}`}
+                    >
+                      Bayar
+                    </Button>
+                  ) : null}
+                </div>
                 {order?.items?.map((item) => (
-                  <Card shadow="sm" radius="sm" key={item.id}>
+                  <Card shadow="sm" radius="sm" key={item.id} className="mb-2">
                     <CardBody>
                       <div className="flex justify-between items-center">
                         <div className="flex gap-3">
@@ -116,69 +165,79 @@ const ModalOrderDetail = ({
               </div>
 
               {/* Button Action */}
-              <div>
-                <h2 className="my-3 font-semibold">Update Status</h2>
-                <div className="flex items-center gap-2">
-                  <Button
-                    variant="bordered"
-                    size="sm"
-                    color={order?.status === "PENDING" ? "warning" : "default"}
-                    startContent={<FiClock />}
-                  >
-                    Pending
-                  </Button>
-                  <Button
-                    variant="bordered"
-                    size="sm"
-                    color={order?.status === "PAID" ? "success" : "default"}
-                    startContent={<FiCreditCard />}
-                  >
-                    Paid
-                  </Button>
-                  <Button
-                    disabled={order?.status === "PENDING"}
-                    onPress={() => {
-                      mutateIsProcessing(order?.id);
-                    }}
-                    variant="bordered"
-                    size="sm"
-                    color={
-                      order?.status === "PROCESSING" ? "secondary" : "default"
-                    }
-                    startContent={<FiBox />}
-                  >
-                    Diproses
-                  </Button>
-                  <Button
-                    disabled={order?.status === "PENDING"}
-                    onPress={() => {
-                      mutateIsDelivered(order?.id);
-                    }}
-                    variant="bordered"
-                    size="sm"
-                    color={
-                      order?.status === "DELIVERED" ? "primary" : "default"
-                    }
-                    startContent={<FiTruck />}
-                  >
-                    Dikirim
-                  </Button>
-                  <Button
-                    disabled={order?.status === "PENDING"}
-                    onPress={() => {
-                      mutateIsCompleted(order?.id);
-                    }}
-                    variant="bordered"
-                    size="sm"
-                    color={
-                      order?.status === "COMPLETED" ? "success" : "default"
-                    }
-                    startContent={<FiCheck />}
-                  >
-                    Diterima
-                  </Button>
+              {type === "seller" ? (
+                <div>
+                  <h2 className="my-3 font-semibold">Update Status</h2>
+                  <div className="flex items-center gap-2">
+                    <Button
+                      variant="bordered"
+                      size="sm"
+                      color={
+                        order?.status === "PENDING" ? "warning" : "default"
+                      }
+                      startContent={<FiClock />}
+                    >
+                      Pending
+                    </Button>
+                    <Button
+                      variant="bordered"
+                      size="sm"
+                      color={order?.status === "PAID" ? "success" : "default"}
+                      startContent={<FiCreditCard />}
+                    >
+                      Paid
+                    </Button>
+                    <Button
+                      disabled={order?.status === "PENDING"}
+                      onPress={() => {
+                        mutateIsProcessing(order?.id);
+                      }}
+                      variant="bordered"
+                      size="sm"
+                      color={
+                        order?.status === "PROCESSING" ? "secondary" : "default"
+                      }
+                      startContent={!isPendingIsProcessing ? <FiBox /> : null}
+                      isLoading={isPendingIsProcessing}
+                      isDisabled={isPendingIsProcessing}
+                    >
+                      Diproses
+                    </Button>
+                    <Button
+                      disabled={order?.status === "PENDING"}
+                      onPress={() => {
+                        mutateIsDelivered(order?.id);
+                      }}
+                      variant="bordered"
+                      size="sm"
+                      color={
+                        order?.status === "DELIVERED" ? "primary" : "default"
+                      }
+                      startContent={!isPendingIsDelivered ? <FiTruck /> : null}
+                      isLoading={isPendingIsDelivered}
+                      isDisabled={isPendingIsDelivered}
+                    >
+                      Dikirim
+                    </Button>
+                    <Button
+                      disabled={order?.status === "PENDING"}
+                      onPress={() => {
+                        mutateIsCompleted(order?.id);
+                      }}
+                      variant="bordered"
+                      size="sm"
+                      color={
+                        order?.status === "COMPLETED" ? "success" : "default"
+                      }
+                      startContent={!isPendingIsCompleted ? <FiCheck /> : null}
+                      isLoading={isPendingIsCompleted}
+                      isDisabled={isPendingIsCompleted}
+                    >
+                      Diterima
+                    </Button>
+                  </div>
                 </div>
-              </div>
+              ) : null}
             </ModalBody>
             <ModalFooter>
               <Button color="danger" variant="light" onPress={onClose}>
