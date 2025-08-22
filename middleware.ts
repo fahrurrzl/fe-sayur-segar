@@ -27,7 +27,6 @@ export default async function middleware(req: NextRequest) {
   const isProtected =
     pathname.startsWith("/dashboard") ||
     pathname.startsWith("/admin") ||
-    pathname.startsWith("/pricing") ||
     pathname.startsWith("/profile");
 
   // Jika belum login dan akses route proteksi -> redirect ke login + simpan callbackUrl
@@ -46,7 +45,7 @@ export default async function middleware(req: NextRequest) {
   }
 
   // Contoh role-based check untuk /admin
-  if (pathname.startsWith("/admin") && token?.role !== "admin") {
+  if (pathname.startsWith("/admin") && token?.role !== "superadmin") {
     return NextResponse.redirect(new URL("/not-authorized", origin));
   }
 
@@ -59,7 +58,6 @@ export const config = {
   matcher: [
     "/dashboard/:path*",
     "/admin/:path*",
-    "/pricing/:path*",
     "/profile/:path*",
     "/auth/login",
     "/auth/register",

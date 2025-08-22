@@ -9,25 +9,17 @@ import {
   CardBody,
   CardHeader,
   Divider,
-  RadioGroup,
   Skeleton,
   Textarea,
 } from "@heroui/react";
 import React, { useEffect } from "react";
-import {
-  FiCreditCard,
-  FiMapPin,
-  FiShoppingCart,
-  FiTruck,
-} from "react-icons/fi";
+import { FiMapPin, FiShoppingCart } from "react-icons/fi";
 import CartItem from "../cart-item";
 import { TCartItem } from "@/types";
 import { useRouter } from "next/navigation";
 import { FaCheck } from "react-icons/fa";
 import useOrder from "@/hooks/useOrder";
 import { Controller } from "react-hook-form";
-import { CustomRadio } from "../custom-radio";
-import PaymentMethodSelector from "../payment-method-selector";
 
 const Checkout = () => {
   const router = useRouter();
@@ -48,7 +40,8 @@ const Checkout = () => {
     (total: number, item: TCartItem) => total + item.price,
     0
   );
-  const total = subTotal;
+  const shippingFee = 20000 * dataCarts?.data?.items.length;
+  const total = subTotal + shippingFee;
 
   useEffect(() => {
     if (dataUser) {
@@ -215,7 +208,7 @@ const Checkout = () => {
                     {isLoadingCarts ? (
                       <Skeleton className="w-32 h-6 rounded-md" />
                     ) : (
-                      rupiahFormat(20000)
+                      rupiahFormat(shippingFee)
                     )}
                   </span>
                 </div>

@@ -70,10 +70,20 @@ export const Navbar = () => {
         <ul className="hidden lg:flex gap-4 justify-start ml-2">
           {siteConfig.navItems
             .filter((item) => {
-              // Hide Dashboard if user is not authenticated
-              if (item.href === "/dashboard" && status !== "authenticated") {
-                return false;
+              if (item.href === "/admin/dashboard") {
+                return (
+                  status === "authenticated" &&
+                  session?.user?.role === "superadmin"
+                );
               }
+
+              if (item.href === "/dashboard") {
+                return (
+                  status === "authenticated" &&
+                  session?.user?.role !== "superadmin"
+                );
+              }
+
               return true;
             })
             .map((item) => (
