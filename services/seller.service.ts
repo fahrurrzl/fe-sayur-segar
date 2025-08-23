@@ -21,4 +21,28 @@ export default {
         Authorization: `Bearer ${token}`,
       },
     }),
+  index: (token: string) =>
+    instance.get(endpoint.SELLER, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }),
+  getSellerById: (id: string, token: string) =>
+    instance.get(`${endpoint.SELLER}/${id}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }),
+  updateVerified: (id: string, token: string) =>
+    instance.put(`${endpoint.SELLER}/verify/${id}`, undefined, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }),
+  adminDeleteSeller: (id: string, token: string) =>
+    instance.delete(`${endpoint.SELLER}/${id}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }),
 };

@@ -31,6 +31,7 @@ export default function LayoutWrapper({
     "/admin/dashboard/product",
     "/admin/dashboard/order",
     "/admin/dashboard/category/create",
+    "/admin/dashboard/seller",
   ];
 
   const pathname = usePathname();

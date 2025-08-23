@@ -19,12 +19,20 @@ export type TLogin = {
 };
 
 export type TSeller = {
+  id?: string;
   storeName: string;
   storeLocation: string;
   description?: string;
   bankName: string;
   accountName: string;
   accountNumber: string;
+  verified?: boolean;
+  user?: {
+    name: string;
+    email: string;
+    image?: string;
+    phone?: string;
+  };
 };
 
 export type TProductInput = {

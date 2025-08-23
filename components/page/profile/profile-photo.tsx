@@ -1,12 +1,14 @@
 "use client";
 
 import { Avatar, Button, Card, CardBody, CardHeader } from "@heroui/react";
+import { useSession } from "next-auth/react";
 import { usePathname, useRouter } from "next/navigation";
 import React from "react";
 import { FaAngleRight, FaStore } from "react-icons/fa";
 import { FiCamera, FiSettings, FiShield, FiUser } from "react-icons/fi";
 
 const ProfilePhoto = ({ dataUser }: { dataUser: any }) => {
+  const { data: session } = useSession();
   const pathName = usePathname();
   const router = useRouter();
   const isSellerVerified =
@@ -15,20 +17,22 @@ const ProfilePhoto = ({ dataUser }: { dataUser: any }) => {
   return (
     <div className="lg:col-span-1">
       <Card className="shadow-lg">
-        <button
-          className="bg-success text-white w-fit mb-4 py-2 pl-4 pr-8 rounded-r-full flex items-center gap-2 cursor-pointer hover:bg-success-600 transition-colors group disabled:opacity-50 disabled:cursor-not-allowed"
-          onClick={() =>
-            dataUser?.Seller.length > 0
-              ? isSellerVerified
-                ? router.push("/dashboard")
-                : router.push("/dashboard/store-info")
-              : router.push("/profile/seller")
-          }
-        >
-          <FaStore className="h-4 w-4" />
-          {dataUser?.Seller.length > 0 ? "Lapak Saya" : "Menjadi Penjual"}
-          <FaAngleRight className="h-4 w-4 group-hover:translate-x-2 transition-transform" />
-        </button>
+        {session?.user?.role === "user" ? (
+          <button
+            className="bg-success text-white w-fit mb-4 py-2 pl-4 pr-8 rounded-r-full flex items-center gap-2 cursor-pointer hover:bg-success-600 transition-colors group disabled:opacity-50 disabled:cursor-not-allowed"
+            onClick={() =>
+              dataUser?.Seller.length > 0
+                ? isSellerVerified
+                  ? router.push("/dashboard")
+                  : router.push("/dashboard/store-info")
+                : router.push("/profile/seller")
+            }
+          >
+            <FaStore className="h-4 w-4" />
+            {dataUser?.Seller.length > 0 ? "Lapak Saya" : "Menjadi Penjual"}
+            <FaAngleRight className="h-4 w-4 group-hover:translate-x-2 transition-transform" />
+          </button>
+        ) : null}
         <CardHeader className="flex lg:flex-col items-start gap-4 lg:gap-0 lg:items-center pb-6">
           <div className="relative inline-block group">
             <Avatar
