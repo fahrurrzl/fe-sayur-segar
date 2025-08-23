@@ -1,6 +1,6 @@
 import sellerService from "@/services/seller.service";
 import { TSeller } from "@/types";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { sellerSchema } from "@/schemas/seller.schema";
@@ -9,8 +9,10 @@ import useProfile from "./useProfile";
 import { addToast } from "@heroui/react";
 import { useRouter } from "next/navigation";
 import walletService from "@/services/wallet.service";
+import { useState } from "react";
 
 const useSeller = () => {
+  const [sellerId, setSellerId] = useState<string | null>(null);
   const router = useRouter();
   const { data: session } = useSession();
   const { dataUser } = useProfile();
@@ -118,6 +120,104 @@ const useSeller = () => {
 
   const handleUpdateStore = (payload: TSeller) => mutateUpdateSeller(payload);
 
+  // get all users
+  const getAllSellerService = async () => {
+    const res = await sellerService.index(session?.user?.token as string);
+    return res.data;
+  };
+
+  const { data: dataAllSeller, isLoading: isLoadingAllSeller } = useQuery({
+    queryKey: ["all-seller"],
+    queryFn: getAllSellerService,
+    enabled: !!session,
+  });
+
+  const getSellerByIdService = async () => {
+    const res = await sellerService.getSellerById(
+      sellerId as string,
+      session?.user?.token as string
+    );
+    return res.data;
+  };
+
+  const { data: dataSellerById, isLoading: isLoadingSellerById } = useQuery({
+    queryKey: ["seller-by-id", sellerId],
+    queryFn: () => getSellerByIdService(),
+    enabled: !!sellerId,
+  });
+
+  // update verified
+  const updateVerifiedService = async (id: string) => {
+    const res = await sellerService.updateVerified(
+      id,
+      session?.user?.token as string
+    );
+    return res.data;
+  };
+
+  const queryClient = useQueryClient();
+
+  const { mutate: mutateUpdateVerified, isPending: isPendingUpdateVerified } =
+    useMutation({
+      mutationFn: (id: string) => updateVerifiedService(id),
+      onSuccess: (seller) => {
+        queryClient.invalidateQueries({
+          queryKey: ["all-seller"],
+        });
+        queryClient.invalidateQueries({
+          queryKey: ["seller-by-id", seller?.data?.id],
+        });
+        addToast({
+          title: "Berhasil",
+          description: `Lapak verified`,
+          color: "success",
+        });
+      },
+      onError: (error) => {
+        console.log(error);
+        addToast({
+          title: "Gagal",
+          description: "Lapak gagal verified",
+          color: "danger",
+        });
+      },
+    });
+
+  // admin delete seller
+  const adminDeleteSellerService = async (id: string) => {
+    const res = await sellerService.adminDeleteSeller(
+      id,
+      session?.user?.token as string
+    );
+    return res.data;
+  };
+
+  const {
+    mutate: mutateAdminDeleteSeller,
+    isPending: isPendingAdminDeleteSeller,
+    isSuccess: isSuccessAdminDeleteSeller,
+  } = useMutation({
+    mutationFn: (id: string) => adminDeleteSellerService(id),
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ["all-seller"],
+      });
+      addToast({
+        title: "Berhasil",
+        description: `Lapak berhasil dihapus`,
+        color: "success",
+      });
+    },
+    onError: (error) => {
+      console.log(error);
+      addToast({
+        title: "Gagal",
+        description: "Lapak gagal dihapus",
+        color: "danger",
+      });
+    },
+  });
+
   return {
     // form
     control,
@@ -130,9 +230,22 @@ const useSeller = () => {
     isErrorCreateSeller,
     handleUpdateStore,
     isPendingUpdateSeller,
+    mutateAdminDeleteSeller,
+    isPendingAdminDeleteSeller,
+    isSuccessAdminDeleteSeller,
+    // mutation verified
+    mutateUpdateVerified,
+    isPendingUpdateVerified,
     // show
     dataSeller,
     isLoadingSeller,
+    // get all users
+    dataAllSeller,
+    isLoadingAllSeller,
+    // get seller by id
+    dataSellerById,
+    isLoadingSellerById,
+    setSellerId,
   };
 };
 
