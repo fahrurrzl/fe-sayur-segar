@@ -9,7 +9,8 @@ export default {
         Authorization: `Bearer ${token}`,
       },
     }),
-  getProducts: () => instance.get(endpoint.PRODUCT),
+  getProducts: (params: string) =>
+    instance.get(`${endpoint.PRODUCT}?${params}`),
   getProductById: (id: string) => instance.get(`${endpoint.PRODUCT}/${id}`),
   update: (id: string, payload: TProductInput, token: string) =>
     instance.put(`${endpoint.PRODUCT}/${id}`, payload, {

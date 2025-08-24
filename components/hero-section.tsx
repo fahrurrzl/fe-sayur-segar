@@ -1,11 +1,18 @@
+"use client";
+
 import { Button } from "@heroui/button";
 import { FaShieldAlt, FaShoppingCart } from "react-icons/fa";
 import { FiTruck } from "react-icons/fi";
 import { LuLeaf } from "react-icons/lu";
 import heroVegetables from "@/public/images/hero-vegetables.jpg";
 import Image from "next/image";
+import Link from "next/link";
+import useProfile from "@/hooks/useProfile";
 
 const HeroSection = () => {
+  const { dataUser } = useProfile();
+  const isVerifiedSeller = dataUser?.Seller[0].verified;
+
   return (
     <section className="relative bg-gradient py-16 overflow-hidden">
       <div className="container mx-auto px-4">
@@ -31,13 +38,17 @@ const HeroSection = () => {
                 size="lg"
                 color="success"
                 className="text-white"
+                as={Link}
+                href="#products"
               >
                 <FaShoppingCart className="w-5 h-5 mr-2" />
                 Mulai Belanja
               </Button>
-              <Button variant="bordered" size="lg">
-                Jadi Pedagang
-              </Button>
+              {!isVerifiedSeller && dataUser?.role !== "superadmin" ? (
+                <Button variant="bordered" size="lg">
+                  Jadi Pedagang
+                </Button>
+              ) : null}
             </div>
 
             {/* Features */}

@@ -7,13 +7,57 @@ import { useSession } from "next-auth/react";
 import { useForm } from "react-hook-form";
 import useMedia from "./useMedia";
 import { addToast } from "@heroui/react";
-import { useParams, useRouter } from "next/navigation";
+import {
+  useParams,
+  usePathname,
+  useRouter,
+  useSearchParams,
+} from "next/navigation";
+import useDebounce from "./useDebounce";
 
 const useProduct = () => {
   const router = useRouter();
   const { data: session } = useSession();
+  const { debounce } = useDebounce();
   const params = useParams();
   const { id } = params;
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+
+  const category = searchParams.get("category");
+  const search = searchParams.get("search");
+
+  const setUrl = () => {
+    const params = new URLSearchParams(searchParams.toString());
+
+    params.set("category", category || "");
+    params.set("search", search || "");
+
+    router.replace(`${pathname}?${params.toString()}`);
+  };
+
+  const handleChangeCategory = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const params = new URLSearchParams(searchParams.toString());
+    params.set("category", e.target.value);
+    router.push(`${pathname}?${params.toString()}`);
+  };
+
+  const handleSearchDebounced = debounce((value: string) => {
+    const params = new URLSearchParams(searchParams.toString());
+    params.set("search", value);
+
+    router.push(`${pathname}?${params.toString()}`);
+  }, 500);
+
+  const handleChangeSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+    handleSearchDebounced(e.target.value);
+  };
+
+  const handleClearSearch = () => {
+    const params = new URLSearchParams(searchParams.toString());
+    params.set("search", "");
+    router.push(`${pathname}?${params.toString()}`);
+  };
 
   const {
     handleUploadFile,
@@ -105,7 +149,11 @@ const useProduct = () => {
 
   // get products
   const getProductsService = async () => {
-    const res = await productService.getProducts();
+    let params = `category=${category}&search=${search}`;
+    if (!category && !search) {
+      params = "";
+    }
+    const res = await productService.getProducts(params);
     return res.data;
   };
 
@@ -114,7 +162,7 @@ const useProduct = () => {
     isLoading: isLoadingProducts,
     refetch,
   } = useQuery({
-    queryKey: ["products"],
+    queryKey: ["products", category, search],
     queryFn: getProductsService,
   });
 
@@ -232,6 +280,10 @@ const useProduct = () => {
     handleDeleteProduct,
     isPendingDeleteProduct,
     isSuccessDeleteProduct,
+    setUrl,
+    handleChangeCategory,
+    handleChangeSearch,
+    handleClearSearch,
   };
 };
 

@@ -4,7 +4,6 @@ import { useState } from "react";
 import NextLink from "next/link";
 import { ThemeSwitch } from "@/components/theme-switch";
 import Image from "next/image";
-import { SearchIcon } from "./icons";
 import { MdOutlineShoppingCart } from "react-icons/md";
 import { siteConfig } from "@/config/site";
 import { clsx } from "clsx";
@@ -34,14 +33,15 @@ import { signOut, useSession } from "next-auth/react";
 import { usePathname, useRouter } from "next/navigation";
 import { FiLogIn, FiLogOut, FiUser } from "react-icons/fi";
 import useCart from "@/hooks/useCart";
+import useProduct from "@/hooks/useProduct";
 
 export const Navbar = () => {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const router = useRouter();
   const pathname = usePathname();
   const { data: session, status } = useSession();
   const { dataCarts } = useCart();
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   return (
     <HeroUINavbar
@@ -104,15 +104,6 @@ export const Navbar = () => {
       </NavbarContent>
 
       <NavbarContent className="hidden sm:flex" justify="end">
-        <NavbarItem>
-          <Input
-            placeholder="Cari sayur segar..."
-            startContent={
-              <SearchIcon className="text-default-400 pointer-events-none flex-shrink-0" />
-            }
-          />
-        </NavbarItem>
-
         <NavbarItem className="hidden sm:flex gap-2">
           <ThemeSwitch />
         </NavbarItem>
@@ -252,17 +243,6 @@ export const Navbar = () => {
       {/* Mobile Menu */}
       <NavbarMenu className="z-50">
         <div className="mx-4 mt-2 flex flex-col gap-2">
-          {/* Search in mobile menu */}
-          <NavbarMenuItem>
-            <Input
-              placeholder="Cari sayur segar..."
-              startContent={
-                <SearchIcon className="text-default-400 pointer-events-none flex-shrink-0" />
-              }
-              className="w-full"
-            />
-          </NavbarMenuItem>
-
           {/* Navigation items */}
           {siteConfig.navItems
             .filter((item) => {

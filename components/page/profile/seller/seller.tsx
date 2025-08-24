@@ -15,8 +15,8 @@ import {
 import { useRouter } from "next/navigation";
 import { Controller } from "react-hook-form";
 import { BsBank, BsCreditCard } from "react-icons/bs";
-import { FaParagraph, FaStore } from "react-icons/fa";
-import { FiCreditCard, FiMapPin } from "react-icons/fi";
+import { FaStore } from "react-icons/fa";
+import { FiMapPin } from "react-icons/fi";
 import { MdOutlineDescription } from "react-icons/md";
 
 const Seller = () => {
@@ -29,7 +29,6 @@ const Seller = () => {
     errors,
     handleCreateSeller,
     isPendingCreateSeller,
-    dataSeller,
     isLoadingSeller,
   } = useSeller();
 
