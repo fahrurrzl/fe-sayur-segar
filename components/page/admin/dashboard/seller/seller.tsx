@@ -4,7 +4,6 @@ import DataTable from "@/components/data-table";
 import useSeller from "@/hooks/useSeller";
 import { Avatar } from "@heroui/avatar";
 import { Button, Chip, Tooltip, useDisclosure } from "@heroui/react";
-import Link from "next/link";
 import { Key, useCallback, useState } from "react";
 import { FiEye, FiTrash } from "react-icons/fi";
 import { columns } from "./columns";

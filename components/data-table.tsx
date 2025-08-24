@@ -65,7 +65,11 @@ const DataTable = ({
                 {(column) => (
                   <TableColumn
                     key={column.uid as Key}
-                    align={column.uid === "actions" ? "center" : "start"}
+                    align={
+                      column.uid === "actions" || column.uid === "user"
+                        ? "center"
+                        : "start"
+                    }
                   >
                     {`${column.name}`}
                   </TableColumn>

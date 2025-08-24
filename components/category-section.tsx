@@ -4,6 +4,7 @@ import useCategory from "@/hooks/useCateogry";
 import { TCategory } from "@/types";
 import { Card, CardBody } from "@heroui/react";
 import Image from "next/image";
+import Link from "next/link";
 
 const CategorySection = () => {
   const { dataCategories, isLoadingCategories } = useCategory();
@@ -18,6 +19,8 @@ const CategorySection = () => {
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
           {dataCategories?.map((category: TCategory) => (
             <Card
+              as={Link}
+              href={`/explore?category=${category.id}`}
               key={category.id}
               className="group cursor-pointer hover:shadow-lg transition-all duration-300 hover:scale-105 border border-gray-200"
             >

@@ -2,8 +2,9 @@
 
 import useProduct from "@/hooks/useProduct";
 import ProductCard from "./product-card";
-import { TProduct, TProductResponse } from "@/types";
-import { Skeleton } from "@heroui/react";
+import { TProduct } from "@/types";
+import { Button, Skeleton } from "@heroui/react";
+import Link from "next/link";
 
 const FeatureProduct = () => {
   const { dataProducts, isLoadingProducts } = useProduct();
@@ -20,9 +21,15 @@ const FeatureProduct = () => {
               Sayuran pilihan terbaik hari ini
             </p>
           </div>
-          <button className="text-success hover:text-success-300 font-medium">
+          <Button
+            as={Link}
+            href="/explore"
+            variant="light"
+            color="success"
+            className="hover:text-success-300 font-medium"
+          >
             Lihat Semua →
-          </button>
+          </Button>
         </div>
 
         <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
