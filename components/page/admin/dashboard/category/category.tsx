@@ -11,6 +11,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useDisclosure } from "@heroui/react";
 import ModalDelete from "./modal-delete";
+import { formatDate } from "@/utils/dateFormat";
 
 const Category = () => {
   const [selectedCategory, setSelectedCategory] = useState("");
@@ -23,15 +24,35 @@ const Category = () => {
       const cellValue = category[columnKey as string];
 
       switch (columnKey) {
-        case "imageUrl":
+        case "category":
           return (
-            <Image
-              src={(cellValue as string) || ""}
-              alt="product"
-              width={80}
-              height={80}
-              className="object-contain aspect-square rounded-md"
-            />
+            <div className="flex items-center gap-2">
+              <Image
+                src={category?.imageUrl as string}
+                alt={category?.name as string}
+                width={50}
+                height={50}
+                className="object-contain aspect-square rounded-md"
+              />
+              <p className="font-medium">{category?.name as string}</p>
+            </div>
+          );
+        case "createdAt":
+          return (
+            <div>
+              <p className="font-medium">{formatDate(cellValue as string)}</p>
+            </div>
+          );
+        case "createdBy":
+          return (
+            <div className="text-center">
+              <p className="font-medium">
+                {(category?.user as { name: string })?.name}
+              </p>
+              <p className="text-sm text-foreground-500">
+                {(category?.user as { role: string }).role}
+              </p>
+            </div>
           );
         case "actions":
           return (

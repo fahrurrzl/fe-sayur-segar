@@ -1,5 +1,6 @@
 export const columns = [
-  { name: "IMAGE", uid: "imageUrl" },
-  { name: "NAME", uid: "name" },
+  { name: "KATEGORI", uid: "category" },
+  { name: "DIBUAT", uid: "createdAt" },
+  { name: "DIBUAT OLEH", uid: "createdBy" },
   { name: "ACTIONS", uid: "actions" },
 ];

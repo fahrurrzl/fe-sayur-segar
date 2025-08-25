@@ -66,7 +66,9 @@ const DataTable = ({
                   <TableColumn
                     key={column.uid as Key}
                     align={
-                      column.uid === "actions" || column.uid === "user"
+                      column.uid === "actions" ||
+                      column.uid === "user" ||
+                      column.uid === "createdBy"
                         ? "center"
                         : "start"
                     }

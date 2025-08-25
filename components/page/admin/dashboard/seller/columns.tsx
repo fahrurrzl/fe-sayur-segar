@@ -1,5 +1,5 @@
 export const columns = [
-  { name: "NAMA", uid: "storeName" },
+  { name: "NAMA LAPAK", uid: "storeName" },
   { name: "PEMILIK", uid: "user" },
   { name: "LOKASI", uid: "storeLocation" },
   { name: "STATUS", uid: "verified" },
