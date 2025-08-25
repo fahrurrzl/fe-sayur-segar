@@ -11,6 +11,7 @@ import { Button, Tooltip, useDisclosure } from "@heroui/react";
 import Link from "next/link";
 import { FiEdit, FiTrash } from "react-icons/fi";
 import ModalDelete from "./modal-delete";
+import cn from "@/utils/cn";
 
 const Product = () => {
   const [selectedProduct, setSelectedProduct] = useState("");
@@ -21,20 +22,48 @@ const Product = () => {
   const renderCell = useCallback(
     (product: Record<string, unknown>, columnKey: Key) => {
       const cellValue = product[columnKey as string];
+      console.log(product);
 
       switch (columnKey) {
-        case "imageUrl":
+        case "product":
           return (
-            <Image
-              src={cellValue as string}
-              alt="product"
-              width={80}
-              height={80}
-              className="object-contain aspect-square rounded-md"
-            />
+            <div className="flex items-center gap-2">
+              <Image
+                src={product?.imageUrl as string}
+                alt="product"
+                width={50}
+                height={50}
+                className="object-contain aspect-square rounded-md"
+              />
+              <div className="w-80">
+                <p className="font-medium">{product?.name as string}</p>
+                <p className="text-xs text-gray-500 truncate">
+                  {product?.description as string}
+                </p>
+              </div>
+            </div>
+          );
+        case "category":
+          return (
+            <p className="text-gray-500">
+              {(product?.category as { name: string })?.name}
+            </p>
           );
         case "price":
-          return rupiahFormat(cellValue as number);
+          return (
+            <p className="font-medium">{rupiahFormat(cellValue as number)}</p>
+          );
+        case "stock":
+          return (
+            <p
+              className={cn(
+                "font-medium",
+                Number(cellValue) > 20 ? "text-success" : "text-danger"
+              )}
+            >
+              {Number(cellValue)}
+            </p>
+          );
         case "actions":
           return (
             <div className="relative flex items-center justify-center gap-2">

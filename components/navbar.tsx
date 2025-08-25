@@ -21,7 +21,6 @@ import {
   DropdownMenu,
   DropdownTrigger,
   User,
-  Input,
   Button,
   useDisclosure,
   Badge,
@@ -33,7 +32,6 @@ import { signOut, useSession } from "next-auth/react";
 import { usePathname, useRouter } from "next/navigation";
 import { FiLogIn, FiLogOut, FiUser } from "react-icons/fi";
 import useCart from "@/hooks/useCart";
-import useProduct from "@/hooks/useProduct";
 
 export const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);

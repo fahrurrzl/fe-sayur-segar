@@ -35,14 +35,16 @@ const Seller = () => {
           return cellValue;
         case "user":
           return (
-            <div className="flex items-center gap-1">
-              <Avatar
-                className="w-10 h-10 mx-auto border-4 border-emerald-200"
-                name={`${seller?.user?.name}`}
-                src={`https://ui-avatars.com/api/?name=${seller?.user?.name}&background=random`}
-                showFallback
-              />
-              <div className="flex flex-col">
+            <div className="flex items-center gap-2">
+              <div>
+                <Avatar
+                  className="w-10 h-10 mx-auto border-4 border-emerald-200"
+                  name={`${seller?.user?.name}`}
+                  src={`https://ui-avatars.com/api/?name=${seller?.user?.name}&background=random`}
+                  showFallback
+                />
+              </div>
+              <div className="flex flex-col items-start">
                 <span className="font-medium">{seller?.user?.name}</span>
                 <span className="text-xs text-gray-500">
                   {seller.user?.email}

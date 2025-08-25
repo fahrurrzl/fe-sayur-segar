@@ -11,7 +11,7 @@ import useProfile from "@/hooks/useProfile";
 
 const HeroSection = () => {
   const { dataUser } = useProfile();
-  const isVerifiedSeller = dataUser?.Seller[0].verified;
+  const isVerifiedSeller = dataUser?.Seller[0]?.verified;
 
   return (
     <section className="relative bg-gradient py-16 overflow-hidden">
@@ -45,7 +45,12 @@ const HeroSection = () => {
                 Mulai Belanja
               </Button>
               {!isVerifiedSeller && dataUser?.role !== "superadmin" ? (
-                <Button variant="bordered" size="lg">
+                <Button
+                  variant="bordered"
+                  size="lg"
+                  as={Link}
+                  href="/profile/seller"
+                >
                   Jadi Pedagang
                 </Button>
               ) : null}
