@@ -164,11 +164,11 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
         </Card>
 
         {/* Page Content - Scrollable */}
-        <main className="flex-1 bg-gray-50/50 overflow-hidden">
+        <main className="flex-1 bg-gray-50/50 overflow-auto">
           <div className="h-full overflow-auto">
             <div className="p-4 sm:p-6">
-              <div className="overflow-x-auto">
-                <div className="min-w-max">{children}</div>
+              <div className="overflow-x-auto rounded-xl">
+                <div>{children}</div>
               </div>
             </div>
           </div>
