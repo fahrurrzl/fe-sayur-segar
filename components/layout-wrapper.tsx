@@ -25,6 +25,7 @@ export default function LayoutWrapper({
     `/dashboard/store-info/edit/${id}`,
     "/dashboard/my-order",
     "/dashboard/order",
+    "/dashboard/wallet",
     // admin
     "/admin/dashboard",
     "/admin/dashboard/category",

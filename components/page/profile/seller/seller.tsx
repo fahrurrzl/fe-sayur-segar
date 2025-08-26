@@ -9,15 +9,26 @@ import {
   CardBody,
   CardHeader,
   Input,
+  Select,
+  SelectItem,
   Skeleton,
   Textarea,
 } from "@heroui/react";
 import { useRouter } from "next/navigation";
 import { Controller } from "react-hook-form";
-import { BsBank, BsCreditCard } from "react-icons/bs";
+import { BsBank, BsCreditCard, BsPerson } from "react-icons/bs";
 import { FaStore } from "react-icons/fa";
 import { FiMapPin } from "react-icons/fi";
 import { MdOutlineDescription } from "react-icons/md";
+
+export const banks = [
+  { key: "bca", label: "BCA" },
+  { key: "bni", label: "BNI" },
+  { key: "bri", label: "BRI" },
+  { key: "mandiri", label: "Mandiri" },
+  { key: "permata", label: "Permata" },
+  { key: "other", label: "Lainnya" },
+];
 
 const Seller = () => {
   const router = useRouter();
@@ -149,16 +160,22 @@ const Seller = () => {
                         name="bankName"
                         control={control}
                         render={({ field }) => (
-                          <Input
+                          <Select
                             {...field}
                             label="Nama Bank"
                             variant="bordered"
-                            placeholder="Masukkan nama bank"
+                            placeholder="Pilih nama bank"
                             startContent={
                               <BsBank className="h-4 w-4 text-gray-400" />
                             }
                             isInvalid={!!errors.bankName}
-                          />
+                          >
+                            {banks.map((bank) => (
+                              <SelectItem key={bank.key}>
+                                {bank.label}
+                              </SelectItem>
+                            ))}
+                          </Select>
                         )}
                       />
                       {errors.bankName && (
@@ -181,7 +198,7 @@ const Seller = () => {
                             variant="bordered"
                             placeholder="Masukkan nama rekening"
                             startContent={
-                              <BsCreditCard className="h-4 w-4 text-gray-400" />
+                              <BsPerson className="h-4 w-4 text-gray-400" />
                             }
                             isInvalid={!!errors.accountName}
                           />

@@ -5,6 +5,7 @@ import { Button } from "@heroui/button";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { HiOutlineCube, HiShoppingCart } from "react-icons/hi";
+import { LuWallet } from "react-icons/lu";
 import { MdDashboard, MdReceipt, MdStore } from "react-icons/md";
 
 const menuItems = [
@@ -27,6 +28,11 @@ const menuItems = [
     name: "Pesanan Saya",
     href: "/dashboard/my-order",
     icon: MdReceipt,
+  },
+  {
+    name: "Kelola Wallet",
+    href: "/dashboard/wallet",
+    icon: LuWallet,
   },
   {
     name: "Info Lapak",

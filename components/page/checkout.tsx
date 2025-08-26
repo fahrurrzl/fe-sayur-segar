@@ -40,7 +40,19 @@ const Checkout = () => {
     (total: number, item: TCartItem) => total + item.price,
     0
   );
-  const shippingFee = 20000 * dataCarts?.data?.items.length;
+
+  let shippingFee = 0;
+
+  // set untuk menampung seller unique
+  const uniqueSellers = new Set<string>();
+
+  dataCarts?.data?.items.forEach((item: any) => {
+    if (item.product?.seller?.storeName) {
+      uniqueSellers.add(item.product.seller.storeName);
+    }
+  });
+  shippingFee = uniqueSellers.size * 10000;
+
   const total = subTotal + shippingFee;
 
   useEffect(() => {

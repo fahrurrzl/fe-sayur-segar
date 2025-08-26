@@ -141,7 +141,7 @@ const StoreInfo = () => {
                 <div className="flex justify-between">
                   <span className="text-sm text-gray-600">Bank:</span>
                   <span className="text-sm font-medium text-gray-900">
-                    {dataUser?.Seller[0]?.bankName}
+                    {dataUser?.Seller[0]?.bankName.toUpperCase()}
                   </span>
                 </div>
                 <div className="flex justify-between">
