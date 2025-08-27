@@ -33,6 +33,7 @@ export default function LayoutWrapper({
     "/admin/dashboard/order",
     "/admin/dashboard/category/create",
     "/admin/dashboard/seller",
+    "/admin/dashboard/wallet-transaction",
   ];
 
   const pathname = usePathname();

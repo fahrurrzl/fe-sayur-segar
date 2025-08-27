@@ -1,10 +1,10 @@
 "use client";
 
-import useProfile from "@/hooks/useProfile";
 import { Button } from "@heroui/button";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { HiUsers } from "react-icons/hi";
+import { LuBox, LuWallet } from "react-icons/lu";
 import { MdCategory, MdDashboard } from "react-icons/md";
 
 const menuItems = [
@@ -23,11 +23,20 @@ const menuItems = [
     href: "/admin/dashboard/seller",
     icon: HiUsers,
   },
+  {
+    name: "Kelola Produk",
+    href: "/admin/dashboard/product",
+    icon: LuBox,
+  },
+  {
+    name: "Kelola Transaksi Wallet",
+    href: "/admin/dashboard/wallet-transaction",
+    icon: LuWallet,
+  },
 ];
 
 const AdminDashboardNavbar = () => {
   const pathname = usePathname();
-  const { dataUser } = useProfile();
 
   return (
     <nav className="flex-1 p-4">
