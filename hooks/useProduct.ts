@@ -252,6 +252,46 @@ const useProduct = () => {
 
   const handleDeleteProduct = (id: string) => mutateDeleteProduct(id);
 
+  // admin delete
+  const adminDeleteProductService = async (id: string) => {
+    const res = await productService.adminDelete(
+      id,
+      session?.user.token as string
+    );
+    return res.data;
+  };
+
+  const {
+    mutate: mutateAdminDeleteProduct,
+    isPending: isPendingAdminDeleteProduct,
+    isSuccess: isSuccessAdminDeleteProduct,
+  } = useMutation({
+    mutationFn: adminDeleteProductService,
+    onSuccess: (data) => {
+      handleDeleteFile(data.data.imageUrl, () => {
+        addToast({
+          title: "Berhasil",
+          description: "Produk berhasil dihapus",
+          color: "success",
+        });
+      });
+
+      queryClient.invalidateQueries({
+        queryKey: ["products", category, search],
+      });
+    },
+    onError: (error) => {
+      console.log(error);
+      addToast({
+        title: "Gagal",
+        description: "Produk gagal dihapus",
+        color: "danger",
+      });
+    },
+  });
+
+  const handleAdminDeleteProduct = (id: string) => mutateAdminDeleteProduct(id);
+
   return {
     // form
     control,
@@ -280,6 +320,10 @@ const useProduct = () => {
     handleDeleteProduct,
     isPendingDeleteProduct,
     isSuccessDeleteProduct,
+    // admin delete
+    handleAdminDeleteProduct,
+    isPendingAdminDeleteProduct,
+    isSuccessAdminDeleteProduct,
     setUrl,
     handleChangeCategory,
     handleChangeSearch,
