@@ -8,4 +8,5 @@ export default {
   ORDER: "/order",
   WALLET: "/wallet",
   WALLET_TRANSACTION: "/wallet/transaction",
+  TRANSFER: "/transfer",
 };

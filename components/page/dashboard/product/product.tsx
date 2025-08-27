@@ -22,7 +22,6 @@ const Product = () => {
   const renderCell = useCallback(
     (product: Record<string, unknown>, columnKey: Key) => {
       const cellValue = product[columnKey as string];
-      console.log(product);
 
       switch (columnKey) {
         case "product":
