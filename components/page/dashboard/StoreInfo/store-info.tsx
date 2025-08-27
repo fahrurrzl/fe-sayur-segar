@@ -52,7 +52,7 @@ const StoreInfo = () => {
               color="success"
               className="text-white"
               as={Link}
-              href={`/dashboard/store-info/edit/${dataUser?.Seller[0].id}`}
+              href={`/dashboard/store-info/edit/${dataUser?.Seller[0]?.id}`}
             >
               <FiEdit />
               Edit Info
