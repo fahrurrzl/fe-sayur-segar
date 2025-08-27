@@ -22,6 +22,8 @@ import { FiUser } from "react-icons/fi";
 import { LuCircleCheck } from "react-icons/lu";
 import { MdWhatsapp } from "react-icons/md";
 import ModalConfirmTransfer from "./modal-confirm-transfer";
+import { useEffect } from "react";
+import useTransfer from "@/hooks/useTransfer";
 
 const ModalDetail = ({
   isOpen,
@@ -37,6 +39,14 @@ const ModalDetail = ({
     onOpen: onOpenConfirmTransfer,
     onClose: onCloseConfirmTransfer,
   } = useDisclosure();
+  const { isSuccessTransfer, handelTransfer, isPendingTransfer } =
+    useTransfer();
+
+  useEffect(() => {
+    if (isSuccessTransfer) {
+      onClose();
+    }
+  }, [isSuccessTransfer, onClose]);
 
   const InfoItem = ({
     label,
@@ -80,6 +90,7 @@ const ModalDetail = ({
         isOpen={isOpenConfirmTransfer}
         onClose={onCloseConfirmTransfer}
         onOpenChange={onOpenConfirmTransfer}
+        data={walletTransaction}
       />
 
       <Modal
@@ -186,9 +197,19 @@ const ModalDetail = ({
                           variant="shadow"
                           size="sm"
                           color="primary"
-                          startContent={<BsSend />}
+                          startContent={isPendingTransfer ? null : <BsSend />}
+                          isLoading={isPendingTransfer}
+                          disabled={isPendingTransfer}
                           onPress={() => {
-                            onOpenConfirmTransfer();
+                            handelTransfer({
+                              amount: walletTransaction?.amount as number,
+                              accountNumber: walletTransaction?.wallet?.seller
+                                ?.accountNumber as string,
+                              accountHolderName: walletTransaction?.wallet
+                                ?.seller?.accountName as string,
+                              channelCode: `ID_${walletTransaction?.wallet?.seller?.bankName.toUpperCase()}`,
+                              referenceId: walletTransaction?.id as string,
+                            });
                           }}
                         >
                           Transfer

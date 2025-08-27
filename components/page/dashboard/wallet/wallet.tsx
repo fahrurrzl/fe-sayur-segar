@@ -28,7 +28,6 @@ const Wallet = () => {
   const { dataWalletTransactions, isLoadingWalletTransactions } =
     useWalletTransaction();
   const { isOpen, onOpen, onClose } = useDisclosure();
-  console.log(dataWalletTransactions);
 
   return (
     <div>

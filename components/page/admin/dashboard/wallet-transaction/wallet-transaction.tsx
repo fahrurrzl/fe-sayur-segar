@@ -16,11 +16,9 @@ const WalletTransaction = () => {
     dataAllWalletTransactions,
     isLoadingGetAllTransactions,
     dataWalletTransactionById,
-    isLoadingWalletTransactionById,
     setSelectedId,
-    selectedId,
   } = useWalletTransaction();
-  console.log(dataWalletTransactionById);
+
   const {
     isOpen: isOpenDetail,
     onOpen: onOpenDetail,
@@ -127,6 +125,7 @@ const WalletTransaction = () => {
         title="Transaksi Wallet"
         description="Kelola transaksi wallet"
         data={dataAllWalletTransactions?.data || []}
+        isLoading={isLoadingGetAllTransactions}
       />
     </>
   );

@@ -25,6 +25,7 @@ const useWalletTransaction = () => {
   } = useQuery({
     queryKey: ["all-wallet-transactions"],
     queryFn: getAllWalletTransactionsService,
+    staleTime: 0,
   });
 
   // get wallet transaction
