@@ -122,6 +122,39 @@ const useWalletTransaction = () => {
     });
   };
 
+  // delete wallet transaction (superadmin)
+  const deleteWalletTransactionService = async (id: string) => {
+    const res = await walletTransactionService.deleteWalletTransaction(
+      id,
+      session?.user.token as string
+    );
+    return res.data;
+  };
+
+  const {
+    mutate: mutateDeleteWalletTransaction,
+    isPending: isPendingDeleteWalletTransaction,
+    isSuccess: isSuccessDeleteWalletTransaction,
+  } = useMutation({
+    mutationFn: deleteWalletTransactionService,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["all-wallet-transactions"] });
+      addToast({
+        title: "Berhasil",
+        description: "Transaksi berhasil dihapus",
+        color: "success",
+      });
+    },
+    onError: (error: any) => {
+      console.log(error);
+      addToast({
+        title: "Gagal",
+        description: "Transaksi gagal dihapus",
+        color: "danger",
+      });
+    },
+  });
+
   return {
     // get wallet transaction
     dataWalletTransactions,
@@ -141,6 +174,10 @@ const useWalletTransaction = () => {
     handleCreateWalletTransaction,
     isCreating,
     isSuccessCreate,
+    // delete wallet transaction
+    mutateDeleteWalletTransaction,
+    isPendingDeleteWalletTransaction,
+    isSuccessDeleteWalletTransaction,
   };
 };
 

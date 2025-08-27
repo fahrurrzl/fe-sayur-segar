@@ -32,4 +32,10 @@ export default {
         },
       }
     ),
+  deleteWalletTransaction: (id: string, token: string) =>
+    instance.delete(`${endpoint.WALLET_TRANSACTION}/${id}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }),
 };

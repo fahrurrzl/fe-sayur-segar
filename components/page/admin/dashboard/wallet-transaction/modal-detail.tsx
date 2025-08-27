@@ -21,7 +21,6 @@ import { FaCreditCard } from "react-icons/fa";
 import { FiUser } from "react-icons/fi";
 import { LuCircleCheck } from "react-icons/lu";
 import { MdWhatsapp } from "react-icons/md";
-import ModalConfirmTransfer from "./modal-confirm-transfer";
 import { useEffect } from "react";
 import useTransfer from "@/hooks/useTransfer";
 
@@ -86,13 +85,6 @@ const ModalDetail = ({
 
   return (
     <>
-      <ModalConfirmTransfer
-        isOpen={isOpenConfirmTransfer}
-        onClose={onCloseConfirmTransfer}
-        onOpenChange={onOpenConfirmTransfer}
-        data={walletTransaction}
-      />
-
       <Modal
         isOpen={isOpen}
         size="2xl"

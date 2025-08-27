@@ -4,14 +4,18 @@ import DataTable from "@/components/data-table";
 import { formatDate } from "@/utils/dateFormat";
 import { rupiahFormat } from "@/utils/rupiahFormat";
 import { Button, Chip, Tooltip, useDisclosure } from "@heroui/react";
-import { Key, useCallback } from "react";
+import { Key, useCallback, useState } from "react";
 import { FiEye, FiTrash } from "react-icons/fi";
 import { columns } from "./columns";
 import useWalletTransaction from "@/hooks/useWalletTransaction";
 import { BsBank, BsCheckCircle, BsClock } from "react-icons/bs";
 import ModalDetail from "./modal-detail";
+import ModalDelete from "./modal-delete";
 
 const WalletTransaction = () => {
+  const [selectedWalletTransaction, setSelectedWalletTransaction] =
+    useState("");
+
   const {
     dataAllWalletTransactions,
     isLoadingGetAllTransactions,
@@ -23,6 +27,13 @@ const WalletTransaction = () => {
     isOpen: isOpenDetail,
     onOpen: onOpenDetail,
     onClose: onCloseDetail,
+  } = useDisclosure();
+
+  const {
+    isOpen: isOpenDelete,
+    onOpen: onOpenDelete,
+    onClose: onCloseDelete,
+    onOpenChange: onOpenChangeDelete,
   } = useDisclosure();
 
   const renderCell = useCallback(
@@ -99,6 +110,10 @@ const WalletTransaction = () => {
                   variant="light"
                   color="danger"
                   className="cursor-pointer active:opacity-50"
+                  onPress={() => {
+                    onOpenDelete();
+                    setSelectedWalletTransaction(walletTransaction?.id);
+                  }}
                 >
                   <FiTrash />
                 </Button>
@@ -114,6 +129,14 @@ const WalletTransaction = () => {
 
   return (
     <>
+      <ModalDelete
+        isOpen={isOpenDelete}
+        onClose={onCloseDelete}
+        onOpenChange={onOpenChangeDelete}
+        selectedWalletTransaction={selectedWalletTransaction}
+        setSelectedWalletTransaction={setSelectedWalletTransaction}
+      />
+
       <ModalDetail
         isOpen={isOpenDetail}
         onClose={onCloseDetail}
