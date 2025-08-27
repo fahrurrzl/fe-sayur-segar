@@ -24,4 +24,10 @@ export default {
         Authorization: `Bearer ${token}`,
       },
     }),
+  adminDelete: (id: string, token: string) =>
+    instance.delete(`${endpoint.PRODUCT}/admin/${id}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }),
 };
