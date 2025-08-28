@@ -1,6 +1,7 @@
 import instance from "@/lib/axios";
 import endpoint from "./endpoint";
 import { TLogin, TRegister, TUpdateUser } from "@/types";
+import { TChangePassword } from "@/types/auth";
 
 export default {
   register: (payload: TRegister) =>
@@ -20,6 +21,12 @@ export default {
     }),
   updateUser: (payload: TUpdateUser, token: string) =>
     instance.put(`${endpoint.AUTH}/update`, payload, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }),
+  changePassword: (payload: TChangePassword, token: string) =>
+    instance.put(`${endpoint.AUTH}/change-password`, payload, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
