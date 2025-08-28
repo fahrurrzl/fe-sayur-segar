@@ -17,8 +17,8 @@ const RegisterSuccess = () => {
             Pendaftaran Berhasil!
           </h1>
           <p className="text-base text-foreground-600">
-            Akun Anda telah berhasil dibuat. Selamat datang di keluarga besar
-            kami!
+            Akun Anda telah berhasil dibuat. Silahkan cek email untuk
+            mengaktifkan akun!
           </p>
         </CardHeader>
         <CardBody className="space-y-4">
@@ -30,15 +30,6 @@ const RegisterSuccess = () => {
           </div>
 
           <div className="space-y-3">
-            <Button
-              className="w-full text-white"
-              onPress={() => router.push("/auth/login")}
-              color="success"
-            >
-              Masuk ke Akun
-              <FiArrowRight className="ml-2 h-4 w-4" />
-            </Button>
-
             <Button
               variant="bordered"
               className="w-full"
