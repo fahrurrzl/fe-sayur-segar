@@ -31,4 +31,8 @@ export default {
         Authorization: `Bearer ${token}`,
       },
     }),
+  activation: (code: string) =>
+    instance.post(`${endpoint.AUTH}/activation?code=${code}`, {
+      code,
+    }),
 };

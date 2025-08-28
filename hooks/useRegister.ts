@@ -37,8 +37,8 @@ const useRegister = () => {
   const { mutate: mutateRegister, isPending: isPendingRegister } = useMutation({
     mutationFn: registerService,
     onSuccess: () => {
-      reset();
       router.push("/auth/register-success");
+      reset();
     },
     onError: (error) => {
       console.log(error);
