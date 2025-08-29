@@ -50,7 +50,7 @@ export const Navbar = () => {
       isMenuOpen={isMenuOpen}
       onMenuOpenChange={setIsMenuOpen}
     >
-      <NavbarContent className="" justify="start">
+      <NavbarContent justify="start">
         <NavbarBrand as="li" className="gap-3 max-w-fit">
           <NextLink className="flex justify-start items-center gap-2" href="/">
             <Image
@@ -101,8 +101,8 @@ export const Navbar = () => {
         </ul>
       </NavbarContent>
 
-      <NavbarContent className="hidden sm:flex" justify="end">
-        <NavbarItem className="hidden sm:flex gap-2">
+      <NavbarContent className="hidden lg:flex" justify="end">
+        <NavbarItem className="hidden lg:flex gap-2">
           <ThemeSwitch />
         </NavbarItem>
 
@@ -141,7 +141,7 @@ export const Navbar = () => {
           </NavbarItem>
         ) : null}
 
-        <NavbarItem className="md:flex">
+        <NavbarItem className="hidden lg:flex">
           {status === "authenticated" ? (
             <Dropdown placement="bottom-start" radius="sm">
               <DropdownTrigger>
@@ -194,7 +194,13 @@ export const Navbar = () => {
       </NavbarContent>
 
       {/* Mobile */}
-      <NavbarContent className="sm:hidden flex pl-4" justify="end">
+      <NavbarContent className="lg:hidden flex pl-4" justify="end">
+        {/* Theme Switch */}
+        <NavbarMenuItem>
+          <div className="flex items-center justify-center cursor-pointer text-slate-600">
+            <ThemeSwitch />
+          </div>
+        </NavbarMenuItem>
         <NavbarItem>
           {status === "authenticated" ? (
             dataCarts?.data?._count.items > 0 ? (
@@ -234,7 +240,7 @@ export const Navbar = () => {
         </NavbarItem>
         <NavbarMenuToggle
           aria-label={isMenuOpen ? "Close menu" : "Open menu"}
-          className="sm:hidden"
+          className="lg:hidden"
         />
       </NavbarContent>
 
@@ -244,9 +250,18 @@ export const Navbar = () => {
           {/* Navigation items */}
           {siteConfig.navItems
             .filter((item) => {
-              // Hide Dashboard if user is not authenticated
-              if (item.href === "/dashboard" && status !== "authenticated") {
-                return false;
+              if (item.href === "/admin/dashboard") {
+                return (
+                  status === "authenticated" &&
+                  session?.user?.role === "superadmin"
+                );
+              }
+
+              if (item.href === "/dashboard") {
+                return (
+                  status === "authenticated" &&
+                  session?.user?.role !== "superadmin"
+                );
               }
               return true;
             })
@@ -265,14 +280,6 @@ export const Navbar = () => {
                 </NextLink>
               </NavbarMenuItem>
             ))}
-
-          {/* Theme Switch */}
-          <NavbarMenuItem>
-            <div className="flex items-center gap-2">
-              <span className="text-sm">Theme:</span>
-              <ThemeSwitch />
-            </div>
-          </NavbarMenuItem>
 
           {/* Authentication */}
           <NavbarMenuItem>
