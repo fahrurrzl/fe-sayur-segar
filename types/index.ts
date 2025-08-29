@@ -30,7 +30,7 @@ export type TSeller = {
   user?: {
     name: string;
     email: string;
-    image?: string;
+    imageUrl?: string;
     phone?: string;
   };
 };

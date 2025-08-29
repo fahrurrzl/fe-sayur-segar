@@ -86,7 +86,7 @@ const Seller = () => {
         case "actions":
           return (
             <div className="relative flex items-center justify-center gap-2">
-              <Tooltip color="primary" content="Ubah produk">
+              <Tooltip color="primary" content="Detail Penjual">
                 <Button
                   isIconOnly
                   size="sm"
@@ -101,7 +101,7 @@ const Seller = () => {
                   <FiEye />
                 </Button>
               </Tooltip>
-              <Tooltip color="danger" content="Hapus produk">
+              <Tooltip color="danger" content="Hapus Penjual">
                 <Button
                   isIconOnly
                   size="sm"

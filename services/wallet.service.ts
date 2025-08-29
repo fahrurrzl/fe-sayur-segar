@@ -8,4 +8,10 @@ export default {
         Authorization: `Bearer ${token}`,
       },
     }),
+  getBalance: (token: string) =>
+    instance.get(`${endpoint.WALLET}/balance`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }),
 };

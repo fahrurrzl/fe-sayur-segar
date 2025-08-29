@@ -47,6 +47,9 @@ const useTransfer = () => {
       queryClient.invalidateQueries({
         queryKey: ["wallet-transaction-by-id", data?.data?.referenceId],
       });
+      queryClient.invalidateQueries({
+        queryKey: ["balance"],
+      });
     },
     onError: (error) => {
       console.log(error);
