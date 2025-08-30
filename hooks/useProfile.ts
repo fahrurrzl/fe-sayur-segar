@@ -1,6 +1,6 @@
 import { updateUserSchema } from "@/schemas/update-user.schema";
 import authService from "@/services/auth.service";
-import { TUpdateUser } from "@/types";
+import { IUpdateUser } from "@/types/auth";
 import { addToast } from "@heroui/react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
@@ -22,6 +22,10 @@ const useProfile = () => {
       email: "",
       address: "",
       phone: "",
+      username: "",
+      gender: "",
+      birthDate: "",
+      photo: "",
     },
   });
 
@@ -42,7 +46,7 @@ const useProfile = () => {
   });
 
   // update user
-  const updateUserService = async (payload: TUpdateUser) => {
+  const updateUserService = async (payload: IUpdateUser) => {
     const res = await authService.updateUser(
       payload,
       session?.user?.token as string
@@ -65,6 +69,10 @@ const useProfile = () => {
           name: updatedUser.name,
           email: updatedUser.email,
           role: updatedUser.role,
+          username: updatedUser.username,
+          gender: updatedUser.gender,
+          birthDate: updatedUser.birthDate,
+          photo: updatedUser.photo,
         });
         queryClient.invalidateQueries({ queryKey: ["user"] });
       },
@@ -78,7 +86,7 @@ const useProfile = () => {
       },
     });
 
-  const handleUpdateUser = (payload: TUpdateUser) => mutateUpdateUser(payload);
+  const handleUpdateUser = (payload: IUpdateUser) => mutateUpdateUser(payload);
 
   return {
     // form

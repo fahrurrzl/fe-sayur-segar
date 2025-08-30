@@ -1,5 +1,5 @@
 import { loginSchema } from "@/schemas/login.schema";
-import { TLogin } from "@/types";
+import { TLogin } from "@/types/auth";
 import { addToast } from "@heroui/react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";

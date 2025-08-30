@@ -6,6 +6,10 @@ export const regsiterSchema = z
       .string()
       .nonempty({ message: "Silahkan isi nama Anda" })
       .min(3, { message: "Nama minimal 3 karakter" }),
+    username: z
+      .string()
+      .nonempty({ message: "Silahkan isi username Anda" })
+      .min(3, { message: "Username minimal 3 karakter" }),
     email: z
       .string()
       .email({ message: "Silahkan isi email yang valid" })

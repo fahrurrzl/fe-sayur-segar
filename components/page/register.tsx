@@ -68,6 +68,27 @@ const Register = () => {
 
             <div className="space-y-1">
               <Controller
+                name="username"
+                control={control}
+                render={({ field }) => (
+                  <Input
+                    {...field}
+                    variant="bordered"
+                    label="Username"
+                    type="text"
+                    placeholder="Masukkan username"
+                    autoFocus
+                    isInvalid={!!errors.username}
+                  />
+                )}
+              />
+              {errors.username && (
+                <p className="text-danger text-xs">{errors.username.message}</p>
+              )}
+            </div>
+
+            <div className="space-y-1">
+              <Controller
                 name="email"
                 control={control}
                 render={({ field }) => (

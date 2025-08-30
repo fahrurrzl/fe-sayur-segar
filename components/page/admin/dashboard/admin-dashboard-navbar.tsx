@@ -3,15 +3,16 @@
 import { Button } from "@heroui/button";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { HiUsers } from "react-icons/hi";
 import { LuBox, LuWallet } from "react-icons/lu";
-import { MdCategory, MdDashboard } from "react-icons/md";
+import { MdCategory, MdOutlineDashboard } from "react-icons/md";
+import { TbWeight } from "react-icons/tb";
+import { HiOutlineUsers } from "react-icons/hi2";
 
 const menuItems = [
   {
     name: "Dashboard",
     href: "/admin/dashboard",
-    icon: MdDashboard,
+    icon: MdOutlineDashboard,
   },
   {
     name: "Kelola Kategori",
@@ -19,9 +20,14 @@ const menuItems = [
     icon: MdCategory,
   },
   {
+    name: "Kelola Unit",
+    href: "/admin/dashboard/unit",
+    icon: TbWeight,
+  },
+  {
     name: "Kelola Penjual",
     href: "/admin/dashboard/seller",
-    icon: HiUsers,
+    icon: HiOutlineUsers,
   },
   {
     name: "Kelola Produk",
