@@ -1,11 +1,16 @@
 "use client";
 
 import useProfile from "@/hooks/useProfile";
+import {
+  calendarDateToString,
+  stringToCalendarDate,
+} from "@/utils/stringToCalendarDate";
 import { Button } from "@heroui/button";
 import {
   Card,
   CardBody,
   CardHeader,
+  DatePicker,
   Input,
   Select,
   SelectItem,
@@ -16,7 +21,8 @@ import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import { Controller } from "react-hook-form";
 import { FaUser } from "react-icons/fa";
-import { FiMail, FiPhone } from "react-icons/fi";
+import { FiCalendar, FiMail, FiPhone } from "react-icons/fi";
+import { I18nProvider } from "@react-aria/i18n";
 
 const ProfileForm = () => {
   const router = useRouter();
@@ -38,7 +44,11 @@ const ProfileForm = () => {
       setValue("phone", dataUser?.phone || "");
       setValue("username", dataUser?.username || "");
       setValue("gender", dataUser?.gender || "");
-      setValue("birthDate", dataUser?.birthDate || "");
+      const birthDate = dataUser?.birthDate
+        ? dataUser.birthDate.split("T")[0]
+        : "";
+
+      setValue("birthDate", birthDate);
       setValue("photo", dataUser?.photo || "");
     }
   }, [dataUser]);
@@ -79,6 +89,8 @@ const ProfileForm = () => {
                             <FaUser className="h-4 w-4 text-gray-400" />
                           }
                           isRequired
+                          isInvalid={!!errors.name}
+                          errorMessage={errors.name?.message}
                         />
                       )}
                     />
@@ -100,6 +112,8 @@ const ProfileForm = () => {
                             <FaUser className="h-4 w-4 text-gray-400" />
                           }
                           isRequired
+                          isInvalid={!!errors.username}
+                          errorMessage={errors.username?.message}
                         />
                       )}
                     />
@@ -116,14 +130,38 @@ const ProfileForm = () => {
                           {...field}
                           label="Jenis Kelamin"
                           variant="bordered"
-                          items={[
-                            { value: "male", label: "Laki-laki" },
-                            { value: "female", label: "Perempuan" },
-                          ]}
+                          selectedKeys={field.value ? [field.value] : []}
+                          isInvalid={!!errors.gender}
+                          errorMessage={errors.gender?.message}
                         >
-                          <SelectItem>Laki-laki</SelectItem>
-                          <SelectItem>Perempuan</SelectItem>
+                          <SelectItem key="male">Laki-laki</SelectItem>
+                          <SelectItem key="female">Perempuan</SelectItem>
                         </Select>
+                      )}
+                    />
+                  </Skeleton>
+                </div>
+
+                <div className="grid grid-cols-1 gap-6">
+                  <Skeleton className="rounded-lg" isLoaded={!!dataUser}>
+                    <Controller
+                      name="birthDate"
+                      control={control}
+                      render={({ field }) => (
+                        <I18nProvider locale="id">
+                          <DatePicker
+                            {...field}
+                            startContent={<FiCalendar />}
+                            label="Tanggal Lahir"
+                            variant="bordered"
+                            value={stringToCalendarDate(field.value)}
+                            onChange={(val) =>
+                              field.onChange(calendarDateToString(val))
+                            }
+                            isInvalid={!!errors.birthDate}
+                            errorMessage={errors.birthDate?.message}
+                          />
+                        </I18nProvider>
                       )}
                     />
                   </Skeleton>
@@ -150,6 +188,8 @@ const ProfileForm = () => {
                             <FiMail className="h-4 w-4 text-gray-400" />
                           }
                           isRequired
+                          isInvalid={!!errors.email}
+                          errorMessage={errors.email?.message}
                         />
                       )}
                     />
@@ -168,6 +208,8 @@ const ProfileForm = () => {
                           startContent={
                             <FiPhone className="h-4 w-4 text-gray-400" />
                           }
+                          isInvalid={!!errors.phone}
+                          errorMessage={errors.phone?.message}
                         />
                       )}
                     />
@@ -184,6 +226,8 @@ const ProfileForm = () => {
                           placeholder="Masukkan alamat lengkap"
                           minRows={3}
                           variant="bordered"
+                          isInvalid={!!errors.address}
+                          errorMessage={errors.address?.message}
                         />
                       )}
                     />
