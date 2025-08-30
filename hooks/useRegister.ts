@@ -3,9 +3,9 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import authService from "@/services/auth.service";
 import { useMutation } from "@tanstack/react-query";
-import { TRegister } from "@/types";
 import { useRouter } from "next/navigation";
 import { regsiterSchema } from "@/schemas/register.schema";
+import { IRegister } from "@/types/auth";
 
 const useRegister = () => {
   const [isVisiblePassword, setIsVisiblePassword] = useState(false);
@@ -24,6 +24,7 @@ const useRegister = () => {
     resolver: zodResolver(regsiterSchema),
     defaultValues: {
       name: "",
+      username: "",
       email: "",
       address: "",
       phone: "",
@@ -32,7 +33,7 @@ const useRegister = () => {
     },
   });
 
-  const registerService = async (data: TRegister) => authService.register(data);
+  const registerService = async (data: IRegister) => authService.register(data);
 
   const { mutate: mutateRegister, isPending: isPendingRegister } = useMutation({
     mutationFn: registerService,
@@ -45,7 +46,7 @@ const useRegister = () => {
     },
   });
 
-  const handleRegister = (data: TRegister) => mutateRegister(data);
+  const handleRegister = (data: IRegister) => mutateRegister(data);
   return {
     // state
     isVisiblePassword,

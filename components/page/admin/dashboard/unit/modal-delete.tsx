@@ -1,4 +1,4 @@
-import useCategory from "@/hooks/useCateogry";
+import useUnit from "@/hooks/useUnit";
 import {
   Button,
   Modal,
@@ -13,29 +13,26 @@ interface PropTypes {
   isOpen: boolean;
   onClose: () => void;
   onOpenChange: (open: boolean) => void;
-  selectedCategory: string;
-  setSelectedCategory: (id: string) => void;
+  selectedUnit: string;
+  setSelectedUnit: (id: string) => void;
 }
 
 const ModalDelete = ({
   isOpen,
   onClose,
   onOpenChange,
-  selectedCategory,
-  setSelectedCategory,
+  selectedUnit,
+  setSelectedUnit,
 }: PropTypes) => {
-  const {
-    handleDeleteCategory,
-    isPendingDeleteCategory,
-    isSuccessDeleteCategory,
-  } = useCategory();
+  const { handleDeleteUnit, isPendingDeleteUnit, isSuccessDeleteUnit } =
+    useUnit();
 
   useEffect(() => {
-    if (isSuccessDeleteCategory) {
+    if (isSuccessDeleteUnit) {
       onClose();
-      setSelectedCategory("");
+      setSelectedUnit("");
     }
-  }, [isSuccessDeleteCategory]);
+  }, [isSuccessDeleteUnit]);
 
   return (
     <Modal isOpen={isOpen} onOpenChange={onOpenChange} onClose={onClose}>
@@ -43,10 +40,10 @@ const ModalDelete = ({
         {(onClose) => (
           <>
             <ModalHeader className="flex flex-col gap-1">
-              Hapus Kategori
+              Hapus Unit
             </ModalHeader>
             <ModalBody>
-              <p>Apakah Anda yakin ingin menghapus kategori ini?</p>
+              <p>Apakah Anda yakin ingin menghapus unit ini?</p>
             </ModalBody>
             <ModalFooter>
               <Button color="danger" variant="light" onPress={onClose}>
@@ -55,9 +52,9 @@ const ModalDelete = ({
               <Button
                 color="success"
                 className="text-white"
-                onPress={() => handleDeleteCategory(selectedCategory)}
-                isLoading={isPendingDeleteCategory}
-                disabled={isPendingDeleteCategory}
+                onPress={() => handleDeleteUnit(selectedUnit)}
+                isLoading={isPendingDeleteUnit}
+                disabled={isPendingDeleteUnit}
               >
                 Hapus
               </Button>

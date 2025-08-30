@@ -4,20 +4,6 @@ export type IconSvgProps = SVGProps<SVGSVGElement> & {
   size?: number;
 };
 
-export type TRegister = {
-  name: string;
-  email: string;
-  address: string;
-  phone: string;
-  password: string;
-  confirmPassword: string;
-};
-
-export type TLogin = {
-  email: string;
-  password: string;
-};
-
 export type TSeller = {
   id?: string;
   storeName: string;
@@ -89,13 +75,6 @@ export type TCartItem = {
   productId: string;
   quantity: number;
   updatedAt: string; // ISO date string
-};
-
-export type TUpdateUser = {
-  name: string;
-  email: string;
-  address: string;
-  phone: string;
 };
 
 export type TOrderInput = {
