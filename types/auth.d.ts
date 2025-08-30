@@ -11,7 +11,7 @@ export interface IRegister {
 export interface IUpdateUser
   extends Omit<IRegister, "password" | "confirmPassword"> {
   gender: string;
-  birthDate: string;
+  birthDate: CalendarDate | null;
   photo?: string;
 }
 
