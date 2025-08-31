@@ -1,5 +1,5 @@
 import cartService from "@/services/cart.service";
-import { TCart } from "@/types";
+import { TCart } from "@/types/cart";
 import { addToast } from "@heroui/react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useSession } from "next-auth/react";

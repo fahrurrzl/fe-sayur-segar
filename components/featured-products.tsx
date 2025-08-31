@@ -2,9 +2,9 @@
 
 import useProduct from "@/hooks/useProduct";
 import ProductCard from "./product-card";
-import { TProduct } from "@/types";
 import { Button, Skeleton } from "@heroui/react";
 import Link from "next/link";
+import { TProduct } from "@/types/product";
 
 const FeatureProduct = () => {
   const { dataProducts, isLoadingProducts } = useProduct();

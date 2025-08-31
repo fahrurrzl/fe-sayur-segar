@@ -1,7 +1,7 @@
 "use client";
 
 import useCategory from "@/hooks/useCateogry";
-import { TCategory } from "@/types";
+import { TCategory } from "@/types/category";
 import { Card, CardBody } from "@heroui/react";
 import Image from "next/image";
 import Link from "next/link";

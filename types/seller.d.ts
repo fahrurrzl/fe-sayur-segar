@@ -18,3 +18,11 @@ export type TSeller = {
     address?: string;
   };
 };
+
+export interface Seller {
+  id: string;
+  userId: string;
+  storeName: string;
+  storeLocation: string;
+  verified: boolean;
+}

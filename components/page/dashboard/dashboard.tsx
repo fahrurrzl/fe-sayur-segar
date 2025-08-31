@@ -3,7 +3,7 @@
 import useOrder from "@/hooks/useOrder";
 import useProfile from "@/hooks/useProfile";
 import useSeller from "@/hooks/useSeller";
-import { TProductResponse } from "@/types";
+import { TProductResponse } from "@/types/product";
 import { rupiahFormat } from "@/utils/rupiahFormat";
 import {
   Alert,

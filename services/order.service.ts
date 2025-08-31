@@ -1,6 +1,6 @@
 import instance from "@/lib/axios";
-import { TOrderInput } from "@/types";
 import endpoint from "./endpoint";
+import { TOrderInput } from "@/types/order";
 
 export default {
   create: (payload: TOrderInput, token: string) =>

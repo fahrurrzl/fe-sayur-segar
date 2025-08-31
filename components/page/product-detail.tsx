@@ -1,7 +1,7 @@
 "use client";
 
 import useCart from "@/hooks/useCart";
-import { TProduct } from "@/types";
+import { TProduct } from "@/types/product";
 import { rupiahFormat } from "@/utils/rupiahFormat";
 import {
   Button,

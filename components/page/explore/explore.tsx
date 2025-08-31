@@ -4,7 +4,8 @@ import { SearchIcon } from "@/components/icons";
 import ProductCard from "@/components/product-card";
 import useCategory from "@/hooks/useCateogry";
 import useProduct from "@/hooks/useProduct";
-import { TCategory, TProduct } from "@/types";
+import { TCategory } from "@/types/category";
+import { TProduct } from "@/types/product";
 import {
   Card,
   CardBody,

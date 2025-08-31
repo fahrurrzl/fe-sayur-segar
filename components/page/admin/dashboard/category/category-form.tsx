@@ -2,7 +2,7 @@
 
 import InputFile from "@/components/input-file";
 import useCategory from "@/hooks/useCateogry";
-import { TCategory } from "@/types";
+import { TCategory } from "@/types/category";
 import cn from "@/utils/cn";
 import { Button } from "@heroui/button";
 import { Card, CardBody, CardHeader, Input } from "@heroui/react";

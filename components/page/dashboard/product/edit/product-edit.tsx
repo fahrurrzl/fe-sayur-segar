@@ -1,5 +1,5 @@
+import { TProductResponse } from "@/types/product";
 import ProductForm from "../product-form";
-import { TProductResponse } from "@/types";
 
 interface PropTypes {
   data: TProductResponse;
