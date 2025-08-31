@@ -103,9 +103,14 @@ const AdminDashboard = () => {
           </CardHeader>
           <CardBody>
             <div className="flex items-center justify-center lg:justify-between flex-col-reverse lg:flex-row gap-2 lg:gap-4">
-              <p className="text-2xl font-bold text-gray-900 mt-1 text-center lg:text-start">
-                {dataCategories?.length}
-              </p>
+              <Skeleton
+                isLoaded={!!dataCategories?.length}
+                className="rounded-md w-24 h-9"
+              >
+                <p className="text-2xl font-bold text-gray-900 mt-1 text-center lg:text-start">
+                  {dataCategories?.length}
+                </p>
+              </Skeleton>
               <div
                 className={`w-12 h-12 bg-warning rounded-lg flex items-center justify-center`}
               >
@@ -122,9 +127,14 @@ const AdminDashboard = () => {
           </CardHeader>
           <CardBody>
             <div className="flex items-center justify-center lg:justify-between flex-col-reverse lg:flex-row gap-2 lg:gap-4">
-              <p className="text-2xl font-bold text-gray-900 mt-1 text-center lg:text-start">
-                {dataProducts?.data?.length}
-              </p>
+              <Skeleton
+                isLoaded={!!dataProducts?.data?.length}
+                className="rounded-md w-24 h-9"
+              >
+                <p className="text-2xl font-bold text-gray-900 mt-1 text-center lg:text-start">
+                  {dataProducts?.data?.length}
+                </p>
+              </Skeleton>
               <div
                 className={`w-12 h-12 bg-primary rounded-lg flex items-center justify-center`}
               >
@@ -141,9 +151,14 @@ const AdminDashboard = () => {
           </CardHeader>
           <CardBody>
             <div className="flex items-center justify-center lg:justify-between flex-col-reverse lg:flex-row gap-2 lg:gap-4">
-              <p className="text-2xl font-bold text-gray-900 mt-1 text-center lg:text-start">
-                {dataAllSeller?.data?.length}
-              </p>
+              <Skeleton
+                isLoaded={!!dataAllSeller?.data?.length}
+                className="rounded-md w-24 h-9"
+              >
+                <p className="text-2xl font-bold text-gray-900 mt-1 text-center lg:text-start">
+                  {dataAllSeller?.data?.length}
+                </p>
+              </Skeleton>
               <div
                 className={`w-12 h-12 bg-secondary rounded-lg flex items-center justify-center`}
               >
