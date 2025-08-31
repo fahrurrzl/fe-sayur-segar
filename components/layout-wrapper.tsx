@@ -32,6 +32,7 @@ export default function LayoutWrapper({
     "/admin/dashboard/product",
     "/admin/dashboard/order",
     "/admin/dashboard/category/create",
+    `/admin/dashboard/category/edit/${id}`,
     "/admin/dashboard/unit",
     "/admin/dashboard/unit/create",
     `/admin/dashboard/unit/edit/${id}`,
