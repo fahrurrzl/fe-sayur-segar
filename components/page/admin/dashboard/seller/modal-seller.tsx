@@ -1,7 +1,9 @@
 "use client";
 
+import ButtonWhatsapp from "@/components/button-whatsapp";
 import useSeller from "@/hooks/useSeller";
 import { TSeller } from "@/types/seller";
+import { formatDate } from "@/utils/dateFormat";
 import {
   Button,
   Card,
@@ -94,7 +96,11 @@ const ModalSeller = ({
                 />
                 <InfoItem
                   label="Tanggal Lahir"
-                  value={seller?.user?.birthDate}
+                  value={
+                    formatDate(
+                      seller?.user?.birthDate?.split("T")[0] as string
+                    ).split(",")[0]
+                  }
                 />
                 <InfoItem label="Email" value={seller?.user?.email} />
                 <InfoItem label="No. Telp" value={seller?.user?.phone} />
@@ -155,15 +161,11 @@ const ModalSeller = ({
                         Verifikasi
                       </Button>
 
-                      <Button
+                      <ButtonWhatsapp
                         variant="shadow"
-                        size="sm"
-                        color="success"
-                        className="text-white"
-                        startContent={<MdWhatsapp />}
-                      >
-                        WhatsApp
-                      </Button>
+                        phone={seller?.user?.phone as string}
+                        message={`Hallo, ${seller?.user?.name}. Mohon maaf lapak Anda belum bisa kami verifikasi karena data yang Anda berikan tidak valid. Silahkan periksa kembali data yang Anda berikan.`}
+                      />
                     </div>
                   )}
                 </div>

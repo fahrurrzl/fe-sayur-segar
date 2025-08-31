@@ -20,9 +20,10 @@ import {
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import { Controller } from "react-hook-form";
-import { FaUser } from "react-icons/fa";
+import { FaGenderless, FaUser, FaUserLock } from "react-icons/fa";
 import { FiCalendar, FiMail, FiPhone } from "react-icons/fi";
 import { I18nProvider } from "@react-aria/i18n";
+import { MdLocationPin } from "react-icons/md";
 
 const ProfileForm = () => {
   const router = useRouter();
@@ -109,7 +110,7 @@ const ProfileForm = () => {
                           placeholder="Masukkan username"
                           disabled
                           startContent={
-                            <FaUser className="h-4 w-4 text-gray-400" />
+                            <FaUserLock className="h-4 w-4 text-gray-400" />
                           }
                           isRequired
                           isInvalid={!!errors.username}
@@ -130,6 +131,9 @@ const ProfileForm = () => {
                           {...field}
                           label="Jenis Kelamin"
                           variant="bordered"
+                          startContent={
+                            <FaGenderless className="h-4 w-4 text-gray-400" />
+                          }
                           selectedKeys={field.value ? [field.value] : []}
                           isInvalid={!!errors.gender}
                           errorMessage={errors.gender?.message}
@@ -203,13 +207,23 @@ const ProfileForm = () => {
                         <Input
                           {...field}
                           label="Nomor Telepon"
-                          placeholder="Masukkan nomor telepon"
+                          placeholder="8123456789"
                           variant="bordered"
                           startContent={
                             <FiPhone className="h-4 w-4 text-gray-400" />
                           }
                           isInvalid={!!errors.phone}
                           errorMessage={errors.phone?.message}
+                          onChange={(e) => {
+                            let val = e.target.value;
+
+                            // kalau user hapus +62, tambahkan lagi
+                            if (!val.startsWith("+62")) {
+                              val = "+62" + val.replace(/^(\+62|62|0)/, "");
+                            }
+
+                            field.onChange(val);
+                          }}
                         />
                       )}
                     />
@@ -226,6 +240,9 @@ const ProfileForm = () => {
                           placeholder="Masukkan alamat lengkap"
                           minRows={3}
                           variant="bordered"
+                          startContent={
+                            <MdLocationPin className="h-4 w-4 text-gray-400" />
+                          }
                           isInvalid={!!errors.address}
                           errorMessage={errors.address?.message}
                         />
