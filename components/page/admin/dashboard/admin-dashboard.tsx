@@ -78,7 +78,7 @@ const AdminDashboard = () => {
             <div className="flex items-center justify-center lg:justify-between flex-col-reverse lg:flex-row gap-2 lg:gap-4">
               <Skeleton
                 isLoaded={!!dataBalance?.data?.balance}
-                className="w-48 rounded-md"
+                className="rounded-md"
               >
                 <p className="text-2xl font-bold text-gray-900 mt-1 text-center lg:text-start">
                   {rupiahFormat(dataBalance?.data?.balance)}
