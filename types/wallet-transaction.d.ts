@@ -15,6 +15,7 @@ export interface IWalletTransaction {
       storeLocation: string;
       user: {
         name: string;
+        phone: string;
       };
     };
   };

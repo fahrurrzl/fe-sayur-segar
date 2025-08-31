@@ -14,15 +14,14 @@ import {
   ModalContent,
   ModalFooter,
   ModalHeader,
-  useDisclosure,
 } from "@heroui/react";
 import { BsBank, BsSend } from "react-icons/bs";
 import { FaCreditCard } from "react-icons/fa";
 import { FiUser } from "react-icons/fi";
 import { LuCircleCheck } from "react-icons/lu";
-import { MdWhatsapp } from "react-icons/md";
 import { useEffect } from "react";
 import useTransfer from "@/hooks/useTransfer";
+import ButtonWhatsapp from "@/components/button-whatsapp";
 
 const ModalDetail = ({
   isOpen,
@@ -33,11 +32,6 @@ const ModalDetail = ({
   onClose: () => void;
   walletTransaction: IWalletTransaction | null;
 }) => {
-  const {
-    isOpen: isOpenConfirmTransfer,
-    onOpen: onOpenConfirmTransfer,
-    onClose: onCloseConfirmTransfer,
-  } = useDisclosure();
   const { isSuccessTransfer, handelTransfer, isPendingTransfer } =
     useTransfer();
 
@@ -109,6 +103,10 @@ const ModalDetail = ({
                   <InfoItem
                     label="Nama Lapak"
                     value={walletTransaction?.wallet?.seller?.storeName}
+                  />
+                  <InfoItem
+                    label="No. Telp"
+                    value={walletTransaction?.wallet?.seller?.user?.phone}
                   />
                 </SectionCard>
 
@@ -207,15 +205,15 @@ const ModalDetail = ({
                           Transfer
                         </Button>
 
-                        <Button
+                        <ButtonWhatsapp
                           variant="shadow"
                           size="sm"
-                          color="success"
-                          className="text-white"
-                          startContent={<MdWhatsapp />}
-                        >
-                          WhatsApp
-                        </Button>
+                          phone={
+                            walletTransaction?.wallet?.seller?.user
+                              ?.phone as string
+                          }
+                          message={`Halo ${walletTransaction?.wallet?.seller?.user?.name}, Mohon maaf, saat ini kami belum bisa transfer ke rekening ${walletTransaction?.wallet?.seller?.bankName.toUpperCase()} - ${walletTransaction?.wallet?.seller?.accountNumber} atas nama ${walletTransaction?.wallet?.seller?.accountName.toUpperCase()}. Pastikan rekening yang anda masukkan benar.`}
+                        />
                       </div>
                     )}
                   </div>

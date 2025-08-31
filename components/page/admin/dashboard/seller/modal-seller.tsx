@@ -97,6 +97,7 @@ const ModalSeller = ({
                 <InfoItem
                   label="Tanggal Lahir"
                   value={
+                    seller?.user?.birthDate &&
                     formatDate(
                       seller?.user?.birthDate?.split("T")[0] as string
                     ).split(",")[0]

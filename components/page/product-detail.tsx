@@ -180,9 +180,9 @@ const ProductDetail = ({ product }: { product: TProduct }) => {
                 {description}
               </p>
 
-              <Divider className="my-6" />
+              {/* <Divider className="my-6" /> */}
 
-              <h4 className="font-semibold mb-3">Manfaat Kesehatan</h4>
+              {/* <h4 className="font-semibold mb-3">Manfaat Kesehatan</h4>
               <ul className="space-y-2">
                 {[
                   "Mencegah penyakit jantung",
@@ -194,7 +194,7 @@ const ProductDetail = ({ product }: { product: TProduct }) => {
                     <span className="text-default-600">{benefit}</span>
                   </li>
                 ))}
-              </ul>
+              </ul> */}
             </CardBody>
           </Card>
         </div>
