@@ -64,7 +64,9 @@ const ProductCard = ({ product }: { product: TProductResponse }) => {
               <span className="text-lg font-bold text-success">
                 {rupiahFormat(price)}
               </span>
-              <span className="text-sm text-foreground-500">/pcs</span>
+              <span className="text-sm text-foreground-500">
+                /{product?.Unit?.symbol}
+              </span>
               {/* {discount && (
                 <span className="text-sm text-foreground-500 line-through">
                   Rp {price.toLocaleString("id-ID")}

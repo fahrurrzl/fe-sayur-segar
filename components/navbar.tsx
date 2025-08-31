@@ -152,7 +152,7 @@ export const Navbar = () => {
                     src: `https://ui-avatars.com/api/?name=${session?.user.name}&background=random`,
                   }}
                   className="transition-transform"
-                  description={session?.user.email}
+                  description={`@${session?.user.username}`}
                   name={session?.user.name}
                 />
               </DropdownTrigger>
@@ -295,7 +295,7 @@ export const Navbar = () => {
                       {session?.user.name}
                     </span>
                     <span className="text-xs text-default-500">
-                      {session?.user.email}
+                      @{session?.user.username}
                     </span>
                   </div>
                 </div>

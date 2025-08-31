@@ -22,6 +22,7 @@ import { Controller } from "react-hook-form";
 import cn from "@/utils/cn";
 import { useEffect } from "react";
 import { TProductResponse } from "@/types";
+import useUnit from "@/hooks/useUnit";
 
 interface PropTypes {
   type: "create" | "edit";
@@ -31,6 +32,8 @@ interface PropTypes {
 const ProductForm = ({ type, data }: PropTypes) => {
   const router = useRouter();
   const { dataCategories: categories } = useCategory();
+  const { dataUnits, isLoadingUnits } = useUnit();
+
   const {
     // form
     control,
@@ -56,6 +59,7 @@ const ProductForm = ({ type, data }: PropTypes) => {
       setValue("name", data?.name || "");
       setValue("price", data?.price || 0);
       setValue("stock", data?.stock || 0);
+      setValue("unitId", data?.unitId || "");
       setValue("categoryId", data?.categoryId || "");
       setValue("description", data?.description || "");
       setValue("imageUrl", data?.imageUrl || "");
@@ -173,29 +177,63 @@ const ProductForm = ({ type, data }: PropTypes) => {
                     </p>
                   )}
                 </div>
-                <div className="space-y-1">
-                  <Controller
-                    name="stock"
-                    control={control}
-                    render={({ field }) => (
-                      <Input
-                        {...field}
-                        value={field.value?.toString() || ""}
-                        onChange={(e) =>
-                          field.onChange(Number(e.target.value) || 0)
-                        }
-                        label="Stok Produk"
-                        variant="bordered"
-                        type="number"
-                        isInvalid={!!errors.stock}
-                      />
+
+                <div className="grid grid-cols-2 gap-2">
+                  <div className="space-y-1">
+                    <Controller
+                      name="stock"
+                      control={control}
+                      render={({ field }) => (
+                        <Input
+                          {...field}
+                          value={field.value?.toString() || ""}
+                          onChange={(e) =>
+                            field.onChange(Number(e.target.value) || 0)
+                          }
+                          label="Stok Produk"
+                          variant="bordered"
+                          type="number"
+                          isInvalid={!!errors.stock}
+                        />
+                      )}
+                    />
+                    {errors.stock && (
+                      <p className="text-red-500 text-sm">
+                        {errors.stock.message}
+                      </p>
                     )}
-                  />
-                  {errors.stock && (
-                    <p className="text-red-500 text-sm">
-                      {errors.stock.message}
-                    </p>
-                  )}
+                  </div>
+
+                  <div className="space-y-1">
+                    <Controller
+                      name="unitId"
+                      control={control}
+                      render={({ field }) => (
+                        <Select
+                          {...field}
+                          selectedKeys={field.value ? [field.value] : []}
+                          variant="bordered"
+                          items={dataUnits?.data || []}
+                          label="Satuan Produk"
+                          placeholder="Pilih Satuan"
+                          isInvalid={!!errors?.unitId}
+                          isLoading={isLoadingUnits}
+                          disabled={isLoadingUnits}
+                        >
+                          {(unit: { id: string; symbol: string }) => (
+                            <SelectItem key={unit?.id}>
+                              {unit?.symbol}
+                            </SelectItem>
+                          )}
+                        </Select>
+                      )}
+                    />
+                    {errors.stock && (
+                      <p className="text-red-500 text-sm">
+                        {errors.stock.message}
+                      </p>
+                    )}
+                  </div>
                 </div>
 
                 <div className="space-y-1">

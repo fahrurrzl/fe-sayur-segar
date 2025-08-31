@@ -60,7 +60,8 @@ const Product = () => {
                 Number(cellValue) > 20 ? "text-success" : "text-danger"
               )}
             >
-              {Number(cellValue)}
+              {Number(cellValue)}{" "}
+              {(product?.Unit as { symbol: string })?.symbol}
             </p>
           );
         case "actions":

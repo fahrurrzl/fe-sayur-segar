@@ -101,7 +101,9 @@ const ProductDetail = ({ product }: { product: TProduct }) => {
               <span className="text-3xl font-bold text-fresh">
                 {rupiahFormat(price)}
               </span>
-              <span className="text-lg text-muted-foreground">/{"ikat"}</span>
+              <span className="text-lg text-muted-foreground">
+                /{product?.Unit?.symbol}
+              </span>
               {false && (
                 <span className="text-lg text-muted-foreground line-through">
                   {rupiahFormat(price)}

@@ -3,7 +3,6 @@
 import useCategory from "@/hooks/useCateogry";
 import useProduct from "@/hooks/useProduct";
 import useSeller from "@/hooks/useSeller";
-import { TSeller } from "@/types";
 import {
   Button,
   Card,
@@ -22,6 +21,7 @@ import { rupiahFormat } from "@/utils/rupiahFormat";
 import useWalletTransaction from "@/hooks/useWalletTransaction";
 import { IWalletTransaction } from "@/types/wallet-transaction";
 import ModalDetail from "./wallet-transaction/modal-detail";
+import { TSeller } from "@/types/seller";
 
 const AdminDashboard = () => {
   const { dataCategories } = useCategory();

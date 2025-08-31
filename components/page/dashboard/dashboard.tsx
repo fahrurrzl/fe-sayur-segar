@@ -225,7 +225,7 @@ const Dashboard = () => {
                 {dataSeller?.products
                   ?.filter((product: TProductResponse) => product?.stock < 20)
                   ?.map((product: TProductResponse) => (
-                    <div className="space-y-3">
+                    <div className="space-y-3" key={product?.id}>
                       <div className="flex items-center justify-between py-2">
                         <div className="flex items-center space-x-3">
                           <Image
@@ -246,7 +246,7 @@ const Dashboard = () => {
                         </div>
                         <div className="text-right">
                           <p className="text-danger font-medium">
-                            {product?.stock}
+                            {product?.stock} {product?.Unit?.symbol}
                           </p>
                         </div>
                       </div>

@@ -1,5 +1,4 @@
 import sellerService from "@/services/seller.service";
-import { TSeller } from "@/types";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -10,6 +9,7 @@ import { addToast } from "@heroui/react";
 import { useRouter } from "next/navigation";
 import walletService from "@/services/wallet.service";
 import { useState } from "react";
+import { TSeller } from "@/types/seller";
 
 const useSeller = () => {
   const [sellerId, setSellerId] = useState<string | null>(null);
