@@ -76,9 +76,14 @@ const AdminDashboard = () => {
           </CardHeader>
           <CardBody>
             <div className="flex items-center justify-center lg:justify-between flex-col-reverse lg:flex-row gap-2 lg:gap-4">
-              <p className="text-2xl font-bold text-gray-900 mt-1 text-center lg:text-start">
-                {rupiahFormat(dataBalance?.data?.balance)}
-              </p>
+              <Skeleton
+                isLoaded={!!dataBalance?.data?.balance}
+                className="w-48 rounded-md"
+              >
+                <p className="text-2xl font-bold text-gray-900 mt-1 text-center lg:text-start">
+                  {rupiahFormat(dataBalance?.data?.balance)}
+                </p>
+              </Skeleton>
               <div
                 className={`w-12 h-12 bg-success rounded-lg flex items-center justify-center`}
               >
