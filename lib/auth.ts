@@ -53,6 +53,7 @@ export const authOptions: AuthOptions = {
       if (user) {
         token.id = user.id;
         token.email = user.email;
+        token.username = user.username;
         token.name = user.name;
         token.role = user.role;
         token.token = (user as any).token;
@@ -61,7 +62,7 @@ export const authOptions: AuthOptions = {
       // 🔹 Kalau ada update dari client → replace field yang dikirim
       if (trigger === "update" && session) {
         if (session.name) token.name = session.name;
-        if (session.email) token.email = session.email;
+        if (session.username) token.username = session.username;
         if ((session as any).role) token.role = (session as any).role;
       }
 
@@ -72,6 +73,7 @@ export const authOptions: AuthOptions = {
       if (token) {
         session.user.id = token.id as string;
         session.user.email = token.email as string;
+        session.user.username = token.username as string;
         session.user.name = token.name as string;
         session.user.role = token.role as string;
         (session.user as any).token = token.token as string;

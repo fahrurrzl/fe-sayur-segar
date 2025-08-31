@@ -12,8 +12,13 @@ export const updateUserSchema = z.object({
     .transform((val) => new Date(val))
     .refine(
       (date) => {
+        if (!(date instanceof Date) || isNaN(date.getTime())) return false;
         const today = new Date();
-        const age = today.getFullYear() - date.getFullYear();
+        let age = today.getFullYear() - date.getFullYear();
+        const m = today.getMonth() - date.getMonth();
+        if (m < 0 || (m === 0 && today.getDate() < date.getDate())) {
+          age--;
+        }
         return age >= 17;
       },
       { message: "Umur minimal 17 tahun" }

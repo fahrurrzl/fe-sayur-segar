@@ -1,7 +1,7 @@
 "use client";
 
 import useSeller from "@/hooks/useSeller";
-import { TSeller } from "@/types";
+import { TSeller } from "@/types/seller";
 import {
   Button,
   Card,
@@ -78,8 +78,27 @@ const ModalSeller = ({
               {/* Informasi Penjual */}
               <SectionCard icon={<FiUser />} title="Informasi Penjual">
                 <InfoItem label="Nama" value={seller?.user?.name} />
+                <InfoItem
+                  label="Username"
+                  value={`@${seller?.user?.username}`}
+                />
+                <InfoItem
+                  label="Gender"
+                  value={
+                    seller?.user?.gender === "female"
+                      ? "Perempuan"
+                      : seller?.user?.gender === "male"
+                        ? "Laki-laki"
+                        : "-"
+                  }
+                />
+                <InfoItem
+                  label="Tanggal Lahir"
+                  value={seller?.user?.birthDate}
+                />
                 <InfoItem label="Email" value={seller?.user?.email} />
                 <InfoItem label="No. Telp" value={seller?.user?.phone} />
+                <InfoItem label="Alamat" value={seller?.user?.address} />
               </SectionCard>
 
               {/* Informasi Lapak */}
@@ -91,8 +110,14 @@ const ModalSeller = ({
 
               {/* Informasi Bank */}
               <SectionCard icon={<FaCreditCard />} title="Informasi Bank">
-                <InfoItem label="Nama Bank" value={seller?.bankName} />
-                <InfoItem label="Nama Pemilik" value={seller?.accountName} />
+                <InfoItem
+                  label="Nama Bank"
+                  value={seller?.bankName.toUpperCase()}
+                />
+                <InfoItem
+                  label="Nama Pemilik"
+                  value={seller?.accountName.toUpperCase()}
+                />
                 <InfoItem
                   label="Nomor Rekening"
                   value={seller?.accountNumber}

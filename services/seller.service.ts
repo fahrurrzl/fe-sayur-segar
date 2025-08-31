@@ -1,6 +1,6 @@
 import instance from "@/lib/axios";
 import endpoint from "./endpoint";
-import { TSeller } from "@/types";
+import { TSeller } from "@/types/seller";
 
 export default {
   create: (payload: TSeller, token: string) =>

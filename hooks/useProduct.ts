@@ -81,6 +81,7 @@ const useProduct = () => {
       name: "",
       price: 0,
       stock: 0,
+      unitId: "",
       categoryId: "",
       description: "",
       imageUrl: "",
