@@ -113,11 +113,21 @@ const Register = () => {
               render={({ field }) => (
                 <Input
                   {...field}
-                  variant="bordered"
                   label="Nomor Telepon"
-                  type="tel"
-                  placeholder="08xxxxxxxxxx"
+                  placeholder="+62 8123456789"
+                  variant="bordered"
                   isInvalid={!!errors.phone}
+                  errorMessage={errors.phone?.message}
+                  onChange={(e) => {
+                    let val = e.target.value;
+
+                    // kalau user hapus +62, tambahkan lagi
+                    if (!val.startsWith("+62")) {
+                      val = "+62" + val.replace(/^(\+62|62|0)/, "");
+                    }
+
+                    field.onChange(val);
+                  }}
                 />
               )}
             />
