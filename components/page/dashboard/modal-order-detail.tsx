@@ -1,5 +1,5 @@
 import useOrder from "@/hooks/useOrder";
-import { OrderResponse } from "@/types";
+import { OrderResponse } from "@/types/order";
 import { rupiahFormat } from "@/utils/rupiahFormat";
 import {
   Button,

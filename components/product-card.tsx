@@ -1,13 +1,12 @@
 "use client";
 
 import useCart from "@/hooks/useCart";
-import { TProductResponse } from "@/types";
+import { TProductResponse } from "@/types/product";
 import { rupiahFormat } from "@/utils/rupiahFormat";
-import { Badge, Button, Card, CardBody, Chip, Spinner } from "@heroui/react";
+import { Card, CardBody } from "@heroui/react";
 import Image from "next/image";
 import Link from "next/link";
 import { FaMapPin, FaStar } from "react-icons/fa";
-import { FiShoppingCart } from "react-icons/fi";
 
 const ProductCard = ({ product }: { product: TProductResponse }) => {
   const { name, price, imageUrl, seller } = product;

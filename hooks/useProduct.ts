@@ -1,6 +1,5 @@
 import { productSchema } from "@/schemas/product.schema";
 import productService from "@/services/product.service";
-import { TProductInput } from "@/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useSession } from "next-auth/react";
@@ -14,6 +13,7 @@ import {
   useSearchParams,
 } from "next/navigation";
 import useDebounce from "./useDebounce";
+import { TProductInput } from "@/types/product";
 
 const useProduct = () => {
   const router = useRouter();

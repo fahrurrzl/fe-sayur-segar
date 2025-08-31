@@ -1,6 +1,6 @@
 import instance from "@/lib/axios";
 import endpoint from "./endpoint";
-import { TCart } from "@/types";
+import { TCart } from "@/types/cart";
 
 export default {
   addToCart: (payload: TCart, token: string) =>

@@ -15,11 +15,11 @@ import {
 import React, { useEffect } from "react";
 import { FiMapPin, FiShoppingCart } from "react-icons/fi";
 import CartItem from "../cart-item";
-import { TCartItem } from "@/types";
 import { useRouter } from "next/navigation";
 import { FaCheck } from "react-icons/fa";
 import useOrder from "@/hooks/useOrder";
 import { Controller } from "react-hook-form";
+import { TCartItem } from "@/types/cart";
 
 const Checkout = () => {
   const router = useRouter();

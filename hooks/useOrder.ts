@@ -2,7 +2,7 @@
 
 import { orderSchema } from "@/schemas/order.schema";
 import orderService from "@/services/order.service";
-import { TOrderInput } from "@/types";
+import { TOrderInput } from "@/types/order";
 import { addToast } from "@heroui/react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";

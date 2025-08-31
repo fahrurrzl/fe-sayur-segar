@@ -1,5 +1,5 @@
 import useCart from "@/hooks/useCart";
-import { TCartItem } from "@/types";
+import { TCartItem } from "@/types/cart";
 import { rupiahFormat } from "@/utils/rupiahFormat";
 import { Button, Card, CardBody } from "@heroui/react";
 import Image from "next/image";

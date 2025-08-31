@@ -4,10 +4,10 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
 import useMedia from "./useMedia";
-import { TCategory } from "@/types";
 import { useSession } from "next-auth/react";
 import { addToast } from "@heroui/react";
 import { useParams, useRouter } from "next/navigation";
+import { TCategory } from "@/types/category";
 
 const useCategory = () => {
   const router = useRouter();

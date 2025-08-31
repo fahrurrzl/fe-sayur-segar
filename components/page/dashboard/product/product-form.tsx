@@ -21,8 +21,8 @@ import useProduct from "@/hooks/useProduct";
 import { Controller } from "react-hook-form";
 import cn from "@/utils/cn";
 import { useEffect } from "react";
-import { TProductResponse } from "@/types";
 import useUnit from "@/hooks/useUnit";
+import { TProductResponse } from "@/types/product";
 
 interface PropTypes {
   type: "create" | "edit";

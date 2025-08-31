@@ -1,6 +1,6 @@
 import instance from "@/lib/axios";
 import endpoint from "./endpoint";
-import { TCategory } from "@/types";
+import { TCategory } from "@/types/category";
 
 export default {
   getCategories: () => instance.get(endpoint.CATEGORY),
