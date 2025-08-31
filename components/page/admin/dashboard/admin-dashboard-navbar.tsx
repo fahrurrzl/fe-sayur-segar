@@ -20,7 +20,7 @@ const menuItems = [
     icon: MdCategory,
   },
   {
-    name: "Kelola Unit",
+    name: "Kelola Unit / Satuan",
     href: "/admin/dashboard/unit",
     icon: TbWeight,
   },
