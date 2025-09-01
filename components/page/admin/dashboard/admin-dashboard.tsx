@@ -76,20 +76,14 @@ const AdminDashboard = () => {
           </CardHeader>
           <CardBody>
             <div className="flex items-center justify-center lg:justify-between flex-col-reverse lg:flex-row gap-2 lg:gap-4">
-<<<<<<< HEAD
               <Skeleton
                 isLoaded={!!dataBalance?.data?.balance}
                 className="rounded-md"
               >
-                <p className="text-2xl font-bold text-gray-900 mt-1 text-center lg:text-start">
+                <p className="text-2xl font-bold text-gray-900 dark:text-gray-200 mt-1 text-center lg:text-start">
                   {rupiahFormat(dataBalance?.data?.balance)}
                 </p>
               </Skeleton>
-=======
-              <p className="text-2xl font-bold text-gray-900 dark:text-gray-200 mt-1 text-center lg:text-start">
-                {rupiahFormat(dataBalance?.data?.balance)}
-              </p>
->>>>>>> dev
               <div
                 className={`w-12 h-12 bg-success rounded-lg flex items-center justify-center`}
               >
@@ -109,20 +103,14 @@ const AdminDashboard = () => {
           </CardHeader>
           <CardBody>
             <div className="flex items-center justify-center lg:justify-between flex-col-reverse lg:flex-row gap-2 lg:gap-4">
-<<<<<<< HEAD
               <Skeleton
                 isLoaded={!!dataCategories?.length}
                 className="rounded-md w-24 h-9"
               >
-                <p className="text-2xl font-bold text-gray-900 mt-1 text-center lg:text-start">
+                <p className="text-2xl font-bold text-gray-900 dark:text-gray-200 mt-1 text-center lg:text-start">
                   {dataCategories?.length}
                 </p>
               </Skeleton>
-=======
-              <p className="text-2xl font-bold text-gray-900 dark:text-gray-200 mt-1 text-center lg:text-start">
-                {dataCategories?.length}
-              </p>
->>>>>>> dev
               <div
                 className={`w-12 h-12 bg-warning rounded-lg flex items-center justify-center`}
               >
@@ -139,20 +127,14 @@ const AdminDashboard = () => {
           </CardHeader>
           <CardBody>
             <div className="flex items-center justify-center lg:justify-between flex-col-reverse lg:flex-row gap-2 lg:gap-4">
-<<<<<<< HEAD
               <Skeleton
                 isLoaded={!!dataProducts?.data?.length}
                 className="rounded-md w-24 h-9"
               >
-                <p className="text-2xl font-bold text-gray-900 mt-1 text-center lg:text-start">
+                <p className="text-2xl font-bold text-gray-900 dark:text-gray-200 mt-1 text-center lg:text-start">
                   {dataProducts?.data?.length}
                 </p>
               </Skeleton>
-=======
-              <p className="text-2xl font-bold text-gray-900 dark:text-gray-200 mt-1 text-center lg:text-start">
-                {dataProducts?.data?.length}
-              </p>
->>>>>>> dev
               <div
                 className={`w-12 h-12 bg-primary rounded-lg flex items-center justify-center`}
               >
@@ -169,20 +151,14 @@ const AdminDashboard = () => {
           </CardHeader>
           <CardBody>
             <div className="flex items-center justify-center lg:justify-between flex-col-reverse lg:flex-row gap-2 lg:gap-4">
-<<<<<<< HEAD
               <Skeleton
                 isLoaded={!!dataAllSeller?.data?.length}
                 className="rounded-md w-24 h-9"
               >
-                <p className="text-2xl font-bold text-gray-900 mt-1 text-center lg:text-start">
+                <p className="text-2xl font-bold text-gray-900 dark:text-gray-200 mt-1 text-center lg:text-start">
                   {dataAllSeller?.data?.length}
                 </p>
               </Skeleton>
-=======
-              <p className="text-2xl font-bold text-gray-900 dark:text-gray-200 mt-1 text-center lg:text-start">
-                {dataAllSeller?.data?.length}
-              </p>
->>>>>>> dev
               <div
                 className={`w-12 h-12 bg-secondary rounded-lg flex items-center justify-center`}
               >
