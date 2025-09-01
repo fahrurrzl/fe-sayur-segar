@@ -46,7 +46,7 @@ const ProfilePhoto = ({ dataUser }: { dataUser: any }) => {
         <CardHeader className="flex lg:flex-col items-start gap-4 lg:gap-0 lg:items-center pb-6">
           <div className="relative inline-block group">
             <Avatar
-              className="w-32 h-32 mx-auto border-4 border-emerald-200"
+              className="lg:w-32 lg:h-32 w-20 h-20 mx-auto border-4 border-emerald-200"
               name={`${dataUser?.name}`}
               src={`https://ui-avatars.com/api/?name=${dataUser?.name}&background=random`}
               showFallback
@@ -62,7 +62,9 @@ const ProfilePhoto = ({ dataUser }: { dataUser: any }) => {
           </div>
           <div className="lg:text-center text-left">
             <h3 className="mt-6 text-xl font-semibold">{dataUser?.name}</h3>
-            <p className="text-gray-600 text-sm">{dataUser?.email}</p>
+            <p className="text-gray-600 dark:text-gray-400 text-sm">
+              {dataUser?.email}
+            </p>
           </div>
         </CardHeader>
         <CardBody>

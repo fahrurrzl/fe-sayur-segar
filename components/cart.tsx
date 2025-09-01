@@ -33,7 +33,7 @@ const Cart = ({ isOpen, onOpenChange, items }: PropTypes) => {
             <DrawerHeader className="flex flex-col gap-1">
               <div className="py-2 text-success flex items-center gap-2">
                 <MdOutlineShoppingCart size={24} />
-                <p className="text-slate-800 font-semibold text-lg mr-2">
+                <p className="text-slate-800 dark:text-slate-200 font-semibold text-lg mr-2">
                   Keranjang Belanja
                 </p>
                 <Badge
@@ -57,8 +57,12 @@ const Cart = ({ isOpen, onOpenChange, items }: PropTypes) => {
                   <Divider />
 
                   <div className="flex justify-between items-center">
-                    <p className="text-slate-600">Subtotal</p>
-                    <p className="text-slate-600">{rupiahFormat(subTotal)}</p>
+                    <p className="text-slate-600 dark:text-slate-200">
+                      Subtotal
+                    </p>
+                    <p className="text-slate-600 dark:text-slate-200">
+                      {rupiahFormat(subTotal)}
+                    </p>
                   </div>
                   {/* <div className="flex justify-between items-center mt-2">
                     <p className="text-slate-600">Ongkos Kirim</p>
@@ -67,7 +71,9 @@ const Cart = ({ isOpen, onOpenChange, items }: PropTypes) => {
 
                   <Divider />
                   <div className="flex justify-between items-center mt-2">
-                    <p className="font-semibold text-slate-800">Total</p>
+                    <p className="font-semibold text-slate-800 dark:text-slate-200">
+                      Total
+                    </p>
                     <p className="font-semibold text-lg text-success">
                       {rupiahFormat(total)}
                     </p>

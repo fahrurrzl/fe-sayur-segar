@@ -15,7 +15,8 @@ const ProductCard = ({ product }: { product: TProductResponse }) => {
 
   return (
     <Card
-      className="group overflow-hidden border border-gray-200 hover:shadow-lg transition-all duration-300 hover:scale-105"
+      shadow="sm"
+      className="group overflow-hidden hover:shadow-lg transition-all duration-300"
       as={Link}
       href={`/product/${product.id}`}
     >
@@ -25,7 +26,7 @@ const ProductCard = ({ product }: { product: TProductResponse }) => {
           alt={name}
           width={500}
           height={500}
-          className="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-300"
+          className="w-full h-32 lg:h-48 object-cover group-hover:scale-105 transition-transform duration-300"
         />
         {/* {discount && (
           <Chip className="absolute top-2 left-2 bg-danger text-white">

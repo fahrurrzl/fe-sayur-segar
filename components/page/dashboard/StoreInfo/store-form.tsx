@@ -71,7 +71,7 @@ const StoreForm = () => {
           <Card>
             <CardHeader className="flex flex-col gap-w items-start">
               <h2 className="text-lg font-semibold">Detail Produk</h2>
-              <p className="text-sm text-foreground-500">
+              <p className="text-sm text-foreground-500 dark:text-foreground-400">
                 Isi detail produk Anda
               </p>
             </CardHeader>
@@ -79,7 +79,7 @@ const StoreForm = () => {
               {/* Basic Information */}
               <div className="space-y-4">
                 <div>
-                  <h3 className="text-lg font-semibold mb-4 text-gray-900">
+                  <h3 className="text-lg font-semibold mb-4 text-gray-900 dark:text-white">
                     Informasi Dasar
                   </h3>
                   <div className="grid grid-cols-1 gap-6">
@@ -98,7 +98,7 @@ const StoreForm = () => {
                               placeholder="Masukkan nama lapak"
                               variant="bordered"
                               startContent={
-                                <FaStore className="h-4 w-4 text-gray-400" />
+                                <FaStore className="h-4 w-4 text-gray-400 dark:text-gray-400" />
                               }
                               isInvalid={!!errors.storeName}
                             />
@@ -127,7 +127,7 @@ const StoreForm = () => {
                               placeholder="Masukkan deskripsi lapak Anda"
                               variant="bordered"
                               startContent={
-                                <MdOutlineDescription className="h-5 w-5 text-gray-400" />
+                                <MdOutlineDescription className="h-5 w-5 text-gray-400 dark:text-gray-400" />
                               }
                               isInvalid={!!errors.description}
                             />
@@ -145,7 +145,7 @@ const StoreForm = () => {
 
                 {/* Contact Information */}
                 <div>
-                  <h3 className="text-lg font-semibold mb-4 text-gray-900">
+                  <h3 className="text-lg font-semibold mb-4 text-gray-900 dark:text-white">
                     Informasi Kontak
                   </h3>
                   <div className="grid grid-cols-2 gap-4">
@@ -164,7 +164,7 @@ const StoreForm = () => {
                               variant="bordered"
                               placeholder="Masukkan lokasi lapak"
                               startContent={
-                                <FiMapPin className="h-4 w-4 text-gray-400" />
+                                <FiMapPin className="h-4 w-4 text-gray-400 dark:text-gray-400" />
                               }
                               isInvalid={!!errors.storeLocation}
                             />
@@ -194,7 +194,7 @@ const StoreForm = () => {
                               variant="bordered"
                               placeholder="Pilih nama bank"
                               startContent={
-                                <BsBank className="h-4 w-4 text-gray-400" />
+                                <BsBank className="h-4 w-4 text-gray-400 dark:text-gray-400" />
                               }
                               isInvalid={!!errors.bankName}
                             >
@@ -229,7 +229,7 @@ const StoreForm = () => {
                               variant="bordered"
                               placeholder="Masukkan nama rekening"
                               startContent={
-                                <BsPerson className="h-4 w-4 text-gray-400" />
+                                <BsPerson className="h-4 w-4 text-gray-400 dark:text-gray-400" />
                               }
                               isInvalid={!!errors.accountName}
                             />
@@ -258,7 +258,7 @@ const StoreForm = () => {
                               variant="bordered"
                               placeholder="Masukkan nomor rekening"
                               startContent={
-                                <BsCreditCard className="h-4 w-4 text-gray-400" />
+                                <BsCreditCard className="h-4 w-4 text-gray-400 dark:text-gray-400" />
                               }
                               isInvalid={!!errors.accountNumber}
                             />
@@ -288,7 +288,7 @@ const StoreForm = () => {
                           label="Nama Lapak"
                           variant="bordered"
                           startContent={
-                            <FaStore className="h-4 w-4 text-gray-400" />
+                            <FaStore className="h-4 w-4 text-gray-400 dark:text-gray-400" />
                           }
                           {...field}
                           isInvalid={!!errors.storeName}
@@ -317,7 +317,7 @@ const StoreForm = () => {
                           label="Lokasi Lapak"
                           variant="bordered"
                           startContent={
-                            <FiMapPin className="h-4 w-4 text-gray-400" />
+                            <FiMapPin className="h-4 w-4 text-gray-400 dark:text-gray-400" />
                           }
                           isInvalid={!!errors.storeLocation}
                         />
@@ -347,7 +347,7 @@ const StoreForm = () => {
                           variant="bordered"
                           placeholder="Pilih nama bank"
                           startContent={
-                            <BsBank className="h-4 w-4 text-gray-400" />
+                            <BsBank className="h-4 w-4 text-gray-400 dark:text-gray-400" />
                           }
                           isInvalid={!!errors.bankName}
                         >
@@ -379,7 +379,7 @@ const StoreForm = () => {
                           label="Atas Nama"
                           variant="bordered"
                           startContent={
-                            <FiCreditCard className="h-4 w-4 text-gray-400" />
+                            <FiCreditCard className="h-4 w-4 text-gray-400 dark:text-gray-400" />
                           }
                           isInvalid={!!errors.accountName}
                         />
@@ -407,7 +407,7 @@ const StoreForm = () => {
                           label="Nomor Rekening"
                           variant="bordered"
                           startContent={
-                            <FiCreditCard className="h-4 w-4 text-gray-400" />
+                            <FiCreditCard className="h-4 w-4 text-gray-400 dark:text-gray-400" />
                           }
                           isInvalid={!!errors.accountNumber}
                         />
@@ -436,7 +436,7 @@ const StoreForm = () => {
                           placeholder="Masukkan deskripsi lapak Anda"
                           variant="bordered"
                           startContent={
-                            <MdOutlineDescription className="h-5 w-5 text-gray-400" />
+                            <MdOutlineDescription className="h-5 w-5 text-gray-400 dark:text-gray-400" />
                           }
                           isInvalid={!!errors.description}
                         />

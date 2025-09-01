@@ -117,7 +117,7 @@ export const Navbar = () => {
                 <Button
                   isIconOnly
                   variant="light"
-                  className="flex items-center p-2 justify-center cursor-pointer text-slate-600"
+                  className="flex items-center p-2 justify-center cursor-pointer text-slate-600 dark:text-slate-200"
                   onPress={onOpen}
                 >
                   <MdOutlineShoppingCart size={22} />
@@ -127,7 +127,7 @@ export const Navbar = () => {
               <Button
                 isIconOnly
                 variant="light"
-                className="flex items-center p-2 justify-center cursor-pointer text-slate-600"
+                className="flex items-center p-2 justify-center cursor-pointer text-slate-600 dark:text-slate-200"
                 onPress={onOpen}
               >
                 <MdOutlineShoppingCart size={22} />
@@ -168,17 +168,19 @@ export const Navbar = () => {
                     Profil
                   </span>
                 </DropdownItem>
-                <DropdownItem
-                  showDivider
-                  key="my-order"
-                  textValue="Pesanan Saya"
-                  onPress={() => router.push("/dashboard/my-order")}
-                >
-                  <span className="flex items-center gap-2 w-full">
-                    <MdOutlineReceipt />
-                    Pesanan Saya
-                  </span>
-                </DropdownItem>
+                {session?.user?.role !== "superadmin" ? (
+                  <DropdownItem
+                    showDivider
+                    key="my-order"
+                    textValue="Pesanan Saya"
+                    onPress={() => router.push("/dashboard/my-order")}
+                  >
+                    <span className="flex items-center gap-2 w-full">
+                      <MdOutlineReceipt />
+                      Pesanan Saya
+                    </span>
+                  </DropdownItem>
+                ) : null}
 
                 <DropdownItem
                   key="logout"
@@ -224,7 +226,7 @@ export const Navbar = () => {
                 <Button
                   isIconOnly
                   variant="light"
-                  className="flex items-center p-2 justify-center cursor-pointer text-slate-600"
+                  className="flex items-center p-2 justify-center cursor-pointer text-slate-600 dark:text-slate-200"
                   onPress={onOpen}
                 >
                   <MdOutlineShoppingCart size={22} />
@@ -333,19 +335,21 @@ export const Navbar = () => {
                     Profil
                   </span>
                 </Button>
-                <Button
-                  variant="light"
-                  className="justify-start"
-                  onPress={() => {
-                    router.push("/dashboard/my-order");
-                    setIsMenuOpen(false);
-                  }}
-                >
-                  <span className="flex items-center gap-2">
-                    <MdOutlineReceipt />
-                    Pesanan Saya
-                  </span>
-                </Button>
+                {session?.user?.role !== "superadmin" ? (
+                  <Button
+                    variant="light"
+                    className="justify-start"
+                    onPress={() => {
+                      router.push("/dashboard/my-order");
+                      setIsMenuOpen(false);
+                    }}
+                  >
+                    <span className="flex items-center gap-2">
+                      <MdOutlineReceipt />
+                      Pesanan Saya
+                    </span>
+                  </Button>
+                ) : null}
                 <Divider />
                 <Button
                   variant="light"
@@ -362,19 +366,7 @@ export const Navbar = () => {
                   </span>
                 </Button>
               </div>
-            ) : (
-              <Button
-                color="success"
-                className="text-white w-full"
-                onPress={() => {
-                  router.push("/auth/login");
-                  setIsMenuOpen(false);
-                }}
-              >
-                <FiLogIn />
-                Masuk
-              </Button>
-            )}
+            ) : null}
           </NavbarMenuItem>
         </div>
       </NavbarMenu>

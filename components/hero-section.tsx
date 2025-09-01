@@ -105,7 +105,7 @@ const HeroSection = () => {
           {/* Right Image */}
           <div className="relative">
             <div className="relative z-10">
-              <div className="bg-gradient-to-br from-success/20 to-success-200/20 rounded-3xl p-8 backdrop-blur-sm">
+              <div className=" bg-gradient-to-br from-success/20 to-success-200/10 dark:from-emerald-500/10 dark:to-emerald-500/20 rounded-3xl p-8 backdrop-blur-md">
                 <Image
                   src={heroVegetables}
                   alt="Sayuran Segar"

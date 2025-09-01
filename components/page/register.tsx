@@ -76,7 +76,6 @@ const Register = () => {
                   label="Username"
                   type="text"
                   placeholder="Masukkan username"
-                  autoFocus
                   isInvalid={!!errors.username}
                 />
               )}

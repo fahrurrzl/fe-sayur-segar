@@ -76,7 +76,7 @@ const AdminDashboard = () => {
           </CardHeader>
           <CardBody>
             <div className="flex items-center justify-center lg:justify-between flex-col-reverse lg:flex-row gap-2 lg:gap-4">
-              <p className="text-2xl font-bold text-gray-900 mt-1 text-center lg:text-start">
+              <p className="text-2xl font-bold text-gray-900 dark:text-gray-200 mt-1 text-center lg:text-start">
                 {rupiahFormat(dataBalance?.data?.balance)}
               </p>
               <div
@@ -98,7 +98,7 @@ const AdminDashboard = () => {
           </CardHeader>
           <CardBody>
             <div className="flex items-center justify-center lg:justify-between flex-col-reverse lg:flex-row gap-2 lg:gap-4">
-              <p className="text-2xl font-bold text-gray-900 mt-1 text-center lg:text-start">
+              <p className="text-2xl font-bold text-gray-900 dark:text-gray-200 mt-1 text-center lg:text-start">
                 {dataCategories?.length}
               </p>
               <div
@@ -117,7 +117,7 @@ const AdminDashboard = () => {
           </CardHeader>
           <CardBody>
             <div className="flex items-center justify-center lg:justify-between flex-col-reverse lg:flex-row gap-2 lg:gap-4">
-              <p className="text-2xl font-bold text-gray-900 mt-1 text-center lg:text-start">
+              <p className="text-2xl font-bold text-gray-900 dark:text-gray-200 mt-1 text-center lg:text-start">
                 {dataProducts?.data?.length}
               </p>
               <div
@@ -136,7 +136,7 @@ const AdminDashboard = () => {
           </CardHeader>
           <CardBody>
             <div className="flex items-center justify-center lg:justify-between flex-col-reverse lg:flex-row gap-2 lg:gap-4">
-              <p className="text-2xl font-bold text-gray-900 mt-1 text-center lg:text-start">
+              <p className="text-2xl font-bold text-gray-900 dark:text-gray-200 mt-1 text-center lg:text-start">
                 {dataAllSeller?.data?.length}
               </p>
               <div
@@ -154,7 +154,7 @@ const AdminDashboard = () => {
         {/* Seller */}
         <Card>
           <CardHeader className="flex items-center justify-between">
-            <h3 className="text-lg font-semibold text-gray-900">
+            <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-200">
               Penjual yang belum verifikasi
             </h3>
             <FiAlertCircle className="w-5 h-5 text-orange-500" />
@@ -165,17 +165,17 @@ const AdminDashboard = () => {
               .map((seller: TSeller) => (
                 <div className="space-y-3" key={seller?.id}>
                   <div className="flex items-center justify-between py-2">
-                    <div className="flex items-center space-x-3">
+                    <div className="flex items-center space-x-3 dark:text-gray-200">
                       <img
                         src={`https://ui-avatars.com/api/?name=${seller?.storeName}&background=random`}
                         alt={seller?.storeName}
                         className="w-10 h-10 rounded-lg object-cover"
                       />
                       <div>
-                        <p className="font-medium text-gray-900">
+                        <p className="font-medium text-gray-900 dark:text-gray-200">
                           {seller?.storeName}
                         </p>
-                        <p className="text-sm text-gray-500">
+                        <p className="text-sm text-gray-500 dark:text-gray-200">
                           {seller?.user?.email}
                         </p>
                       </div>
@@ -204,7 +204,7 @@ const AdminDashboard = () => {
             {dataAllSeller?.data?.filter(
               (seller: any) => seller?.verified !== true
             ).length === 0 && (
-              <p className="text-sm text-gray-500">
+              <p className="text-sm text-gray-500 dark:text-gray-400">
                 Semua penjual sudah terverifikasi
               </p>
             )}
@@ -214,7 +214,7 @@ const AdminDashboard = () => {
         {/* Wallet Transaction */}
         <Card>
           <CardHeader className="flex items-center justify-between">
-            <h3 className="text-lg font-semibold text-gray-900">
+            <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-200">
               Transaksi Wallet
             </h3>
             <Chip
@@ -238,10 +238,10 @@ const AdminDashboard = () => {
                   className="flex items-center justify-between mb-3 bg-warning-200/20 p-2 rounded-sm"
                 >
                   <div>
-                    <p className="uppercase">
+                    <p className="uppercase dark:text-gray-200">
                       {transaction?.wallet?.seller?.bankName}
                     </p>
-                    <p className="uppercase">
+                    <p className="uppercase dark:text-gray-200">
                       {transaction?.wallet?.seller?.accountName}
                     </p>
                     <p>{transaction?.wallet?.seller?.accountNumber}</p>
@@ -273,7 +273,7 @@ const AdminDashboard = () => {
               (transaction: IWalletTransaction) =>
                 transaction?.status === "pending"
             ).length === 0 && (
-              <p className="text-sm text-gray-500">
+              <p className="text-sm text-gray-500 dark:text-gray-400">
                 Semua transaksi wallet sudah selesai
               </p>
             )}

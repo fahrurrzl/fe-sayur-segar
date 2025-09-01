@@ -197,7 +197,7 @@ const Checkout = () => {
         </div>
 
         {/* Right */}
-        <div className="col-span-1">
+        <div className="lg:col-span-1 col-span-2">
           <Card radius="sm" shadow="sm">
             <CardHeader>
               <h2 className="text-xl font-semibold">Ringkasan Pesanan</h2>
