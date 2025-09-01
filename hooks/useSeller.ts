@@ -10,12 +10,14 @@ import { useRouter } from "next/navigation";
 import walletService from "@/services/wallet.service";
 import { useState } from "react";
 import { TSeller } from "@/types/seller";
+import useChangeUrl from "./useChangeUrl";
 
 const useSeller = () => {
   const [sellerId, setSellerId] = useState<string | null>(null);
   const router = useRouter();
   const { data: session } = useSession();
   const { dataUser } = useProfile();
+  const { category, search, page, limit } = useChangeUrl();
 
   // form
   const {
@@ -78,14 +80,17 @@ const useSeller = () => {
 
   // show
   const getSellerService = async () => {
-    const res = await sellerService.me(session?.user?.token as string);
+    let params = `category=${category}&search=${search}&page=${page}&limit=${limit}`;
+    if (!category && !search && !page && !limit) {
+      params = "";
+    }
+    const res = await sellerService.me(session?.user?.token as string, params);
     return res?.data?.data;
   };
 
   const { data: dataSeller, isLoading: isLoadingSeller } = useQuery({
-    queryKey: ["seller"],
+    queryKey: ["seller", page, limit, search, category],
     queryFn: getSellerService,
-    enabled: !!dataUser?.Seller?.length,
   });
 
   // update

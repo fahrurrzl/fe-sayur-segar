@@ -6,58 +6,17 @@ import { useSession } from "next-auth/react";
 import { useForm } from "react-hook-form";
 import useMedia from "./useMedia";
 import { addToast } from "@heroui/react";
-import {
-  useParams,
-  usePathname,
-  useRouter,
-  useSearchParams,
-} from "next/navigation";
-import useDebounce from "./useDebounce";
+import { useParams, useRouter } from "next/navigation";
 import { TProductInput } from "@/types/product";
+import useChangeUrl from "./useChangeUrl";
 
 const useProduct = () => {
   const router = useRouter();
   const { data: session } = useSession();
-  const { debounce } = useDebounce();
   const params = useParams();
   const { id } = params;
-  const pathname = usePathname();
-  const searchParams = useSearchParams();
 
-  const category = searchParams.get("category");
-  const search = searchParams.get("search");
-
-  const setUrl = () => {
-    const params = new URLSearchParams(searchParams.toString());
-
-    params.set("category", category || "");
-    params.set("search", search || "");
-
-    router.replace(`${pathname}?${params.toString()}`);
-  };
-
-  const handleChangeCategory = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const params = new URLSearchParams(searchParams.toString());
-    params.set("category", e.target.value);
-    router.push(`${pathname}?${params.toString()}`);
-  };
-
-  const handleSearchDebounced = debounce((value: string) => {
-    const params = new URLSearchParams(searchParams.toString());
-    params.set("search", value);
-
-    router.push(`${pathname}?${params.toString()}`);
-  }, 500);
-
-  const handleChangeSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
-    handleSearchDebounced(e.target.value);
-  };
-
-  const handleClearSearch = () => {
-    const params = new URLSearchParams(searchParams.toString());
-    params.set("search", "");
-    router.push(`${pathname}?${params.toString()}`);
-  };
+  const { category, search, page, limit } = useChangeUrl();
 
   const {
     handleUploadFile,
@@ -150,8 +109,8 @@ const useProduct = () => {
 
   // get products
   const getProductsService = async () => {
-    let params = `category=${category}&search=${search}`;
-    if (!category && !search) {
+    let params = `category=${category}&search=${search}&page=${page}&limit=${limit}`;
+    if (!category && !search && !page && !limit) {
       params = "";
     }
     const res = await productService.getProducts(params);
@@ -163,9 +122,21 @@ const useProduct = () => {
     isLoading: isLoadingProducts,
     refetch,
   } = useQuery({
-    queryKey: ["products", category, search],
+    queryKey: ["products", category, search, page, limit],
     queryFn: getProductsService,
   });
+
+  // get featured products
+  const getFeaturedProductsService = async () => {
+    const res = await productService.getFeaturedProducts();
+    return res.data;
+  };
+
+  const { data: dataFeaturedProducts, isLoading: isLoadingFeaturedProducts } =
+    useQuery({
+      queryKey: ["featured-products"],
+      queryFn: getFeaturedProductsService,
+    });
 
   // get product by id
   const getProductByIdService = async (id: string) => {
@@ -314,6 +285,8 @@ const useProduct = () => {
     isLoadingProducts,
     getProductByIdService,
     refetch,
+    dataFeaturedProducts,
+    isLoadingFeaturedProducts,
     // mutation
     handleUpdateProduct,
     isPendingUpdateProduct,
@@ -325,10 +298,6 @@ const useProduct = () => {
     handleAdminDeleteProduct,
     isPendingAdminDeleteProduct,
     isSuccessAdminDeleteProduct,
-    setUrl,
-    handleChangeCategory,
-    handleChangeSearch,
-    handleClearSearch,
   };
 };
 

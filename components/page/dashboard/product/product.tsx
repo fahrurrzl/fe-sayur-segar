@@ -4,7 +4,7 @@ import DataTable from "@/components/data-table";
 import { columns } from "./columns";
 import useSeller from "@/hooks/useSeller";
 import { useRouter } from "next/navigation";
-import { Key, useCallback, useState } from "react";
+import { Key, useCallback, useEffect, useState } from "react";
 import Image from "next/image";
 import { rupiahFormat } from "@/utils/rupiahFormat";
 import { Button, Tooltip, useDisclosure } from "@heroui/react";
@@ -12,12 +12,19 @@ import Link from "next/link";
 import { FiEdit, FiTrash } from "react-icons/fi";
 import ModalDelete from "./modal-delete";
 import cn from "@/utils/cn";
+import useChangeUrl from "@/hooks/useChangeUrl";
 
 const Product = () => {
   const [selectedProduct, setSelectedProduct] = useState("");
   const router = useRouter();
   const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
   const { dataSeller, isLoadingSeller } = useSeller();
+  const { setUrl } = useChangeUrl();
+  console.log(dataSeller);
+
+  useEffect(() => {
+    setUrl();
+  }, []);
 
   const renderCell = useCallback(
     (product: Record<string, unknown>, columnKey: Key) => {
@@ -115,13 +122,15 @@ const Product = () => {
         title="Produk"
         description="Kelola produk yang Anda miliki"
         columns={columns}
-        data={dataSeller?.products || []}
+        data={dataSeller?.seller?.products || []}
         renderCell={renderCell as any}
         addButton
         addButtonText="Tambah Produk"
         onPressAddButton={() => router.push("/dashboard/product/create")}
         emptyContent="Belum ada produk yang ditambahkan"
         isLoading={isLoadingSeller}
+        totalPage={dataSeller?.totalPage}
+        currentPage={dataSeller?.currentPage}
       />
     </>
   );

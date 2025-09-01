@@ -22,6 +22,8 @@ import useWalletTransaction from "@/hooks/useWalletTransaction";
 import { IWalletTransaction } from "@/types/wallet-transaction";
 import ModalDetail from "./wallet-transaction/modal-detail";
 import { TSeller } from "@/types/seller";
+import useChangeUrl from "@/hooks/useChangeUrl";
+import { useEffect } from "react";
 
 const AdminDashboard = () => {
   const { dataCategories } = useCategory();
@@ -33,8 +35,8 @@ const AdminDashboard = () => {
     setSelectedId,
     dataWalletTransactionById,
   } = useWalletTransaction();
-
   const { isOpen, onOpen, onClose } = useDisclosure();
+
   const {
     isOpen: isOpenDetail,
     onOpen: onOpenDetail,
@@ -45,6 +47,12 @@ const AdminDashboard = () => {
     onClose();
     setSellerId(null);
   };
+
+  const { setUrl } = useChangeUrl();
+
+  useEffect(() => {
+    setUrl();
+  }, []);
 
   return (
     <div className="space-y-4 p-4">
@@ -128,11 +136,11 @@ const AdminDashboard = () => {
           <CardBody>
             <div className="flex items-center justify-center lg:justify-between flex-col-reverse lg:flex-row gap-2 lg:gap-4">
               <Skeleton
-                isLoaded={!!dataProducts?.data?.length}
+                isLoaded={!!dataProducts?.data?.products?.length}
                 className="rounded-md w-24 h-9"
               >
                 <p className="text-2xl font-bold text-gray-900 dark:text-gray-200 mt-1 text-center lg:text-start">
-                  {dataProducts?.data?.length}
+                  {dataProducts?.data?.products?.length}
                 </p>
               </Skeleton>
               <div

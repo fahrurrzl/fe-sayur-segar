@@ -3,7 +3,7 @@
 import DataTable from "@/components/data-table";
 import { columns } from "./columns";
 import useOrder from "@/hooks/useOrder";
-import { Key, useCallback } from "react";
+import { Key, useCallback, useEffect } from "react";
 import { rupiahFormat } from "@/utils/rupiahFormat";
 import { Button, Chip, useDisclosure } from "@heroui/react";
 import {
@@ -18,6 +18,7 @@ import {
 } from "react-icons/fi";
 import { formatDate } from "@/utils/dateFormat";
 import ModalOrderDetail from "../modal-order-detail";
+import useChangeUrl from "@/hooks/useChangeUrl";
 
 const OrderSeller = () => {
   const {
@@ -30,6 +31,11 @@ const OrderSeller = () => {
     setOrderId,
   } = useOrder();
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const { setUrl } = useChangeUrl();
+
+  useEffect(() => {
+    setUrl();
+  }, []);
 
   const renderCell = useCallback(
     (order: Record<string, unknown>, columnKey: Key) => {
@@ -151,14 +157,18 @@ const OrderSeller = () => {
         isOpen={isOpen}
         onClose={handleOnClose}
         order={dataOrderById?.data || {}}
+        isLoading={isLoadingDataOrderById}
       />
       <DataTable
         columns={columns}
-        data={dataOrderSeller?.data || []}
+        data={dataOrderSeller?.data?.orders || []}
         isLoading={isLoadingDataOrderSeller}
         title="Kelola Pesanan"
         description="Kelola pesanan lapak Anda"
         renderCell={renderCell as any}
+        totalPage={dataOrderSeller?.data?.totalPage}
+        currentPage={dataOrderSeller?.data?.currentPage}
+        emptyContent="Tidak ada pesanan"
       />
     </>
   );

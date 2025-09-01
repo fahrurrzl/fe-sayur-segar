@@ -10,6 +10,7 @@ import { useSession } from "next-auth/react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
+import useChangeUrl from "./useChangeUrl";
 
 const useOrder = () => {
   const [orderId, setOrderId] = useState("");
@@ -18,6 +19,7 @@ const useOrder = () => {
   const router = useRouter();
   const { data: session } = useSession();
   const queryClient = useQueryClient();
+  const { search, page, limit } = useChangeUrl();
 
   const {
     control,
@@ -62,26 +64,38 @@ const useOrder = () => {
 
   // get order user
   const getOrderUserService = async () => {
-    const res = await orderService.getOrderUser(session?.user?.token as string);
+    let params = `search=${search}&page=${page}&limit=${limit}`;
+    if (!search && !page && !limit) {
+      params = "";
+    }
+    const res = await orderService.getOrderUser(
+      session?.user?.token as string,
+      params
+    );
     return res.data;
   };
 
   const { data: dataOrderUser, isLoading: isLoadingDataOrderUser } = useQuery({
-    queryKey: ["order-user"],
+    queryKey: ["order-user", search, page, limit],
     queryFn: getOrderUserService,
   });
 
   // get order seller
   const getOrderSellerService = async () => {
+    let params = `search=${search}&page=${page}&limit=${limit}`;
+    if (!search && !page && !limit) {
+      params = "";
+    }
     const res = await orderService.getOrderSeller(
-      session?.user?.token as string
+      session?.user?.token as string,
+      params
     );
     return res.data;
   };
 
   const { data: dataOrderSeller, isLoading: isLoadingDataOrderSeller } =
     useQuery({
-      queryKey: ["order-seller"],
+      queryKey: ["order-seller", search, page, limit],
       queryFn: getOrderSellerService,
     });
 

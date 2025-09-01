@@ -7,17 +7,23 @@ import { Button, Tooltip, useDisclosure } from "@heroui/react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { Key, useCallback, useState } from "react";
+import { Key, useCallback, useEffect, useState } from "react";
 import { FiEdit, FiTrash } from "react-icons/fi";
 import { columns } from "./columns";
 import useProduct from "@/hooks/useProduct";
 import ModalDelete from "./modal-delete";
+import useChangeUrl from "@/hooks/useChangeUrl";
 
 const AdminProduct = () => {
   const [selectedProduct, setSelectedProduct] = useState("");
   const router = useRouter();
   const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
   const { dataProducts, isLoadingProducts } = useProduct();
+  const { setUrl } = useChangeUrl();
+
+  useEffect(() => {
+    setUrl();
+  }, []);
 
   const renderCell = useCallback(
     (product: Record<string, unknown>, columnKey: Key) => {
@@ -102,11 +108,13 @@ const AdminProduct = () => {
         title="Produk"
         description="Kelola semua produk yang ada"
         columns={columns}
-        data={dataProducts?.data || []}
+        data={dataProducts?.data?.products || []}
         renderCell={renderCell as any}
         onPressAddButton={() => router.push("/dashboard/product/create")}
         emptyContent="Belum ada produk yang ditambahkan"
         isLoading={isLoadingProducts}
+        currentPage={dataProducts?.data?.currentPage}
+        totalPage={dataProducts?.data?.totalPages}
       />
     </>
   );

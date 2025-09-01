@@ -12,6 +12,7 @@ import {
   ModalContent,
   ModalFooter,
   ModalHeader,
+  Spinner,
 } from "@heroui/react";
 import Image from "next/image";
 import Link from "next/link";
@@ -22,11 +23,13 @@ const ModalOrderDetail = ({
   onClose,
   order,
   type,
+  isLoading,
 }: {
   isOpen: boolean;
   onClose: () => void;
   order: OrderResponse;
   type: "user" | "seller";
+  isLoading: boolean;
 }) => {
   const {
     mutateIsProcessing,
@@ -36,6 +39,13 @@ const ModalOrderDetail = ({
     mutateIsCompleted,
     isPendingIsCompleted,
   } = useOrder();
+
+  if (isLoading)
+    return (
+      <div className="flex items-center justify-center h-screen z-50 fixed inset-0 bg-foreground-500/15 backdrop-blur-sm">
+        <Spinner size="lg" color="success" />
+      </div>
+    );
 
   return (
     <Modal

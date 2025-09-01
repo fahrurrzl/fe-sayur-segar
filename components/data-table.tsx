@@ -1,3 +1,4 @@
+import useChangeUrl from "@/hooks/useChangeUrl";
 import {
   Table,
   TableBody,
@@ -10,9 +11,16 @@ import {
   CardHeader,
   Button,
   Skeleton,
+  Pagination,
+  Input,
+  Select,
+  SelectItem,
+  Spinner,
 } from "@heroui/react";
 import React, { Key, ReactNode } from "react";
 import { FiPlus } from "react-icons/fi";
+import { SearchIcon } from "./icons";
+import { LIMIT_DEFAULT, LIMIT_LISTS } from "@/constant/PAGINATION";
 
 interface PropTypes {
   columns: Record<string, unknown>[];
@@ -25,6 +33,8 @@ interface PropTypes {
   onPressAddButton?: () => void;
   emptyContent?: string;
   isLoading?: boolean;
+  totalPage?: number;
+  currentPage?: number;
 }
 
 const DataTable = ({
@@ -38,7 +48,69 @@ const DataTable = ({
   onPressAddButton,
   emptyContent,
   isLoading,
+  totalPage,
+  currentPage,
 }: PropTypes) => {
+  const {
+    handleChangePage,
+    handleClearSearch,
+    handleChangeSearch,
+    handleChangeLimit,
+  } = useChangeUrl();
+
+  const topContent = React.useMemo(() => {
+    return (
+      <div className="flex items-center justify-end">
+        <Input
+          className="lg:w-1/4 w-1/2"
+          suppressHydrationWarning
+          placeholder="Cari sayur segar..."
+          startContent={
+            <SearchIcon className="text-default-400 pointer-events-none flex-shrink-0" />
+          }
+          variant="bordered"
+          isClearable
+          onClear={handleClearSearch}
+          onChange={handleChangeSearch}
+        />
+      </div>
+    );
+  }, [handleClearSearch, handleChangeSearch]);
+
+  const bottomContent = React.useMemo(() => {
+    return (
+      <div className="py-2 px-2 flex justify-between items-center">
+        <Select
+          variant="bordered"
+          className="w-32"
+          label="Show:"
+          labelPlacement="outside-left"
+          defaultSelectedKeys={[LIMIT_DEFAULT.toString()]}
+          onChange={(value) => {
+            handleChangeLimit(value);
+          }}
+          disallowEmptySelection
+        >
+          {LIMIT_LISTS.map((limit) => (
+            <SelectItem key={limit.value}>{limit.label}</SelectItem>
+          ))}
+        </Select>
+
+        <Pagination
+          showControls
+          size="sm"
+          classNames={{
+            cursor: "bg-success text-white",
+          }}
+          color="success"
+          page={currentPage}
+          total={totalPage as number}
+          onChange={handleChangePage}
+        />
+      </div>
+    );
+  }, [handleChangePage, currentPage, totalPage]);
+
   return (
     <Card>
       <CardHeader className="flex items-center justify-between">
@@ -58,41 +130,42 @@ const DataTable = ({
         )}
       </CardHeader>
       <CardBody>
-        <Skeleton className="min-h-[250px] rounded-lg" isLoaded={!isLoading}>
-          <Table aria-label="Example table with custom cells">
-            <TableHeader columns={columns}>
-              {(column) => (
-                <TableColumn
-                  key={column.uid as Key}
-                  align={
-                    column.uid === "actions" ||
-                    column.uid === "user" ||
-                    column.uid === "createdBy"
-                      ? "center"
-                      : "start"
-                  }
-                >
-                  {`${column.name}`}
-                </TableColumn>
-              )}
-            </TableHeader>
-            {data.length > 0 ? (
-              <TableBody items={data}>
-                {(item) => (
-                  <TableRow key={item.id as Key}>
-                    {(columnKey) => (
-                      <TableCell>
-                        {renderCell(item, columnKey as Key)}
-                      </TableCell>
-                    )}
-                  </TableRow>
-                )}
-              </TableBody>
-            ) : (
-              <TableBody emptyContent={emptyContent}>{[]}</TableBody>
+        <Table
+          aria-label="Example table with custom cells"
+          bottomContent={bottomContent}
+          topContent={topContent}
+        >
+          <TableHeader columns={columns}>
+            {(column) => (
+              <TableColumn
+                key={column.uid as Key}
+                align={
+                  column.uid === "actions" ||
+                  column.uid === "user" ||
+                  column.uid === "createdBy"
+                    ? "center"
+                    : "start"
+                }
+              >
+                {`${column.name}`}
+              </TableColumn>
             )}
-          </Table>
-        </Skeleton>
+          </TableHeader>
+          <TableBody
+            items={data}
+            isLoading={isLoading}
+            loadingContent={<Spinner color="success" />}
+            emptyContent={emptyContent}
+          >
+            {(item) => (
+              <TableRow key={item.id as Key}>
+                {(columnKey) => (
+                  <TableCell>{renderCell(item, columnKey as Key)}</TableCell>
+                )}
+              </TableRow>
+            )}
+          </TableBody>
+        </Table>
       </CardBody>
     </Card>
   );

@@ -7,7 +7,7 @@ import Link from "next/link";
 import { TProduct } from "@/types/product";
 
 const FeatureProduct = () => {
-  const { dataProducts, isLoadingProducts } = useProduct();
+  const { dataFeaturedProducts, isLoadingFeaturedProducts } = useProduct();
 
   return (
     <section id="products" className="py-12 bg-background">
@@ -33,14 +33,14 @@ const FeatureProduct = () => {
         </div>
 
         <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-          {isLoadingProducts && (
+          {isLoadingFeaturedProducts && (
             <>
               {Array.from({ length: 4 }, (_, index) => (
                 <Skeleton key={index} className="w-full h-[360px] rounded-lg" />
               ))}
             </>
           )}
-          {dataProducts?.data.map((product: TProduct) => (
+          {dataFeaturedProducts?.data?.map((product: TProduct) => (
             <ProductCard key={product.id} product={product} />
           ))}
         </div>

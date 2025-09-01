@@ -3,8 +3,8 @@
 import DataTable from "@/components/data-table";
 import useOrder from "@/hooks/useOrder";
 import { rupiahFormat } from "@/utils/rupiahFormat";
-import { Badge, Button, Chip, Tooltip, useDisclosure } from "@heroui/react";
-import { Key, useCallback } from "react";
+import { Button, Chip, useDisclosure } from "@heroui/react";
+import { Key, useCallback, useEffect } from "react";
 import { columns } from "./columns";
 import {
   FiBox,
@@ -17,11 +17,22 @@ import {
 } from "react-icons/fi";
 import { formatDate } from "@/utils/dateFormat";
 import ModalOrderDetail from "../modal-order-detail";
+import useChangeUrl from "@/hooks/useChangeUrl";
 
 const OrderUser = () => {
-  const { dataOrderUser, isLoadingDataOrderUser, setOrderId, dataOrderById } =
-    useOrder();
+  const {
+    dataOrderUser,
+    isLoadingDataOrderUser,
+    setOrderId,
+    dataOrderById,
+    isLoadingDataOrderById,
+  } = useOrder();
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const { setUrl } = useChangeUrl();
+
+  useEffect(() => {
+    setUrl();
+  }, []);
 
   const renderCell = useCallback(
     (order: Record<string, unknown>, columnKey: Key) => {
@@ -123,15 +134,18 @@ const OrderUser = () => {
         isOpen={isOpen}
         onClose={handleOnClose}
         order={dataOrderById?.data || {}}
+        isLoading={isLoadingDataOrderById}
       />
       <DataTable
         columns={columns}
         title="Order Saya"
         description="Kelola order Anda"
         renderCell={renderCell as any}
-        data={dataOrderUser?.data || []}
+        data={dataOrderUser?.data?.orders || []}
         isLoading={isLoadingDataOrderUser}
         emptyContent="Belum ada order yang dibuat"
+        totalPage={dataOrderUser?.data?.totalPage}
+        currentPage={dataOrderUser?.data?.currentPage}
       />
     </>
   );

@@ -13,7 +13,7 @@ import { useSession } from "next-auth/react";
 import { usePathname, useRouter } from "next/navigation";
 import React from "react";
 import { FaAngleRight, FaStore } from "react-icons/fa";
-import { FiCamera, FiSettings, FiShield, FiUser } from "react-icons/fi";
+import { FiCamera, FiShield, FiUser } from "react-icons/fi";
 
 const ProfilePhoto = ({ dataUser }: { dataUser: any }) => {
   const { data: session } = useSession();
@@ -87,16 +87,6 @@ const ProfilePhoto = ({ dataUser }: { dataUser: any }) => {
               startContent={<FiShield className="h-4 w-4" />}
             >
               Keamanan
-            </Button>
-
-            <Button
-              variant="bordered"
-              color={pathName === "/profile/settings" ? "success" : "default"}
-              className="w-full justify-start"
-              onPress={() => {}}
-              startContent={<FiSettings className="h-4 w-4" />}
-            >
-              Pengaturan
             </Button>
           </div>
         </CardBody>

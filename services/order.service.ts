@@ -9,14 +9,14 @@ export default {
         Authorization: `Bearer ${token}`,
       },
     }),
-  getOrderUser: (token: string) =>
-    instance.get(`${endpoint.ORDER}/user`, {
+  getOrderUser: (token: string, params: string) =>
+    instance.get(`${endpoint.ORDER}/user?${params}`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
     }),
-  getOrderSeller: (token: string) =>
-    instance.get(`${endpoint.ORDER}/seller`, {
+  getOrderSeller: (token: string, params: string) =>
+    instance.get(`${endpoint.ORDER}/seller?${params}`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },

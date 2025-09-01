@@ -11,6 +11,7 @@ export default {
     }),
   getProducts: (params: string) =>
     instance.get(`${endpoint.PRODUCT}?${params}`),
+  getFeaturedProducts: () => instance.get(`${endpoint.PRODUCT}/featured`),
   getProductById: (id: string) => instance.get(`${endpoint.PRODUCT}/${id}`),
   update: (id: string, payload: TProductInput, token: string) =>
     instance.put(`${endpoint.PRODUCT}/${id}`, payload, {

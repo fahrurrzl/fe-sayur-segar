@@ -1,5 +1,6 @@
 "use client";
 
+import useChangeUrl from "@/hooks/useChangeUrl";
 import useOrder from "@/hooks/useOrder";
 import useProfile from "@/hooks/useProfile";
 import useSeller from "@/hooks/useSeller";
@@ -8,6 +9,7 @@ import { rupiahFormat } from "@/utils/rupiahFormat";
 import { Button, Card, CardBody, CardHeader, Chip } from "@heroui/react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 import {
   FiAlertCircle,
   FiBox,
@@ -24,11 +26,16 @@ const Dashboard = () => {
   const { dataUser, isLoadingUser } = useProfile();
   const { dataSeller } = useSeller();
   const { dataOrderSeller } = useOrder();
+  const { setUrl } = useChangeUrl();
   console.log(dataSeller);
 
   const router = useRouter();
   const isSellerVerified =
     dataUser?.Seller[0]?.verified && dataUser?.Seller?.length;
+
+  useEffect(() => {
+    setUrl();
+  }, []);
 
   return (
     <div className="p-4">
@@ -75,7 +82,7 @@ const Dashboard = () => {
               <CardBody>
                 <div className="flex items-center justify-center lg:justify-between flex-col-reverse lg:flex-row gap-2 lg:gap-0">
                   <p className="text-2xl font-bold text-gray-900 mt-1 text-center lg:text-start dark:text-white">
-                    {dataSeller?.products?.length}
+                    {dataSeller?.seller?.products?.length}
                   </p>
                   <div
                     className={`w-12 h-12 bg-primary rounded-lg flex items-center justify-center`}
@@ -94,7 +101,7 @@ const Dashboard = () => {
               <CardBody>
                 <div className="flex items-center justify-center lg:justify-between flex-col-reverse lg:flex-row gap-2 lg:gap-0">
                   <p className="text-2xl font-bold text-gray-900 mt-1 text-center lg:text-start dark:text-white">
-                    {dataOrderSeller?.data?.length}
+                    {dataOrderSeller?.data?.orders?.length}
                   </p>
                   <div
                     className={`w-12 h-12 bg-success rounded-lg flex items-center justify-center`}
@@ -123,7 +130,7 @@ const Dashboard = () => {
                 </Button>
               </CardHeader>
               <CardBody>
-                {dataOrderSeller?.data
+                {dataOrderSeller?.data?.orders
                   ?.filter((order: any) => order?.status !== "SUCCESS")
                   ?.map((order: any) => (
                     <div className="space-y-3" key={order?.id}>
@@ -188,7 +195,7 @@ const Dashboard = () => {
                     </div>
                   ))}
 
-                {dataOrderSeller?.data.length === 0 && (
+                {dataOrderSeller?.data?.length === 0 && (
                   <p className="text-sm text-gray-500">Tidak ada pesanan</p>
                 )}
               </CardBody>
