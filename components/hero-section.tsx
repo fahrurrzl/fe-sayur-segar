@@ -8,13 +8,18 @@ import heroVegetables from "@/public/images/hero-vegetables.jpg";
 import Image from "next/image";
 import Link from "next/link";
 import useProfile from "@/hooks/useProfile";
+import ModalConfirmBeseller from "./modal-confirm-beseller";
+import { useDisclosure } from "@heroui/react";
 
 const HeroSection = () => {
   const { dataUser } = useProfile();
+  const { isOpen, onOpenChange } = useDisclosure();
   const isVerifiedSeller = dataUser?.Seller[0]?.verified;
 
   return (
     <section className="relative bg-gradient py-16 overflow-hidden">
+      <ModalConfirmBeseller isOpen={isOpen} onOpenChange={onOpenChange} />
+
       <div className="container mx-auto px-4">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           {/* Left Content */}
@@ -48,8 +53,9 @@ const HeroSection = () => {
                 <Button
                   variant="bordered"
                   size="lg"
-                  as={Link}
-                  href="/profile/seller"
+                  onPress={() => {
+                    onOpenChange();
+                  }}
                 >
                   Jadi Pedagang
                 </Button>

@@ -1,6 +1,14 @@
 "use client";
 
-import { Avatar, Button, Card, CardBody, CardHeader } from "@heroui/react";
+import ModalConfirmBeseller from "@/components/modal-confirm-beseller";
+import {
+  Avatar,
+  Button,
+  Card,
+  CardBody,
+  CardHeader,
+  useDisclosure,
+} from "@heroui/react";
 import { useSession } from "next-auth/react";
 import { usePathname, useRouter } from "next/navigation";
 import React from "react";
@@ -11,11 +19,13 @@ const ProfilePhoto = ({ dataUser }: { dataUser: any }) => {
   const { data: session } = useSession();
   const pathName = usePathname();
   const router = useRouter();
+  const { onClose, onOpenChange, isOpen } = useDisclosure();
   const isSellerVerified =
     dataUser?.Seller[0]?.verified && dataUser?.Seller?.length;
 
   return (
     <div className="lg:col-span-1">
+      <ModalConfirmBeseller isOpen={isOpen} onOpenChange={onOpenChange} />
       <Card className="shadow-lg">
         {session?.user?.role === "user" ? (
           <button
@@ -25,7 +35,7 @@ const ProfilePhoto = ({ dataUser }: { dataUser: any }) => {
                 ? isSellerVerified
                   ? router.push("/dashboard")
                   : router.push("/dashboard/store-info")
-                : router.push("/profile/seller")
+                : onOpenChange()
             }
           >
             <FaStore className="h-4 w-4" />
