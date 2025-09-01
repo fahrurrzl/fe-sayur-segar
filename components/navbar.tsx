@@ -210,7 +210,7 @@ export const Navbar = () => {
       <NavbarContent className="lg:hidden flex pl-4" justify="end">
         {/* Theme Switch */}
         <NavbarMenuItem>
-          <div className="flex items-center justify-center cursor-pointer text-slate-600">
+          <div className="items-center justify-center cursor-pointer text-slate-600 hidden lg:flex">
             <ThemeSwitch />
           </div>
         </NavbarMenuItem>
@@ -242,6 +242,7 @@ export const Navbar = () => {
             )
           ) : (
             <Button
+              size="sm"
               color="success"
               className="text-white"
               onPress={() => router.push("/auth/login")}
@@ -293,6 +294,12 @@ export const Navbar = () => {
                 </NextLink>
               </NavbarMenuItem>
             ))}
+          <NavbarMenuItem>
+            <div className="flex items-center gap-2">
+              <span className="mr-2 text-sm">Theme: </span>
+              <ThemeSwitch />
+            </div>
+          </NavbarMenuItem>
 
           {/* Authentication */}
           <NavbarMenuItem>
@@ -326,6 +333,20 @@ export const Navbar = () => {
                     Profil
                   </span>
                 </Button>
+                <Button
+                  variant="light"
+                  className="justify-start"
+                  onPress={() => {
+                    router.push("/dashboard/my-order");
+                    setIsMenuOpen(false);
+                  }}
+                >
+                  <span className="flex items-center gap-2">
+                    <MdOutlineReceipt />
+                    Pesanan Saya
+                  </span>
+                </Button>
+                <Divider />
                 <Button
                   variant="light"
                   color="danger"
