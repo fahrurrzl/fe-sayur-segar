@@ -51,9 +51,7 @@ const Seller = () => {
             <FaStore className="h-5 w-5 text-emerald-600" />
             Informasi Lapak
           </h2>
-          <p className="text-gray-600 text-sm">
-            Perbarui informasi lapak Anda di sini
-          </p>
+          <p className="text-gray-600 text-sm">Perbarui informasi lapak Anda</p>
         </CardHeader>
 
         <CardBody>

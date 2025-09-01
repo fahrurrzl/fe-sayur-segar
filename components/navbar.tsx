@@ -4,7 +4,7 @@ import { useState } from "react";
 import NextLink from "next/link";
 import { ThemeSwitch } from "@/components/theme-switch";
 import Image from "next/image";
-import { MdOutlineShoppingCart } from "react-icons/md";
+import { MdOutlineReceipt, MdOutlineShoppingCart } from "react-icons/md";
 import { siteConfig } from "@/config/site";
 import { clsx } from "clsx";
 
@@ -25,6 +25,7 @@ import {
   useDisclosure,
   Badge,
   Avatar,
+  Divider,
 } from "@heroui/react";
 import { link as linkStyles } from "@heroui/theme";
 import Cart from "./cart";
@@ -167,6 +168,18 @@ export const Navbar = () => {
                     Profil
                   </span>
                 </DropdownItem>
+                <DropdownItem
+                  showDivider
+                  key="my-order"
+                  textValue="Pesanan Saya"
+                  onPress={() => router.push("/dashboard/my-order")}
+                >
+                  <span className="flex items-center gap-2 w-full">
+                    <MdOutlineReceipt />
+                    Pesanan Saya
+                  </span>
+                </DropdownItem>
+
                 <DropdownItem
                   key="logout"
                   textValue="Keluar"

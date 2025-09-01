@@ -5,26 +5,15 @@ import useProfile from "@/hooks/useProfile";
 import useSeller from "@/hooks/useSeller";
 import { TProductResponse } from "@/types/product";
 import { rupiahFormat } from "@/utils/rupiahFormat";
-import {
-  Alert,
-  Button,
-  Card,
-  CardBody,
-  CardHeader,
-  Chip,
-  Skeleton,
-  Tooltip,
-} from "@heroui/react";
+import { Button, Card, CardBody, CardHeader, Chip } from "@heroui/react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { useEffect } from "react";
 import {
   FiAlertCircle,
   FiBox,
   FiCheck,
   FiClock,
   FiCreditCard,
-  FiEye,
   FiShoppingCart,
   FiTruck,
   FiX,
@@ -41,20 +30,12 @@ const Dashboard = () => {
   const isSellerVerified =
     dataUser?.Seller[0]?.verified && dataUser?.Seller?.length;
 
-  useEffect(() => {
-    if (!dataUser?.Seller?.length) {
-      router.push("/profile");
-    }
-  }, [dataUser]);
-
   return (
     <div className="p-4">
       {!isSellerVerified ? (
-        <Alert
-          title="Informasi"
-          description="Lapak kamu belum terfertifikasi, silahkan tunggu!"
-          color="warning"
-        />
+        <p className="text-xl font-semibold">
+          👋 Welcome back, {dataUser?.name}
+        </p>
       ) : (
         <div className="space-y-4">
           {/* Header */}

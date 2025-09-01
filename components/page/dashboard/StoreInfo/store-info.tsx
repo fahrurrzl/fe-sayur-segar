@@ -1,8 +1,9 @@
 "use client";
 
+import ModalConfirmBeseller from "@/components/modal-confirm-beseller";
 import useProfile from "@/hooks/useProfile";
 import { Button } from "@heroui/button";
-import { Alert, Card, CardBody, Spinner } from "@heroui/react";
+import { Alert, Card, CardBody, Spinner, useDisclosure } from "@heroui/react";
 import Link from "next/link";
 import { FaStore } from "react-icons/fa";
 import {
@@ -16,6 +17,7 @@ import { MdOutlineDescription, MdVerified } from "react-icons/md";
 
 const StoreInfo = () => {
   const { dataUser, isLoadingUser } = useProfile();
+  const { onOpenChange, isOpen } = useDisclosure();
   const isSellerVerified =
     dataUser?.Seller[0]?.verified && dataUser?.Seller?.length;
 
@@ -29,10 +31,20 @@ const StoreInfo = () => {
   if (!dataUser?.Seller?.length)
     return (
       <div className="flexjustify-center h-[250px]">
+        <ModalConfirmBeseller isOpen={isOpen} onOpenChange={onOpenChange} />
         <Alert
           title="Informasi"
           description="Kamu belum memiliki lapak atau belum terverifikasi, silahkan buat lapak terlebih dahulu dan tunggu verifikasi"
           color="warning"
+          endContent={
+            <Button
+              color="success"
+              variant="light"
+              onPress={() => onOpenChange()}
+            >
+              Buat Lapak
+            </Button>
+          }
         />
       </div>
     );
