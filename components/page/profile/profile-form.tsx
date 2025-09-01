@@ -62,7 +62,7 @@ const ProfileForm = () => {
             <FaUser className="h-5 w-5 text-emerald-600" />
             Informasi Pribadi
           </h2>
-          <p className="text-gray-600 text-sm">
+          <p className="text-gray-600 dark:text-gray-400 text-sm">
             Perbarui informasi pribadi Anda di sini
           </p>
         </CardHeader>
@@ -72,7 +72,7 @@ const ProfileForm = () => {
             {/* Basic Information */}
             <div className="space-y-6">
               <div className="space-y-4">
-                <h3 className="text-lg font-semibold mb-4 text-gray-900">
+                <h3 className="text-lg font-semibold mb-4 text-gray-900 dark:text-gray-100">
                   Informasi Dasar
                 </h3>
                 <div className="grid grid-cols-1 gap-6">
@@ -174,7 +174,7 @@ const ProfileForm = () => {
 
               {/* Contact Information */}
               <div>
-                <h3 className="text-lg font-semibold mb-4 text-gray-900">
+                <h3 className="text-lg font-semibold mb-4 text-gray-900 dark:text-gray-100">
                   Informasi Kontak
                 </h3>
                 <div className="space-y-4">

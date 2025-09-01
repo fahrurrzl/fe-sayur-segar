@@ -49,8 +49,12 @@ const ModalDetail = ({
     value?: React.ReactNode;
   }) => (
     <div className="grid grid-cols-1 md:grid-cols-3 gap-1 text-sm">
-      <span className="font-medium text-gray-600">{label}</span>
-      <span className="md:col-span-2 text-gray-800">{value || "-"}</span>
+      <span className="font-medium text-gray-600 dark:text-gray-400">
+        {label}
+      </span>
+      <span className="md:col-span-2 text-gray-800 dark:text-gray-200">
+        {value || "-"}
+      </span>
     </div>
   );
 
@@ -63,10 +67,13 @@ const ModalDetail = ({
     title: string;
     children: React.ReactNode;
   }) => (
-    <Card shadow="sm" className="border border-gray-200 rounded-xl">
+    <Card
+      shadow="sm"
+      className="border border-gray-200 dark:border-gray-700 rounded-xl"
+    >
       <CardBody className="p-4 space-y-4">
         <div className="flex items-center gap-3">
-          <div className="p-2 rounded-full bg-emerald-100 text-emerald-600">
+          <div className="p-2 rounded-full bg-emerald-100 text-emerald-600 dark:bg-emerald-700 dark:text-emerald-200">
             {icon}
           </div>
           <h2 className="text-base font-semibold">{title}</h2>
@@ -89,7 +96,7 @@ const ModalDetail = ({
         <ModalContent>
           {(onClose) => (
             <>
-              <ModalHeader className="flex items-center justify-between border-b border-gray-200">
+              <ModalHeader className="flex items-center justify-between border-b border-gray-200 dark:border-gray-700">
                 <p className="text-lg font-semibold">Detail Penarikan</p>
               </ModalHeader>
 
@@ -220,7 +227,7 @@ const ModalDetail = ({
                 </SectionCard>
               </ModalBody>
 
-              <ModalFooter className="border-t border-gray-200">
+              <ModalFooter className="border-t border-gray-200 dark:border-gray-700">
                 <Button color="danger" variant="light" onPress={onClose}>
                   Tutup
                 </Button>

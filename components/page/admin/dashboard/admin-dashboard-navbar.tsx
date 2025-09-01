@@ -59,8 +59,8 @@ const AdminDashboardNavbar = () => {
               color={isActive ? "success" : "default"}
               className={`w-full justify-start h-12 ${
                 isActive
-                  ? "bg-green-100 text-green-700 border-r-2 rounded-r-sm border-green-600"
-                  : "text-gray-600 hover:bg-gray-100"
+                  ? "bg-green-100 text-green-700 border-r-2 rounded-r-sm border-green-600 dark:border-emerald-600 dark:bg-emerald-900 dark:text-emerald-100"
+                  : "text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-gray-200"
               }`}
               startContent={
                 <IconComponent

@@ -83,10 +83,10 @@ const AdminDashboardLayout = ({ children }: { children: React.ReactNode }) => {
                       src={`https://ui-avatars.com/api/?name=${session?.user.name}&background=random`}
                     />
                     <div className="ml-3 text-left">
-                      <p className="text-sm font-medium text-gray-700">
+                      <p className="text-sm font-medium text-gray-700 dark:text-gray-200">
                         {session?.user.name}
                       </p>
-                      <p className="text-xs text-gray-500">
+                      <p className="text-xs text-gray-500 dark:text-gray-400">
                         {session?.user.email}
                       </p>
                     </div>
@@ -138,10 +138,10 @@ const AdminDashboardLayout = ({ children }: { children: React.ReactNode }) => {
 
               <div className="flex items-center space-x-2 sm:space-x-4 justify-between w-full min-w-0">
                 <div className="flex flex-col min-w-0">
-                  <h1 className="text-sm sm:text-lg font-semibold truncate">
+                  <h1 className="text-sm sm:text-lg font-semibold truncate dark:text-gray-200">
                     Kelola Lapak Anda
                   </h1>
-                  <p className="text-xs text-gray-500 truncate hidden sm:block">
+                  <p className="text-xs text-gray-500 truncate hidden sm:block dark:text-gray-400">
                     Pantau dan kelola produk yang anda jual
                   </p>
                 </div>
@@ -151,7 +151,7 @@ const AdminDashboardLayout = ({ children }: { children: React.ReactNode }) => {
                     <Button
                       isIconOnly
                       variant="light"
-                      className="text-gray-500"
+                      className="text-gray-500 dark:text-gray-200"
                     >
                       <HiOutlineBell className="w-5 h-5" />
                     </Button>
@@ -163,7 +163,7 @@ const AdminDashboardLayout = ({ children }: { children: React.ReactNode }) => {
         </Card>
 
         {/* Page Content - Scrollable */}
-        <main className="flex-1 bg-gray-50/50 overflow-hidden">
+        <main className="flex-1 bg-gray-50/50 dark:bg-gray-950/50 overflow-hidden">
           <div className="h-full overflow-auto">
             <div className="p-4 sm:p-6">
               <div className="overflow-x-auto">

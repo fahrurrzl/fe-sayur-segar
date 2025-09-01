@@ -70,7 +70,7 @@ const InputFile = (props: PropTypes) => {
       ref={drop}
       htmlFor={`file-dropzone-${dropzoneId}`}
       className={cn(
-        "flex min-h-32 w-full cursor-pointer flex-col rounded-md border-2 border-dashed border-gray-400 bg-gray-50 hover:bg-gray-100",
+        "flex min-h-32 w-full cursor-pointer flex-col rounded-md border-2 border-dashed border-gray-400 bg-gray-50 dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-700",
         className
       )}
     >
@@ -96,7 +96,7 @@ const InputFile = (props: PropTypes) => {
               className="!relative rounded-lg"
             />
           </div>
-          <p className="text-center text-sm font-semibold text-gray-500">
+          <p className="text-center text-sm font-semibold text-gray-500 dark:text-gray-200">
             {preview.split("/").pop()}
           </p>
         </div>
@@ -106,14 +106,17 @@ const InputFile = (props: PropTypes) => {
             {isUploading ? (
               <div className="flex items-center gap-2">
                 <Spinner size="sm" />
-                <p className="text-center text-sm font-semibold text-gray-500">
+                <p className="text-center text-sm font-semibold text-gray-500 dark:text-gray-200">
                   Uploading...
                 </p>
               </div>
             ) : (
               <>
-                <BsUpload size={32} className="text-gray-500" />
-                <p className="text-center text-sm font-semibold text-gray-500">
+                <BsUpload
+                  size={32}
+                  className="text-gray-500 dark:text-gray-200"
+                />
+                <p className="text-center text-sm font-semibold text-gray-500 dark:text-gray-200">
                   {isDroppable
                     ? "Drag and drop or click here to upload image"
                     : "Click here to upload image"}

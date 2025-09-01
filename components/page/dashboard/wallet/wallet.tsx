@@ -33,7 +33,7 @@ const Wallet = () => {
     <div>
       <div className="mb-4">
         <h1 className="text-2xl font-bold">Kelola Wallet</h1>
-        <p className="text-sm text-foreground-500">
+        <p className="text-sm text-foreground-500 dark:text-foreground-400">
           Pantau saldo dan kelola penarikan dana Anda
         </p>
       </div>
@@ -69,7 +69,7 @@ const Wallet = () => {
 
       {/* Withdraw Button */}
       <div className="flex justify-between items-center my-8 px-1">
-        <h3 className="text-lg font-semibold text-gray-900">
+        <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
           Riwayat Transaksi
         </h3>
         {seller?.wallet?.balance > 0 ? (
@@ -91,8 +91,8 @@ const Wallet = () => {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 p-1">
         {/* Wallet Transactions */}
         <Card>
-          <CardHeader className="border-b border-b-foreground-200">
-            <h3 className="text-lg font-semibold text-gray-900">
+          <CardHeader className="border-b border-b-foreground-200 dark:border-b-foreground-800">
+            <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
               Transaksi Wallet
             </h3>
           </CardHeader>
@@ -135,7 +135,7 @@ const Wallet = () => {
                           </div>
                         )}
                         <div>
-                          <p className="text-sm font-medium text-gray-900">
+                          <p className="text-sm font-medium text-gray-900 dark:text-white">
                             {transaction?.type === "income"
                               ? "Pembayaran Order #"
                               : "Penarikan"}
@@ -182,8 +182,8 @@ const Wallet = () => {
         </Card>
 
         <Card>
-          <CardHeader>
-            <h3 className="text-lg font-semibold text-gray-900">
+          <CardHeader className="border-b border-b-foreground-200 dark:border-b-foreground-800">
+            <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
               Riwayat Penarikan
             </h3>
           </CardHeader>
@@ -201,7 +201,7 @@ const Wallet = () => {
                   >
                     <div className="flex items-center justify-between mb-2">
                       <div className="flex items-center space-x-2">
-                        <span className="text-sm font-medium text-gray-900">
+                        <span className="text-sm font-medium text-gray-900 dark:text-white">
                           {rupiahFormat(transaction?.amount)}
                         </span>
                       </div>

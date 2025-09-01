@@ -19,10 +19,11 @@ const CategorySection = () => {
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
           {dataCategories?.map((category: TCategory) => (
             <Card
+              shadow="sm"
               as={Link}
               href={`/explore?category=${category.id}`}
               key={category.id}
-              className="group cursor-pointer hover:shadow-lg transition-all duration-300 hover:scale-105 border border-gray-200"
+              className="group cursor-pointer hover:shadow-lg transition-all duration-300"
             >
               <CardBody className="p-4 text-center">
                 <div className="text-3xl flex justify-center group-hover:scale-110 transition-transform duration-300">

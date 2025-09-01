@@ -8,7 +8,7 @@ const ProfileLayout = ({ children }: { children: React.ReactNode }) => {
   const { dataUser } = useProfile();
 
   return (
-    <div className="bg-gradient-to-br from-emerald-50 via-white to-emerald-50">
+    <div className="bg-gradient">
       <PageHeader
         title="Profile Saya"
         description="Kelola profil Anda di sini"

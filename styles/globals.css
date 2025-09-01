@@ -7,5 +7,5 @@
 }
 
 .bg-gradient {
-  @apply bg-gradient-to-br from-green-200/20 to-green-200/10;
+  @apply bg-gradient-to-br from-green-200/20 to-green-200/10 dark:bg-gradient-to-br dark:from-emerald-900/20 dark:to-emerald-900/10;
 }

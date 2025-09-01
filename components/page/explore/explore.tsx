@@ -38,12 +38,12 @@ const Explore = () => {
   return (
     <div className="min-h-screen">
       <div className="container mx-auto px-4 py-6">
-        <div className="flex items-center justify-between mb-6">
+        <div className="flex items-center justify-between mb-6 gap-2">
           <div>
-            <h1 className="text-xl lg:text-2xl font-bold text-foreground">
+            <h1 className="text-lg lg:text-2xl font-bold text-foreground">
               Jelajahi Sayur Segar
             </h1>
-            <p className="text-foreground-500 text-sm lg:text-base">
+            <p className="text-foreground-500 text-xs lg:text-base">
               Temukan sayuran dan buah segar langsung dari petani
             </p>
           </div>

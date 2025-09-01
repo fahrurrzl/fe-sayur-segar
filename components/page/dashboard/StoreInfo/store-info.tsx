@@ -55,7 +55,7 @@ const StoreInfo = () => {
         <div className="flex justify-between flex-col md:flex-row items-start md:items-center gap-4">
           <div>
             <h1 className="text-2xl font-bold">Informasi Lapak</h1>
-            <p className="text-sm text-foreground-500">
+            <p className="text-sm text-foreground-500 dark:text-foreground-400">
               Kelola informasi dan pengaturan lapak Anda
             </p>
           </div>
@@ -90,7 +90,7 @@ const StoreInfo = () => {
 
               <div>
                 <h2 className="text-lg font-semibold">
-                  <span className="flex items-center gap-1">
+                  <span className="flex items-center gap-1 dark:text-white">
                     {dataUser?.Seller[0]?.storeName}{" "}
                     {dataUser?.Seller[0]?.verified && (
                       <MdVerified className="text-primary" />
@@ -107,8 +107,10 @@ const StoreInfo = () => {
             <div className="flex items-start space-x-3">
               <FiMapPin className="w-5 h-5 text-gray-400 mt-0.5" />
               <div>
-                <p className="text-sm font-medium text-gray-900">Lokasi</p>
-                <p className="text-sm text-gray-600">
+                <p className="text-sm font-medium text-gray-900 dark:text-white">
+                  Lokasi
+                </p>
+                <p className="text-sm text-gray-600 dark:text-gray-400">
                   {dataUser?.Seller[0]?.storeLocation}
                 </p>
               </div>
@@ -117,8 +119,12 @@ const StoreInfo = () => {
             <div className="flex items-start space-x-3 p-2 bg-foreground-200/40 rounded-md">
               <FiPhone className="w-5 h-5 text-gray-400 mt-0.5" />
               <div>
-                <p className="text-sm font-medium text-gray-900">Telepon</p>
-                <p className="text-sm text-gray-600">{dataUser?.phone}</p>
+                <p className="text-sm font-medium text-gray-900 dark:text-white">
+                  Telepon
+                </p>
+                <p className="text-sm text-gray-600 dark:text-gray-400">
+                  {dataUser?.phone}
+                </p>
               </div>
               <Button
                 isIconOnly
@@ -136,29 +142,37 @@ const StoreInfo = () => {
             <div className="flex items-start space-x-3 p-2 bg-foreground-200/40 rounded-md">
               <FiMail className="w-5 h-5 text-gray-400 mt-0.5" />
               <div>
-                <p className="text-sm font-medium text-gray-900">Email</p>
-                <p className="text-sm text-gray-600">{dataUser?.email}</p>
+                <p className="text-sm font-medium text-gray-900 dark:text-white">
+                  Email
+                </p>
+                <p className="text-sm text-gray-600 dark:text-gray-400">
+                  {dataUser?.email}
+                </p>
               </div>
             </div>
           </div>
 
           {/* Right Column */}
           <div className="space-y-6">
-            <div className="p-4 bg-gray-50 rounded-lg">
-              <h4 className="text-sm font-medium text-gray-900 mb-3 flex items-center">
+            <div className="p-4 bg-gray-50 dark:bg-gray-800 rounded-lg">
+              <h4 className="text-sm font-medium text-gray-900 dark:text-white mb-3 flex items-center">
                 <FiCreditCard className="w-4 h-4 mr-2" />
                 Informasi Pembayaran
               </h4>
               <div className="space-y-2">
                 <div className="flex justify-between">
-                  <span className="text-sm text-gray-600">Bank:</span>
-                  <span className="text-sm font-medium text-gray-900">
+                  <span className="text-sm text-gray-600 dark:text-gray-400">
+                    Bank:
+                  </span>
+                  <span className="text-sm font-medium text-gray-900 dark:text-white">
                     {dataUser?.Seller[0]?.bankName.toUpperCase()}
                   </span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-sm text-gray-600">No. Rekening:</span>
-                  <span className="text-sm font-medium text-gray-900">
+                  <span className="text-sm text-gray-600 dark:text-gray-400">
+                    No. Rekening:
+                  </span>
+                  <span className="text-sm font-medium text-gray-900 dark:text-white">
                     {dataUser?.Seller[0]?.accountNumber}
                   </span>
                 </div>
@@ -168,12 +182,12 @@ const StoreInfo = () => {
             {/* Deskripsi Toko */}
             <div>
               <div className="flex gap-2">
-                <MdOutlineDescription className="w-5 h-5 text-gray-400 mt-0.5" />
-                <h4 className="text-sm font-medium text-gray-900 mb-2">
+                <MdOutlineDescription className="w-5 h-5 text-gray-400 mt-0.5 dark:text-gray-400" />
+                <h4 className="text-sm font-medium text-gray-900 dark:text-white mb-2">
                   Deskripsi Toko
                 </h4>
               </div>
-              <p className="text-sm text-gray-600 leading-relaxed">
+              <p className="text-sm text-gray-600 dark:text-gray-400 leading-relaxed">
                 {dataUser?.Seller[0]?.description}
               </p>
             </div>

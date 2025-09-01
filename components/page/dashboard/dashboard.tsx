@@ -41,7 +41,7 @@ const Dashboard = () => {
           {/* Header */}
           <div className="flex flex-col mb-8">
             <h2 className="text-xl font-bold">Dashboard Overview</h2>
-            <p className="text-xs text-gray-500">
+            <p className="text-xs text-gray-500 dark:text-gray-400">
               Ringkasan performa toko Anda
             </p>
           </div>
@@ -55,7 +55,7 @@ const Dashboard = () => {
               </CardHeader>
               <CardBody>
                 <div className="flex items-center justify-center lg:justify-between flex-col-reverse lg:flex-row gap-2 lg:gap-0">
-                  <p className="text-2xl font-bold text-gray-900 mt-1 text-center lg:text-start">
+                  <p className="text-2xl font-bold text-gray-900 mt-1 text-center lg:text-start dark:text-white">
                     {rupiahFormat(dataUser?.Seller[0]?.wallet?.balance)}
                   </p>
                   <div
@@ -74,7 +74,7 @@ const Dashboard = () => {
               </CardHeader>
               <CardBody>
                 <div className="flex items-center justify-center lg:justify-between flex-col-reverse lg:flex-row gap-2 lg:gap-0">
-                  <p className="text-2xl font-bold text-gray-900 mt-1 text-center lg:text-start">
+                  <p className="text-2xl font-bold text-gray-900 mt-1 text-center lg:text-start dark:text-white">
                     {dataSeller?.products?.length}
                   </p>
                   <div
@@ -93,7 +93,7 @@ const Dashboard = () => {
               </CardHeader>
               <CardBody>
                 <div className="flex items-center justify-center lg:justify-between flex-col-reverse lg:flex-row gap-2 lg:gap-0">
-                  <p className="text-2xl font-bold text-gray-900 mt-1 text-center lg:text-start">
+                  <p className="text-2xl font-bold text-gray-900 mt-1 text-center lg:text-start dark:text-white">
                     {dataOrderSeller?.data?.length}
                   </p>
                   <div
@@ -111,7 +111,7 @@ const Dashboard = () => {
             {/* Order */}
             <Card>
               <CardHeader className="flex items-center justify-between">
-                <h3 className="text-lg font-semibold text-gray-900">
+                <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
                   Pesanan Terbaru
                 </h3>
                 <Button
@@ -128,18 +128,18 @@ const Dashboard = () => {
                   ?.map((order: any) => (
                     <div className="space-y-3" key={order?.id}>
                       <div className="flex items-center justify-between py-2">
-                        <div className="flex items-center space-x-3">
+                        <div className="flex items-center space-x-3 dark:text-white">
                           <div>
-                            <p className="font-medium text-gray-900">
+                            <p className="font-medium text-gray-900 dark:text-white">
                               {order?.user?.name}
                             </p>
-                            <p className="text-sm text-gray-500">
+                            <p className="text-sm text-gray-500 dark:text-gray-400">
                               #{order?.orderId}
                             </p>
                           </div>
                         </div>
                         <div className="text-right">
-                          <p className="font-medium text-gray-900">
+                          <p className="font-medium text-gray-900 dark:text-white">
                             {rupiahFormat(order?.totalPrice)}
                           </p>
                           <Chip
@@ -197,7 +197,7 @@ const Dashboard = () => {
             {/* Stock */}
             <Card>
               <CardHeader className="flex items-center justify-between">
-                <h3 className="text-lg font-semibold text-gray-900">
+                <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
                   Peringatan Stok
                 </h3>
                 <FiAlertCircle className="w-5 h-5 text-orange-500" />
@@ -208,7 +208,7 @@ const Dashboard = () => {
                   ?.map((product: TProductResponse) => (
                     <div className="space-y-3" key={product?.id}>
                       <div className="flex items-center justify-between py-2">
-                        <div className="flex items-center space-x-3">
+                        <div className="flex items-center space-x-3 dark:text-white">
                           <Image
                             src={product?.imageUrl as string}
                             alt="product"
@@ -217,16 +217,16 @@ const Dashboard = () => {
                             className="object-contain aspect-square rounded-md"
                           />
                           <div>
-                            <p className="font-medium text-gray-900">
+                            <p className="font-medium text-gray-900 dark:text-white">
                               {product?.name}
                             </p>
-                            <p className="text-sm text-gray-500">
+                            <p className="text-sm text-gray-500 dark:text-gray-400">
                               {product?.description}
                             </p>
                           </div>
                         </div>
                         <div className="text-right">
-                          <p className="text-danger font-medium">
+                          <p className="text-danger font-medium dark:text-red-500">
                             {product?.stock} {product?.Unit?.symbol}
                           </p>
                         </div>
@@ -237,7 +237,7 @@ const Dashboard = () => {
                 {dataSeller?.products?.filter(
                   (product: TProductResponse) => product?.stock < 20
                 ).length === 0 && (
-                  <p className="text-sm text-gray-500">
+                  <p className="text-sm text-gray-500 dark:text-gray-400">
                     Semua produk memiliki stok yang cukup
                   </p>
                 )}

@@ -117,7 +117,7 @@ export const Navbar = () => {
                 <Button
                   isIconOnly
                   variant="light"
-                  className="flex items-center p-2 justify-center cursor-pointer text-slate-600"
+                  className="flex items-center p-2 justify-center cursor-pointer text-slate-600 dark:text-slate-200"
                   onPress={onOpen}
                 >
                   <MdOutlineShoppingCart size={22} />
@@ -127,7 +127,7 @@ export const Navbar = () => {
               <Button
                 isIconOnly
                 variant="light"
-                className="flex items-center p-2 justify-center cursor-pointer text-slate-600"
+                className="flex items-center p-2 justify-center cursor-pointer text-slate-600 dark:text-slate-200"
                 onPress={onOpen}
               >
                 <MdOutlineShoppingCart size={22} />
@@ -168,17 +168,19 @@ export const Navbar = () => {
                     Profil
                   </span>
                 </DropdownItem>
-                <DropdownItem
-                  showDivider
-                  key="my-order"
-                  textValue="Pesanan Saya"
-                  onPress={() => router.push("/dashboard/my-order")}
-                >
-                  <span className="flex items-center gap-2 w-full">
-                    <MdOutlineReceipt />
-                    Pesanan Saya
-                  </span>
-                </DropdownItem>
+                {session?.user?.role !== "superadmin" ? (
+                  <DropdownItem
+                    showDivider
+                    key="my-order"
+                    textValue="Pesanan Saya"
+                    onPress={() => router.push("/dashboard/my-order")}
+                  >
+                    <span className="flex items-center gap-2 w-full">
+                      <MdOutlineReceipt />
+                      Pesanan Saya
+                    </span>
+                  </DropdownItem>
+                ) : null}
 
                 <DropdownItem
                   key="logout"
@@ -210,7 +212,7 @@ export const Navbar = () => {
       <NavbarContent className="lg:hidden flex pl-4" justify="end">
         {/* Theme Switch */}
         <NavbarMenuItem>
-          <div className="flex items-center justify-center cursor-pointer text-slate-600">
+          <div className="items-center justify-center cursor-pointer text-slate-600 hidden lg:flex">
             <ThemeSwitch />
           </div>
         </NavbarMenuItem>
@@ -224,7 +226,7 @@ export const Navbar = () => {
                 <Button
                   isIconOnly
                   variant="light"
-                  className="flex items-center p-2 justify-center cursor-pointer text-slate-600"
+                  className="flex items-center p-2 justify-center cursor-pointer text-slate-600 dark:text-slate-200"
                   onPress={onOpen}
                 >
                   <MdOutlineShoppingCart size={22} />
@@ -242,6 +244,7 @@ export const Navbar = () => {
             )
           ) : (
             <Button
+              size="sm"
               color="success"
               className="text-white"
               onPress={() => router.push("/auth/login")}
@@ -293,6 +296,12 @@ export const Navbar = () => {
                 </NextLink>
               </NavbarMenuItem>
             ))}
+          <NavbarMenuItem>
+            <div className="flex items-center gap-2">
+              <span className="mr-2 text-sm">Theme: </span>
+              <ThemeSwitch />
+            </div>
+          </NavbarMenuItem>
 
           {/* Authentication */}
           <NavbarMenuItem>
@@ -326,6 +335,22 @@ export const Navbar = () => {
                     Profil
                   </span>
                 </Button>
+                {session?.user?.role !== "superadmin" ? (
+                  <Button
+                    variant="light"
+                    className="justify-start"
+                    onPress={() => {
+                      router.push("/dashboard/my-order");
+                      setIsMenuOpen(false);
+                    }}
+                  >
+                    <span className="flex items-center gap-2">
+                      <MdOutlineReceipt />
+                      Pesanan Saya
+                    </span>
+                  </Button>
+                ) : null}
+                <Divider />
                 <Button
                   variant="light"
                   color="danger"
@@ -341,19 +366,7 @@ export const Navbar = () => {
                   </span>
                 </Button>
               </div>
-            ) : (
-              <Button
-                color="success"
-                className="text-white w-full"
-                onPress={() => {
-                  router.push("/auth/login");
-                  setIsMenuOpen(false);
-                }}
-              >
-                <FiLogIn />
-                Masuk
-              </Button>
-            )}
+            ) : null}
           </NavbarMenuItem>
         </div>
       </NavbarMenu>
