@@ -18,7 +18,7 @@ const WalletTransaction = () => {
 
   const {
     dataAllWalletTransactions,
-    isLoadingGetAllTransactions,
+    isLoadingDataAllWalletTransaction,
     dataWalletTransactionById,
     setSelectedId,
   } = useWalletTransaction();
@@ -148,7 +148,7 @@ const WalletTransaction = () => {
         title="Transaksi Wallet"
         description="Kelola transaksi wallet"
         data={dataAllWalletTransactions?.data || []}
-        isLoading={isLoadingGetAllTransactions}
+        isLoading={isLoadingDataAllWalletTransaction}
       />
     </>
   );
