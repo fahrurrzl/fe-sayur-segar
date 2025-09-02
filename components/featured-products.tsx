@@ -36,7 +36,10 @@ const FeatureProduct = () => {
           {isLoadingFeaturedProducts && (
             <>
               {Array.from({ length: 4 }, (_, index) => (
-                <Skeleton key={index} className="w-full h-[360px] rounded-lg" />
+                <Skeleton
+                  key={index}
+                  className="w-full lg:h-[300px] h-[250px] rounded-lg"
+                />
               ))}
             </>
           )}

@@ -33,12 +33,15 @@ const useChangeUrl = () => {
   const handleChangeCategory = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const params = new URLSearchParams(searchParams.toString());
     params.set("category", e.target.value);
+    params.set("page", PAGE_DEFAULT.toString());
+
     router.push(`${pathname}?${params.toString()}`);
   };
 
   const handleSearchDebounced = debounce((value: string) => {
     const params = new URLSearchParams(searchParams.toString());
     params.set("search", value);
+    params.set("page", PAGE_DEFAULT.toString());
 
     router.push(`${pathname}?${params.toString()}`);
   }, 500);
@@ -50,12 +53,16 @@ const useChangeUrl = () => {
   const handleClearSearch = () => {
     const params = new URLSearchParams(searchParams.toString());
     params.set("search", "");
+    params.set("page", PAGE_DEFAULT.toString());
+
     router.push(`${pathname}?${params.toString()}`);
   };
 
   const handleChangeLimit = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const params = new URLSearchParams(searchParams.toString());
     params.set("limit", e.target.value);
+    params.set("page", PAGE_DEFAULT.toString());
+
     router.push(`${pathname}?${params.toString()}`);
   };
 

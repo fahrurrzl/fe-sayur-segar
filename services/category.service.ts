@@ -3,7 +3,9 @@ import endpoint from "./endpoint";
 import { TCategory } from "@/types/category";
 
 export default {
-  getCategories: () => instance.get(endpoint.CATEGORY),
+  getCategoriesAdmin: (params: string) =>
+    instance.get(`${endpoint.CATEGORY}?${params}`),
+  getCategoriesLanding: () => instance.get(endpoint.CATEGORY),
   getCategoryById: (id: string) => instance.get(`${endpoint.CATEGORY}/${id}`),
   create: (payload: TCategory, token: string) =>
     instance.post(endpoint.CATEGORY, payload, {

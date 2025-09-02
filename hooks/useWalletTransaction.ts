@@ -21,7 +21,7 @@ const useWalletTransaction = () => {
 
   const {
     data: dataAllWalletTransactions,
-    isLoading: isLoadingGetAllTransactions,
+    isLoading: isLoadingDataAllWalletTransaction,
   } = useQuery({
     queryKey: ["all-wallet-transactions"],
     queryFn: getAllWalletTransactionsService,
@@ -160,7 +160,7 @@ const useWalletTransaction = () => {
     dataWalletTransactions,
     isLoadingWalletTransactions,
     dataAllWalletTransactions,
-    isLoadingGetAllTransactions,
+    isLoadingDataAllWalletTransaction,
     // get wallet transaction by id
     dataWalletTransactionById,
     isLoadingWalletTransactionById,

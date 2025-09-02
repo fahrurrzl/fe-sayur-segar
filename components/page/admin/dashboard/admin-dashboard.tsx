@@ -10,6 +10,7 @@ import {
   CardHeader,
   Chip,
   Skeleton,
+  Spinner,
   Tooltip,
   useDisclosure,
 } from "@heroui/react";
@@ -28,10 +29,12 @@ import { useEffect } from "react";
 const AdminDashboard = () => {
   const { dataCategories } = useCategory();
   const { dataProducts } = useProduct();
-  const { dataAllSeller, setSellerId, dataSellerById } = useSeller();
+  const { dataAllSeller, setSellerId, dataSellerById, isLoadingAllSeller } =
+    useSeller();
   const { dataBalance } = useWallet();
   const {
     dataAllWalletTransactions,
+    isLoadingDataAllWalletTransaction,
     setSelectedId,
     dataWalletTransactionById,
   } = useWalletTransaction();
@@ -112,11 +115,11 @@ const AdminDashboard = () => {
           <CardBody>
             <div className="flex items-center justify-center lg:justify-between flex-col-reverse lg:flex-row gap-2 lg:gap-4">
               <Skeleton
-                isLoaded={!!dataCategories?.length}
+                isLoaded={!!dataCategories?.total}
                 className="rounded-md w-24 h-9"
               >
                 <p className="text-2xl font-bold text-gray-900 dark:text-gray-200 mt-1 text-center lg:text-start">
-                  {dataCategories?.length}
+                  {dataCategories?.total}
                 </p>
               </Skeleton>
               <div
@@ -136,11 +139,11 @@ const AdminDashboard = () => {
           <CardBody>
             <div className="flex items-center justify-center lg:justify-between flex-col-reverse lg:flex-row gap-2 lg:gap-4">
               <Skeleton
-                isLoaded={!!dataProducts?.data?.products?.length}
+                isLoaded={!!dataProducts?.data?.total}
                 className="rounded-md w-24 h-9"
               >
                 <p className="text-2xl font-bold text-gray-900 dark:text-gray-200 mt-1 text-center lg:text-start">
-                  {dataProducts?.data?.products?.length}
+                  {dataProducts?.data?.total}
                 </p>
               </Skeleton>
               <div
@@ -187,7 +190,12 @@ const AdminDashboard = () => {
             </h3>
             <FiAlertCircle className="w-5 h-5 text-orange-500" />
           </CardHeader>
-          <CardBody>
+          <CardBody className="relative min-h-[calc(100vh-500px)]">
+            {isLoadingAllSeller ? (
+              <div className="flex items-center justify-center absolute inset-0 z-50 bg-black/10 backdrop-blur-sm">
+                <Spinner color="success" />
+              </div>
+            ) : null}
             {dataAllSeller?.data
               ?.filter((seller: any) => seller?.verified !== true)
               .map((seller: TSeller) => (
@@ -232,9 +240,11 @@ const AdminDashboard = () => {
             {dataAllSeller?.data?.filter(
               (seller: any) => seller?.verified !== true
             ).length === 0 && (
-              <p className="text-sm text-gray-500 dark:text-gray-400">
-                Semua penjual sudah terverifikasi
-              </p>
+              <div className="flex items-center justify-center h-full">
+                <p className="text-sm text-gray-500 dark:text-gray-400">
+                  Semua penjual sudah terverifikasi
+                </p>
+              </div>
             )}
           </CardBody>
         </Card>
@@ -254,7 +264,12 @@ const AdminDashboard = () => {
               pending
             </Chip>
           </CardHeader>
-          <CardBody>
+          <CardBody className="relative min-h-[calc(100vh-500px)]">
+            {isLoadingDataAllWalletTransaction ? (
+              <div className="flex items-center justify-center absolute inset-0 z-50 bg-black/10 backdrop-blur-sm">
+                <Spinner color="success" />
+              </div>
+            ) : null}
             {dataAllWalletTransactions?.data
               ?.filter(
                 (transaction: IWalletTransaction) =>
@@ -301,9 +316,11 @@ const AdminDashboard = () => {
               (transaction: IWalletTransaction) =>
                 transaction?.status === "pending"
             ).length === 0 && (
-              <p className="text-sm text-gray-500 dark:text-gray-400">
-                Semua transaksi wallet sudah selesai
-              </p>
+              <div className="flex items-center justify-center h-full">
+                <p className="text-sm text-gray-500 dark:text-gray-400">
+                  Semua transaksi wallet sudah selesai
+                </p>
+              </div>
             )}
           </CardBody>
         </Card>

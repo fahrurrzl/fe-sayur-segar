@@ -8,12 +8,15 @@ import { useSession } from "next-auth/react";
 import { addToast } from "@heroui/react";
 import { useParams, useRouter } from "next/navigation";
 import { TCategory } from "@/types/category";
+import useChangeUrl from "./useChangeUrl";
 
 const useCategory = () => {
   const router = useRouter();
   const { data: session } = useSession();
   const params = useParams();
   const { id } = params;
+
+  const { page, limit, search } = useChangeUrl();
 
   const {
     handleUploadFile,
@@ -173,9 +176,25 @@ const useCategory = () => {
 
   const handleDeleteCategory = (id: string) => mutateDeleteCategory(id);
 
-  // get categories
+  // get categories admin
+  const getCategoriesAdminService = async () => {
+    let params = `search=${search}&page=${page}&limit=${limit}`;
+    if (!search && !page && !limit) {
+      params = "";
+    }
+    const res = await categoryService.getCategoriesAdmin(params);
+    return res.data.data;
+  };
+
+  const { data: dataCategoriesAdmin, isLoading: isLoadingCategoriesAdmin } =
+    useQuery({
+      queryKey: ["categories-admin", page, limit, search],
+      queryFn: getCategoriesAdminService,
+    });
+
+  // get categories landing
   const getCategoriesService = async () => {
-    const res = await categoryService.getCategories();
+    const res = await categoryService.getCategoriesLanding();
     return res.data.data;
   };
 
@@ -192,6 +211,8 @@ const useCategory = () => {
     reset,
     setValue,
     // query
+    dataCategoriesAdmin,
+    isLoadingCategoriesAdmin,
     dataCategories,
     isLoadingCategories,
     // mutation

@@ -75,7 +75,7 @@ const Explore = () => {
               </CardHeader>
               <CardBody>
                 <Select
-                  items={dataCategories || []}
+                  items={dataCategories?.categories || []}
                   label="Kategori"
                   placeholder="Pilih kategori"
                   variant="bordered"
@@ -95,7 +95,10 @@ const Explore = () => {
             <div className="grid grid-cols-2 lg:grid-cols-3 gap-4">
               {isLoadingProducts
                 ? Array.from({ length: 3 }).map((_, index) => (
-                    <Skeleton key={index} className="h-80 w-full rounded-md" />
+                    <Skeleton
+                      key={index}
+                      className="w-full lg:h-[300px] h-[250px] rounded-lg"
+                    />
                   ))
                 : null}
               {dataProducts?.data?.products?.map((product: TProduct) => (

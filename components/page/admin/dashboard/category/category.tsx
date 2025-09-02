@@ -2,7 +2,7 @@
 
 import DataTable from "@/components/data-table";
 import useCategory from "@/hooks/useCateogry";
-import React, { Key, useCallback, useState } from "react";
+import React, { Key, useCallback, useEffect, useState } from "react";
 import { columns } from "./columns";
 import Image from "next/image";
 import { Button, Tooltip } from "@heroui/react";
@@ -12,12 +12,18 @@ import { useRouter } from "next/navigation";
 import { useDisclosure } from "@heroui/react";
 import ModalDelete from "./modal-delete";
 import { formatDate } from "@/utils/dateFormat";
+import useChangeUrl from "@/hooks/useChangeUrl";
 
 const Category = () => {
   const [selectedCategory, setSelectedCategory] = useState("");
   const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
   const router = useRouter();
-  const { dataCategories, isLoadingCategories } = useCategory();
+  const { dataCategoriesAdmin, isLoadingCategoriesAdmin } = useCategory();
+  const { setUrl } = useChangeUrl();
+
+  useEffect(() => {
+    setUrl();
+  }, []);
 
   const renderCell = useCallback(
     (category: Record<string, unknown>, columnKey: Key) => {
@@ -105,13 +111,15 @@ const Category = () => {
         title="Kategori"
         description="Kelola kategori"
         columns={columns}
-        data={dataCategories || []}
+        data={dataCategoriesAdmin?.categories || []}
         renderCell={renderCell as any}
         addButton
         addButtonText="Tambah Kategori"
         onPressAddButton={() => router.push("/admin/dashboard/category/create")}
         emptyContent="Belum ada kategori yang ditambahkan"
-        isLoading={isLoadingCategories}
+        isLoading={isLoadingCategoriesAdmin}
+        currentPage={dataCategoriesAdmin?.currentPage}
+        totalPage={dataCategoriesAdmin?.totalPage}
       />
     </>
   );

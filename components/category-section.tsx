@@ -2,7 +2,7 @@
 
 import useCategory from "@/hooks/useCateogry";
 import { TCategory } from "@/types/category";
-import { Card, CardBody } from "@heroui/react";
+import { Card, CardBody, Skeleton } from "@heroui/react";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -17,7 +17,14 @@ const CategorySection = () => {
         </h2>
 
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
-          {dataCategories?.map((category: TCategory) => (
+          {isLoadingCategories ? (
+            <>
+              {Array.from({ length: 6 }, (_, index) => (
+                <Skeleton key={index} className="w-full h-[180px] rounded-lg" />
+              ))}
+            </>
+          ) : null}
+          {dataCategories?.categories?.map((category: TCategory) => (
             <Card
               shadow="sm"
               as={Link}

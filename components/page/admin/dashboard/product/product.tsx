@@ -5,10 +5,9 @@ import cn from "@/utils/cn";
 import { rupiahFormat } from "@/utils/rupiahFormat";
 import { Button, Tooltip, useDisclosure } from "@heroui/react";
 import Image from "next/image";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Key, useCallback, useEffect, useState } from "react";
-import { FiEdit, FiTrash } from "react-icons/fi";
+import { FiTrash } from "react-icons/fi";
 import { columns } from "./columns";
 import useProduct from "@/hooks/useProduct";
 import ModalDelete from "./modal-delete";
@@ -20,6 +19,7 @@ const AdminProduct = () => {
   const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
   const { dataProducts, isLoadingProducts } = useProduct();
   const { setUrl } = useChangeUrl();
+  console.log(dataProducts?.data);
 
   useEffect(() => {
     setUrl();
@@ -114,7 +114,7 @@ const AdminProduct = () => {
         emptyContent="Belum ada produk yang ditambahkan"
         isLoading={isLoadingProducts}
         currentPage={dataProducts?.data?.currentPage}
-        totalPage={dataProducts?.data?.totalPages}
+        totalPage={dataProducts?.data?.totalPage}
       />
     </>
   );
