@@ -10,6 +10,8 @@ import Link from "next/link";
 import useProfile from "@/hooks/useProfile";
 import ModalConfirmBeseller from "./modal-confirm-beseller";
 import { useDisclosure } from "@heroui/react";
+import { TextEffect } from "@/components/motion-primitives/text-effect";
+import { AnimatedGroup } from "@/components/motion-primitives/animated-group";
 
 const HeroSection = () => {
   const { dataUser } = useProfile();
@@ -24,25 +26,70 @@ const HeroSection = () => {
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           {/* Left Content */}
           <div className="space-y-8">
-            <div className="space-y-4">
-              <h1 className="text-4xl lg:text-5xl font-bold text-foreground leading-tight">
-                Sayuran Segar
-                <span className="block bg-gradient-to-r from-green-500 to-green-300 bg-clip-text text-transparent">
-                  Langsung dari Petani
-                </span>
-              </h1>
-              <p className="text-lg text-foreground-500 max-w-md">
-                Dapatkan sayuran segar berkualitas tinggi langsung dari petani
-                lokal. Dikirim hari ini, sampai besok pagi.
-              </p>
-            </div>
+            {/* Text effect start */}
+            <TextEffect
+              className="text-4xl lg:text-5xl font-bold text-foreground leading-tight"
+              per="char"
+              delay={0.5}
+              preset="fade"
+            >
+              Sayuran Segar
+            </TextEffect>
+            <TextEffect
+              className="text-4xl lg:text-5xl font-bold block bg-gradient-to-r from-green-500 to-green-300 bg-clip-text text-transparent py-2 -mt-8"
+              per="char"
+              preset="fade"
+              delay={0.5}
+            >
+              Langsung dari Petani
+            </TextEffect>
+            <TextEffect
+              per="char"
+              delay={1}
+              segmentTransition={{
+                duration: 0.3,
+                type: "spring",
+                bounce: 0.3,
+              }}
+              className="text-lg text-foreground-500 max-w-md"
+            >
+              Dapatkan sayuran segar berkualitas tinggi langsung dari petani
+              lokal. Dikirim hari ini, sampai besok pagi.
+            </TextEffect>
+            {/* Text effect end */}
 
-            <div className="flex flex-col sm:flex-row gap-4">
+            <AnimatedGroup
+              className="flex flex-col lg:flex-row gap-4"
+              preset="slide"
+              variants={{
+                container: {
+                  hidden: { opacity: 0 },
+                  visible: {
+                    opacity: 1,
+                    transition: {
+                      staggerChildren: 0.05,
+                    },
+                  },
+                },
+                item: {
+                  hidden: { opacity: 0, y: 40 },
+                  visible: {
+                    opacity: 1,
+                    y: 0,
+                    transition: {
+                      duration: 1.2,
+                      type: "spring",
+                      bounce: 0.3,
+                    },
+                  },
+                },
+              }}
+            >
               <Button
                 variant="shadow"
                 size="lg"
                 color="success"
-                className="text-white"
+                className="text-white w-full"
                 as={Link}
                 href="#products"
               >
@@ -53,6 +100,7 @@ const HeroSection = () => {
                 <Button
                   variant="bordered"
                   size="lg"
+                  className="w-full"
                   onPress={() => {
                     onOpenChange();
                   }}
@@ -60,10 +108,14 @@ const HeroSection = () => {
                   Jadi Pedagang
                 </Button>
               ) : null}
-            </div>
+            </AnimatedGroup>
 
             {/* Features */}
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 pt-8">
+
+            <AnimatedGroup
+              className="grid grid-cols-1 sm:grid-cols-3 gap-6 pt-8"
+              preset="slide"
+            >
               <div className="flex items-center space-x-3">
                 <div className="bg-green-500/10 p-2 rounded-lg">
                   <FiTruck className="w-5 h-5 text-green-400" />
@@ -99,20 +151,38 @@ const HeroSection = () => {
                   <p className="text-xs text-muted-foreground">Tersedia</p>
                 </div>
               </div>
-            </div>
+            </AnimatedGroup>
           </div>
 
           {/* Right Image */}
           <div className="relative">
-            <div className="relative z-10">
-              <div className=" bg-gradient-to-br from-success/20 to-success-200/10 dark:from-emerald-500/10 dark:to-emerald-500/20 rounded-3xl p-8 backdrop-blur-md">
+            <AnimatedGroup
+              className="relative z-10"
+              preset="slide"
+              variants={{
+                item: {
+                  hidden: { opacity: 0, y: 40 },
+                  visible: {
+                    opacity: 1,
+                    y: 0,
+
+                    transition: {
+                      duration: 1.2,
+                      type: "spring",
+                      bounce: 0.3,
+                    },
+                  },
+                },
+              }}
+            >
+              <div className=" bg-gradient-to-br from-success/20 to-success-200/10 dark:from-emerald-500/10 dark:to-emerald-500/20 rounded-3xl p-4">
                 <Image
                   src={heroVegetables}
                   alt="Sayuran Segar"
                   className="w-full h-auto rounded-2xl shadow-2xl"
                 />
               </div>
-            </div>
+            </AnimatedGroup>
 
             {/* Background Decoration */}
             <div className="absolute -top-4 -right-4 w-72 h-72 bg-gradient-to-br from-fresh/30 to-organic/30 rounded-full blur-3xl"></div>

@@ -4,11 +4,9 @@ import {
   ModalBody,
   ModalContent,
   ModalFooter,
-  ModalHeader,
 } from "@heroui/react";
 import Link from "next/link";
 import React from "react";
-import { FaStore } from "react-icons/fa";
 
 const ModalConfirmBeseller = ({
   isOpen,
@@ -22,17 +20,16 @@ const ModalConfirmBeseller = ({
       <ModalContent>
         {(onClose) => (
           <>
-            <ModalHeader className="flex flex-col gap-1">
-              <div className="flex items-center gap-2">
-                <FaStore className="w-5 h-5 text-success" /> Konfirmasi Menjadi
-                Penjual
-              </div>
-            </ModalHeader>
             <ModalBody>
               <div className="space-y-4">
-                <p className="text-gray-700 dark:text-gray-300">
-                  Apakah Anda yakin ingin menjadi penjual di platform kami?
-                </p>
+                <div className="py-4">
+                  <h2 className="text-xl font-semibold text-gray-700 dark:text-gray-300 text-center">
+                    Mulai Jual Sekarang!
+                  </h2>
+                  <p className="text-center text-gray-500 dark:text-gray-400">
+                    Nikmati keuntungan sebagai penjual
+                  </p>
+                </div>
                 <div className="bg-emerald-50 p-4 rounded-lg border border-emerald-200 dark:bg-emerald-800 dark:border-emerald-700">
                   <h4 className="font-semibold text-emerald-800 mb-2 dark:text-emerald-100">
                     Keuntungan menjadi penjual:

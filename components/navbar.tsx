@@ -46,7 +46,6 @@ export const Navbar = () => {
     <HeroUINavbar
       maxWidth="xl"
       isBlurred
-      shouldHideOnScroll
       position="sticky"
       isMenuOpen={isMenuOpen}
       onMenuOpenChange={setIsMenuOpen}
