@@ -6,7 +6,14 @@ import useProfile from "@/hooks/useProfile";
 import useSeller from "@/hooks/useSeller";
 import { TProductResponse } from "@/types/product";
 import { rupiahFormat } from "@/utils/rupiahFormat";
-import { Button, Card, CardBody, CardHeader, Chip } from "@heroui/react";
+import {
+  Button,
+  Card,
+  CardBody,
+  CardHeader,
+  Chip,
+  Skeleton,
+} from "@heroui/react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
@@ -23,11 +30,10 @@ import {
 import { MdAttachMoney } from "react-icons/md";
 
 const Dashboard = () => {
-  const { dataUser, isLoadingUser } = useProfile();
-  const { dataSeller } = useSeller();
-  const { dataOrderSeller } = useOrder();
+  const { dataUser } = useProfile();
+  const { dataSeller, isLoadingSeller } = useSeller();
+  const { dataOrderSeller, isLoadingDataOrderSeller } = useOrder();
   const { setUrl } = useChangeUrl();
-  console.log(dataSeller);
 
   const router = useRouter();
   const isSellerVerified =
@@ -130,8 +136,16 @@ const Dashboard = () => {
                 </Button>
               </CardHeader>
               <CardBody>
+                {isLoadingDataOrderSeller &&
+                  Array.from({ length: 3 }).map((_, index) => (
+                    <Skeleton
+                      key={index}
+                      isLoaded={false}
+                      className="mb-2 h-12 w-full rounded-md"
+                    />
+                  ))}
                 {dataOrderSeller?.data?.orders
-                  ?.filter((order: any) => order?.status !== "SUCCESS")
+                  ?.filter((order: any) => order?.status !== "COMPLETED")
                   ?.map((order: any) => (
                     <div className="space-y-3" key={order?.id}>
                       <div className="flex items-center justify-between py-2">
@@ -195,8 +209,12 @@ const Dashboard = () => {
                     </div>
                   ))}
 
-                {dataOrderSeller?.data?.length === 0 && (
-                  <p className="text-sm text-gray-500">Tidak ada pesanan</p>
+                {dataOrderSeller?.data.orders?.filter(
+                  (order: any) => order?.status !== "COMPLETED"
+                )?.length === 0 && (
+                  <p className="text-center text-gray-500 dark:text-gray-400">
+                    Tidak ada pesanan
+                  </p>
                 )}
               </CardBody>
             </Card>
@@ -210,7 +228,15 @@ const Dashboard = () => {
                 <FiAlertCircle className="w-5 h-5 text-orange-500" />
               </CardHeader>
               <CardBody>
-                {dataSeller?.products
+                {isLoadingSeller &&
+                  Array.from({ length: 3 }).map((_, index) => (
+                    <Skeleton
+                      key={index}
+                      isLoaded={false}
+                      className="mb-2 h-12 w-full rounded-md"
+                    />
+                  ))}
+                {dataSeller?.seller?.products
                   ?.filter((product: TProductResponse) => product?.stock < 20)
                   ?.map((product: TProductResponse) => (
                     <div className="space-y-3" key={product?.id}>
@@ -224,10 +250,10 @@ const Dashboard = () => {
                             className="object-contain aspect-square rounded-md"
                           />
                           <div>
-                            <p className="font-medium text-gray-900 dark:text-white">
+                            <p className="font-medium text-gray-900 dark:text-white w-56 truncate">
                               {product?.name}
                             </p>
-                            <p className="text-sm text-gray-500 dark:text-gray-400">
+                            <p className="text-sm text-gray-500 dark:text-gray-400 w-56 truncate">
                               {product?.description}
                             </p>
                           </div>
@@ -241,10 +267,10 @@ const Dashboard = () => {
                     </div>
                   ))}
 
-                {dataSeller?.products?.filter(
+                {dataSeller?.seller?.products?.filter(
                   (product: TProductResponse) => product?.stock < 20
                 ).length === 0 && (
-                  <p className="text-sm text-gray-500 dark:text-gray-400">
+                  <p className="text-center text-gray-500 dark:text-gray-400">
                     Semua produk memiliki stok yang cukup
                   </p>
                 )}

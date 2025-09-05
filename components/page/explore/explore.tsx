@@ -22,6 +22,7 @@ import { useEffect } from "react";
 
 const Explore = () => {
   const searchParams = useSearchParams();
+  const searchValue = searchParams.get("search");
   const categoryFilterValue = searchParams.get("category");
   const { dataCategories, isLoadingCategories } = useCategory();
   const { dataProducts, isLoadingProducts } = useProduct();
@@ -62,6 +63,7 @@ const Explore = () => {
               isClearable
               onClear={handleClearSearch}
               onChange={handleChangeSearch}
+              defaultValue={searchValue as string}
             />
           </div>
         </div>

@@ -9,7 +9,6 @@ import {
   Input,
   Select,
   SelectItem,
-  Skeleton,
   Textarea,
 } from "@heroui/react";
 import Link from "next/link";
@@ -31,7 +30,7 @@ interface PropTypes {
 
 const ProductForm = ({ type, data }: PropTypes) => {
   const router = useRouter();
-  const { dataCategories: categories } = useCategory();
+  const { dataCategories } = useCategory();
   const { dataUnits, isLoadingUnits } = useUnit();
 
   const {
@@ -70,7 +69,7 @@ const ProductForm = ({ type, data }: PropTypes) => {
     <div>
       {/* Header */}
       <div className="flex items-center mb-4">
-        <Button isIconOnly variant="light" as={Link} href="/dashboard/product">
+        <Button isIconOnly variant="light" onPress={() => router.back()}>
           <FaArrowLeft />
         </Button>
 
@@ -245,12 +244,12 @@ const ProductForm = ({ type, data }: PropTypes) => {
                         {...field}
                         selectedKeys={field.value ? [field.value] : []}
                         variant="bordered"
-                        items={categories || []}
+                        items={dataCategories?.categories || []}
                         label="Kategori Produk"
                         placeholder="Pilih Kategori"
                         isInvalid={!!errors.categoryId}
-                        isLoading={!categories?.length}
-                        disabled={!categories?.length}
+                        isLoading={!dataCategories?.categories?.length}
+                        disabled={!dataCategories?.categories?.length}
                       >
                         {(category: { id: string; name: string }) => (
                           <SelectItem key={category.id}>

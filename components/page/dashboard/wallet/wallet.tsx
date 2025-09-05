@@ -99,37 +99,41 @@ const Wallet = () => {
           <CardBody>
             <div>
               <div className="space-y-4 max-h-80 overflow-y-auto">
-                {isLoadingWalletTransactions && (
-                  <div className="flex items-center justify-between py-2">
-                    <div className="flex items-center gap-2">
-                      <Skeleton className="w-8 h-8 rounded-full" />
+                {isLoadingWalletTransactions &&
+                  Array.from({ length: 3 }, (_, index) => (
+                    <div
+                      key={index}
+                      className="flex items-center justify-between py-2 gap-2"
+                    >
+                      <div className="flex items-center gap-2">
+                        <Skeleton className="w-8 h-8 rounded-full" />
+                        <div className="space-y-1">
+                          <Skeleton className="w-64 rounded-md h-4" />
+                          <Skeleton className="w-32 rounded-md h-3" />
+                        </div>
+                      </div>
                       <div className="space-y-1">
-                        <Skeleton className="w-64 rounded-md h-4" />
-                        <Skeleton className="w-32 rounded-md h-3" />
+                        <Skeleton className="w-24 rounded-md h-4" />
+                        <Skeleton className="w-24 rounded-md h-3" />
                       </div>
                     </div>
-                    <div className="space-y-1">
-                      <Skeleton className="w-24 rounded-md h-4" />
-                      <Skeleton className="w-24 rounded-md h-3" />
-                    </div>
-                  </div>
-                )}
+                  ))}
                 {dataWalletTransactions?.data.map(
                   (transaction: IWalletTransaction) => (
                     <div
                       key={transaction?.id}
-                      className="flex items-center justify-between py-2"
+                      className="flex items-center justify-between py-2 gap-2"
                     >
                       <div className="flex items-center space-x-3">
                         {transaction?.type === "income" ? (
                           <div
-                            className={`w-8 h-8 rounded-full flex items-center justify-center bg-success/20`}
+                            className={`w-8 h-8 shrink-0 rounded-full flex items-center justify-center bg-success/20`}
                           >
                             <BsArrowDownLeft className="w-4 h-4 text-success" />
                           </div>
                         ) : (
                           <div
-                            className={`w-8 h-8 rounded-full flex items-center justify-center bg-danger/20`}
+                            className={`w-8 h-8 shrink-0 rounded-full flex items-center justify-center bg-danger/20`}
                           >
                             <BsArrowUpRight className="w-4 h-4 text-danger" />
                           </div>
@@ -188,6 +192,10 @@ const Wallet = () => {
             </h3>
           </CardHeader>
           <CardBody>
+            {isLoadingWalletTransactions &&
+              Array.from({ length: 3 }, (_, index) => (
+                <Skeleton key={index} className="w-full rounded-md h-24 mb-3" />
+              ))}
             <div className="space-y-4 max-h-80 overflow-y-auto">
               {dataWalletTransactions?.data
                 .filter(

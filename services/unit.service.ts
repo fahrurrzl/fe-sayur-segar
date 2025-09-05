@@ -3,7 +3,7 @@ import endpoint from "./endpoint";
 import { IUnit } from "@/types/unit";
 
 export default {
-  getUnits: () => instance.get(endpoint.UNIT),
+  getUnits: (params: string) => instance.get(`${endpoint.UNIT}?${params}`),
   createUnit: (payload: IUnit, token: string) =>
     instance.post(endpoint.UNIT, payload, {
       headers: {

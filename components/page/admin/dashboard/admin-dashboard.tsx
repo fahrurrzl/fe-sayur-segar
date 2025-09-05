@@ -163,11 +163,11 @@ const AdminDashboard = () => {
           <CardBody>
             <div className="flex items-center justify-center lg:justify-between flex-col-reverse lg:flex-row gap-2 lg:gap-4">
               <Skeleton
-                isLoaded={!!dataAllSeller?.data?.length}
+                isLoaded={!!dataAllSeller?.data?.sellers?.length}
                 className="rounded-md w-24 h-9"
               >
                 <p className="text-2xl font-bold text-gray-900 dark:text-gray-200 mt-1 text-center lg:text-start">
-                  {dataAllSeller?.data?.length}
+                  {dataAllSeller?.data?.sellers?.length}
                 </p>
               </Skeleton>
               <div
@@ -196,7 +196,7 @@ const AdminDashboard = () => {
                 <Spinner color="success" />
               </div>
             ) : null}
-            {dataAllSeller?.data
+            {dataAllSeller?.data?.sellers
               ?.filter((seller: any) => seller?.verified !== true)
               .map((seller: TSeller) => (
                 <div className="space-y-3" key={seller?.id}>
@@ -237,7 +237,7 @@ const AdminDashboard = () => {
                 </div>
               ))}
 
-            {dataAllSeller?.data?.filter(
+            {dataAllSeller?.data?.sellers?.filter(
               (seller: any) => seller?.verified !== true
             ).length === 0 && (
               <div className="flex items-center justify-center h-full">
@@ -270,7 +270,7 @@ const AdminDashboard = () => {
                 <Spinner color="success" />
               </div>
             ) : null}
-            {dataAllWalletTransactions?.data
+            {dataAllWalletTransactions?.data?.walletTransaction
               ?.filter(
                 (transaction: IWalletTransaction) =>
                   transaction?.status === "pending"
@@ -312,7 +312,7 @@ const AdminDashboard = () => {
                 </div>
               ))}
 
-            {dataAllWalletTransactions?.data?.filter(
+            {dataAllWalletTransactions?.data?.walletTransaction?.filter(
               (transaction: IWalletTransaction) =>
                 transaction?.status === "pending"
             ).length === 0 && (

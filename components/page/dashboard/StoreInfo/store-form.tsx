@@ -1,8 +1,6 @@
 "use client";
 
-import InputFile from "@/components/input-file";
 import useSeller from "@/hooks/useSeller";
-import cn from "@/utils/cn";
 import { Button } from "@heroui/button";
 import {
   Card,
@@ -19,7 +17,7 @@ import { useEffect } from "react";
 import { Controller } from "react-hook-form";
 import { BsBank, BsCreditCard, BsPerson } from "react-icons/bs";
 import { FaArrowLeft, FaStore } from "react-icons/fa";
-import { FiCreditCard, FiMapPin } from "react-icons/fi";
+import { FiMapPin } from "react-icons/fi";
 import { MdOutlineDescription } from "react-icons/md";
 
 export const banks = [
@@ -44,14 +42,15 @@ const StoreForm = () => {
   const router = useRouter();
 
   useEffect(() => {
-    if (dataSeller) {
-      setValue("storeName", dataSeller?.storeName || "");
-      setValue("storeLocation", dataSeller?.storeLocation || "");
-      setValue("description", dataSeller?.description || "");
-      setValue("accountNumber", dataSeller?.accountNumber || "");
-      setValue("accountName", dataSeller?.accountName || "");
+    if (dataSeller?.seller) {
+      setValue("storeName", dataSeller?.seller?.storeName || "");
+      setValue("storeLocation", dataSeller?.seller?.storeLocation || "");
+      setValue("description", dataSeller?.seller?.description || "");
+      setValue("accountNumber", dataSeller?.seller?.accountNumber || "");
+      setValue("accountName", dataSeller?.seller?.accountName || "");
+      setValue("bankName", dataSeller?.seller?.bankName || "");
     }
-  }, [dataSeller]);
+  }, [dataSeller?.seller]);
 
   return (
     <div>
@@ -85,7 +84,7 @@ const StoreForm = () => {
                   <div className="grid grid-cols-1 gap-6">
                     <Skeleton
                       className="rounded-lg"
-                      isLoaded={!!dataSeller?.storeName}
+                      isLoaded={!!dataSeller?.seller?.storeName}
                     >
                       <div className="space-y-1">
                         <Controller
@@ -114,7 +113,7 @@ const StoreForm = () => {
 
                     <Skeleton
                       className="rounded-lg"
-                      isLoaded={!!dataSeller?.description}
+                      isLoaded={!!dataSeller?.seller?.description}
                     >
                       <div className="space-y-1">
                         <Controller
@@ -151,7 +150,7 @@ const StoreForm = () => {
                   <div className="grid grid-cols-2 gap-4">
                     <Skeleton
                       className="rounded-lg"
-                      isLoaded={!!dataSeller?.storeLocation}
+                      isLoaded={!!dataSeller?.seller?.storeLocation}
                     >
                       <div className="space-y-1">
                         <Controller
@@ -180,7 +179,7 @@ const StoreForm = () => {
 
                     <Skeleton
                       className="rounded-lg"
-                      isLoaded={!!dataSeller?.bankName}
+                      isLoaded={!!dataSeller?.seller?.bankName}
                     >
                       <div className="space-y-1">
                         <Controller
@@ -189,7 +188,9 @@ const StoreForm = () => {
                           render={({ field }) => (
                             <Select
                               {...field}
-                              defaultSelectedKeys={[`${dataSeller?.bankName}`]}
+                              defaultSelectedKeys={[
+                                `${dataSeller?.seller?.bankName}`,
+                              ]}
                               label="Nama Bank"
                               variant="bordered"
                               placeholder="Pilih nama bank"
@@ -216,7 +217,7 @@ const StoreForm = () => {
 
                     <Skeleton
                       className="rounded-lg"
-                      isLoaded={!!dataSeller?.accountName}
+                      isLoaded={!!dataSeller?.seller?.accountName}
                     >
                       <div className="space-y-1">
                         <Controller
@@ -245,7 +246,7 @@ const StoreForm = () => {
 
                     <Skeleton
                       className="rounded-lg"
-                      isLoaded={!!dataSeller?.accountNumber}
+                      isLoaded={!!dataSeller?.seller?.accountNumber}
                     >
                       <div className="space-y-1">
                         <Controller

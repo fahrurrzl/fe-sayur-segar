@@ -118,7 +118,9 @@ const ProductDetail = ({ product }: { product: TProduct }) => {
           </div>
 
           {/* Add to Cart */}
-          {stock > 0 && seller?.userId !== session?.user.id ? (
+          {stock > 0 &&
+          seller?.userId !== session?.user.id &&
+          session?.user.role !== "superadmin" ? (
             <Button
               className="w-full text-white"
               size="lg"

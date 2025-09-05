@@ -4,7 +4,6 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { sellerSchema } from "@/schemas/seller.schema";
 import { useSession } from "next-auth/react";
-import useProfile from "./useProfile";
 import { addToast } from "@heroui/react";
 import { useRouter } from "next/navigation";
 import walletService from "@/services/wallet.service";
@@ -16,7 +15,6 @@ const useSeller = () => {
   const [sellerId, setSellerId] = useState<string | null>(null);
   const router = useRouter();
   const { data: session } = useSession();
-  const { dataUser } = useProfile();
   const { category, search, page, limit } = useChangeUrl();
 
   // form
@@ -125,14 +123,21 @@ const useSeller = () => {
 
   const handleUpdateStore = (payload: TSeller) => mutateUpdateSeller(payload);
 
-  // get all users
+  // get all seller
   const getAllSellerService = async () => {
-    const res = await sellerService.index(session?.user?.token as string);
+    let params = `search=${search}&page=${page}&limit=${limit}`;
+    if (!search && !page && !limit) {
+      params = "";
+    }
+    const res = await sellerService.index(
+      session?.user?.token as string,
+      params
+    );
     return res.data;
   };
 
   const { data: dataAllSeller, isLoading: isLoadingAllSeller } = useQuery({
-    queryKey: ["all-seller"],
+    queryKey: ["all-seller", page, limit, search],
     queryFn: getAllSellerService,
     enabled: !!session,
   });

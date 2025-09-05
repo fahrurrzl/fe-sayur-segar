@@ -4,7 +4,7 @@ import DataTable from "@/components/data-table";
 import useSeller from "@/hooks/useSeller";
 import { Avatar } from "@heroui/avatar";
 import { Button, Chip, Tooltip, useDisclosure } from "@heroui/react";
-import { Key, useCallback, useState } from "react";
+import { Key, useCallback, useEffect, useState } from "react";
 import { FiEye, FiTrash } from "react-icons/fi";
 import { columns } from "./columns";
 import { useRouter } from "next/navigation";
@@ -13,6 +13,7 @@ import { MdVerified } from "react-icons/md";
 import { formatDate } from "@/utils/dateFormat";
 import ModalSeller from "./modal-seller";
 import ModalDelete from "./modal-delete";
+import useChangeUrl from "@/hooks/useChangeUrl";
 
 const Seller = () => {
   const [selectedSeller, setSelectedSeller] = useState<string | null>(null);
@@ -25,6 +26,12 @@ const Seller = () => {
     isOpen: isOpenDelete,
     onClose: onCloseDelete,
   } = useDisclosure();
+
+  const { setUrl } = useChangeUrl();
+
+  useEffect(() => {
+    setUrl();
+  }, []);
 
   const renderCell = useCallback(
     (seller: Record<string, any>, columnKey: Key) => {
@@ -149,7 +156,7 @@ const Seller = () => {
         title="Penjual"
         description="Kelola penjual"
         columns={columns}
-        data={dataAllSeller?.data || []}
+        data={dataAllSeller?.data?.sellers || []}
         renderCell={renderCell as any}
         onPressAddButton={() => router.push("/admin/dashboard/seller/create")}
         emptyContent="Belum ada penjual yang ditambahkan"

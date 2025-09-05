@@ -8,8 +8,8 @@ export default {
         Authorization: `Bearer ${token}`,
       },
     }),
-  getAllWalletTransacions: (token: string) =>
-    instance.get(`${endpoint.WALLET_TRANSACTION}/superadmin`, {
+  getAllWalletTransacions: (token: string, params: string) =>
+    instance.get(`${endpoint.WALLET_TRANSACTION}/superadmin?${params}`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },

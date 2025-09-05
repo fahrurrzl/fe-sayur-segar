@@ -21,8 +21,8 @@ export default {
         Authorization: `Bearer ${token}`,
       },
     }),
-  index: (token: string) =>
-    instance.get(endpoint.SELLER, {
+  index: (token: string, params: string) =>
+    instance.get(`${endpoint.SELLER}?${params}`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },

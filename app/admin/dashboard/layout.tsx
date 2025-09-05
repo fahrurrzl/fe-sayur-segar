@@ -11,12 +11,10 @@ import {
   DropdownItem,
   Card,
   CardBody,
-  Badge,
 } from "@heroui/react";
 import {
   HiOutlineMenu,
   HiOutlineX,
-  HiOutlineBell,
   HiOutlineLogout,
   HiOutlineCog,
   HiOutlineUser,
@@ -144,18 +142,6 @@ const AdminDashboardLayout = ({ children }: { children: React.ReactNode }) => {
                   <p className="text-xs text-gray-500 truncate hidden sm:block dark:text-gray-400">
                     Pantau dan kelola produk yang anda jual
                   </p>
-                </div>
-
-                <div className="flex items-center space-x-2 sm:space-x-4 flex-shrink-0">
-                  <Badge content="3" color="danger" size="sm">
-                    <Button
-                      isIconOnly
-                      variant="light"
-                      className="text-gray-500 dark:text-gray-200"
-                    >
-                      <HiOutlineBell className="w-5 h-5" />
-                    </Button>
-                  </Badge>
                 </div>
               </div>
             </div>

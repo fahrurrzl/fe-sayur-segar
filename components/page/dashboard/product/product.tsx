@@ -20,7 +20,6 @@ const Product = () => {
   const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
   const { dataSeller, isLoadingSeller } = useSeller();
   const { setUrl } = useChangeUrl();
-  console.log(dataSeller);
 
   useEffect(() => {
     setUrl();

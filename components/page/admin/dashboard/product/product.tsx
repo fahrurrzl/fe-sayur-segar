@@ -19,7 +19,6 @@ const AdminProduct = () => {
   const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
   const { dataProducts, isLoadingProducts } = useProduct();
   const { setUrl } = useChangeUrl();
-  console.log(dataProducts?.data);
 
   useEffect(() => {
     setUrl();

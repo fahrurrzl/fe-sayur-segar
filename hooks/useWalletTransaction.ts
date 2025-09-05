@@ -6,15 +6,23 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useSession } from "next-auth/react";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
+import useChangeUrl from "./useChangeUrl";
 
 const useWalletTransaction = () => {
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const { data: session } = useSession();
+  const { search, page, limit } = useChangeUrl();
 
   // get all wallet transaction (superadmin)
   const getAllWalletTransactionsService = async () => {
+    let params = `search=${search}&page=${page}&limit=${limit}`;
+    if (!search && !page && !limit) {
+      params = "";
+    }
+
     const res = await walletTransactionService.getAllWalletTransacions(
-      session?.user.token as string
+      session?.user.token as string,
+      params
     );
     return res.data;
   };
@@ -23,9 +31,8 @@ const useWalletTransaction = () => {
     data: dataAllWalletTransactions,
     isLoading: isLoadingDataAllWalletTransaction,
   } = useQuery({
-    queryKey: ["all-wallet-transactions"],
+    queryKey: ["all-wallet-transactions", search, page, limit],
     queryFn: getAllWalletTransactionsService,
-    staleTime: 0,
   });
 
   // get wallet transaction

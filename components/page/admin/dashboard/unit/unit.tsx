@@ -82,6 +82,7 @@ const Unit = () => {
         onPressAddButton={() => router.push("/admin/dashboard/unit/create")}
         emptyContent="Belum ada unit yang ditambahkan"
         isLoading={isLoadingUnits}
+        isPaginate={false}
       />
     </>
   );

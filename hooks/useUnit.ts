@@ -8,21 +8,27 @@ import { useSession } from "next-auth/react";
 import { useParams } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
+import useChangeUrl from "./useChangeUrl";
 
 const useUnit = () => {
   const router = useRouter();
   const { data: session } = useSession();
   const params = useParams();
   const { id } = params;
+  const { search } = useChangeUrl();
 
   // get units
   const getUnitsService = async () => {
-    const res = await unitService.getUnits();
+    let params = `search=${search}`;
+    if (!search) {
+      params = "";
+    }
+    const res = await unitService.getUnits(params);
     return res.data;
   };
 
   const { data: dataUnits, isLoading: isLoadingUnits } = useQuery({
-    queryKey: ["units"],
+    queryKey: ["units", search],
     queryFn: getUnitsService,
   });
 

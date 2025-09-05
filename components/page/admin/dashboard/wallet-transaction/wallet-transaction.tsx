@@ -4,13 +4,14 @@ import DataTable from "@/components/data-table";
 import { formatDate } from "@/utils/dateFormat";
 import { rupiahFormat } from "@/utils/rupiahFormat";
 import { Button, Chip, Tooltip, useDisclosure } from "@heroui/react";
-import { Key, useCallback, useState } from "react";
+import { Key, useCallback, useEffect, useState } from "react";
 import { FiEye, FiTrash } from "react-icons/fi";
 import { columns } from "./columns";
 import useWalletTransaction from "@/hooks/useWalletTransaction";
 import { BsBank, BsCheckCircle, BsClock } from "react-icons/bs";
 import ModalDetail from "./modal-detail";
 import ModalDelete from "./modal-delete";
+import useChangeUrl from "@/hooks/useChangeUrl";
 
 const WalletTransaction = () => {
   const [selectedWalletTransaction, setSelectedWalletTransaction] =
@@ -35,6 +36,12 @@ const WalletTransaction = () => {
     onClose: onCloseDelete,
     onOpenChange: onOpenChangeDelete,
   } = useDisclosure();
+
+  const { setUrl } = useChangeUrl();
+
+  useEffect(() => {
+    setUrl();
+  }, []);
 
   const renderCell = useCallback(
     (walletTransaction: Record<string, any>, columnKey: Key) => {
@@ -147,8 +154,11 @@ const WalletTransaction = () => {
         renderCell={renderCell}
         title="Transaksi Wallet"
         description="Kelola transaksi wallet"
-        data={dataAllWalletTransactions?.data || []}
+        data={dataAllWalletTransactions?.data?.walletTransaction || []}
         isLoading={isLoadingDataAllWalletTransaction}
+        totalPage={dataAllWalletTransactions?.data?.totalPage}
+        currentPage={dataAllWalletTransactions?.data?.currentPage}
+        emptyContent="Tidak ada transaksi wallet"
       />
     </>
   );

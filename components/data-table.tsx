@@ -10,7 +10,6 @@ import {
   CardBody,
   CardHeader,
   Button,
-  Skeleton,
   Pagination,
   Input,
   Select,
@@ -21,6 +20,7 @@ import React, { Key, ReactNode } from "react";
 import { FiPlus } from "react-icons/fi";
 import { SearchIcon } from "./icons";
 import { LIMIT_DEFAULT, LIMIT_LISTS } from "@/constant/PAGINATION";
+import { useSearchParams } from "next/navigation";
 
 interface PropTypes {
   columns: Record<string, unknown>[];
@@ -35,6 +35,8 @@ interface PropTypes {
   isLoading?: boolean;
   totalPage?: number;
   currentPage?: number;
+  searchPlaceholder?: string;
+  isPaginate?: boolean;
 }
 
 const DataTable = ({
@@ -50,6 +52,8 @@ const DataTable = ({
   isLoading,
   totalPage,
   currentPage,
+  searchPlaceholder = "Search...",
+  isPaginate = true,
 }: PropTypes) => {
   const {
     handleChangePage,
@@ -58,13 +62,16 @@ const DataTable = ({
     handleChangeLimit,
   } = useChangeUrl();
 
+  const params = useSearchParams();
+  const searhcValue = params.get("search");
+
   const topContent = React.useMemo(() => {
     return (
       <div className="flex items-center justify-end">
         <Input
           className="lg:w-1/4 w-1/2"
           suppressHydrationWarning
-          placeholder="Cari sayur segar..."
+          placeholder={searchPlaceholder}
           startContent={
             <SearchIcon className="text-default-400 pointer-events-none flex-shrink-0" />
           }
@@ -72,6 +79,7 @@ const DataTable = ({
           isClearable
           onClear={handleClearSearch}
           onChange={handleChangeSearch}
+          defaultValue={searhcValue as string}
         />
       </div>
     );
@@ -80,33 +88,36 @@ const DataTable = ({
   const bottomContent = React.useMemo(() => {
     return (
       <div className="py-2 px-2 flex justify-between items-center">
-        <Select
-          variant="bordered"
-          className="w-32"
-          label="Show:"
-          labelPlacement="outside-left"
-          defaultSelectedKeys={[LIMIT_DEFAULT.toString()]}
-          onChange={(value) => {
-            handleChangeLimit(value);
-          }}
-          disallowEmptySelection
-        >
-          {LIMIT_LISTS.map((limit) => (
-            <SelectItem key={limit.value}>{limit.label}</SelectItem>
-          ))}
-        </Select>
-
-        <Pagination
-          showControls
-          size="sm"
-          classNames={{
-            cursor: "bg-success text-white",
-          }}
-          color="success"
-          page={currentPage}
-          total={totalPage as number}
-          onChange={handleChangePage}
-        />
+        {isPaginate ? (
+          <>
+            <Select
+              variant="bordered"
+              className="w-32"
+              label="Show:"
+              labelPlacement="outside-left"
+              defaultSelectedKeys={[LIMIT_DEFAULT.toString()]}
+              onChange={(value) => {
+                handleChangeLimit(value);
+              }}
+              disallowEmptySelection
+            >
+              {LIMIT_LISTS.map((limit) => (
+                <SelectItem key={limit.value}>{limit.label}</SelectItem>
+              ))}
+            </Select>
+            <Pagination
+              showControls
+              size="sm"
+              classNames={{
+                cursor: "bg-success text-white",
+              }}
+              color="success"
+              page={currentPage}
+              total={totalPage as number}
+              onChange={handleChangePage}
+            />
+          </>
+        ) : null}
       </div>
     );
   }, [handleChangePage, currentPage, totalPage]);
