@@ -1,16 +1,22 @@
-import {
-  Drawer,
-  DrawerBody,
-  DrawerContent,
-  DrawerFooter,
-  DrawerHeader,
-} from "@heroui/drawer";
-import { Badge, Button, Divider } from "@heroui/react";
+import {Badge, Button, Divider, Spinner} from "@heroui/react";
 import { MdOutlineShoppingCart } from "react-icons/md";
-import CartItem from "./cart-item";
 import { rupiahFormat } from "@/utils/rupiahFormat";
 import { useRouter } from "next/navigation";
 import useProfile from "@/hooks/useProfile";
+import dynamic from "next/dynamic";
+
+// Lazy loading cart item
+const CartItem = dynamic(() => import("./cart-item"), {
+    ssr: false,
+    loading: () => <Spinner color="success" size='sm' />
+});
+
+// Lazy load Drawer biar nggak render saat awal load page
+const Drawer = dynamic(() => import("@heroui/drawer").then(mod => mod.Drawer), { ssr: false });
+const DrawerContent = dynamic(() => import("@heroui/drawer").then(mod => mod.DrawerContent));
+const DrawerHeader = dynamic(() => import("@heroui/drawer").then(mod => mod.DrawerHeader));
+const DrawerBody = dynamic(() => import("@heroui/drawer").then(mod => mod.DrawerBody));
+const DrawerFooter = dynamic(() => import("@heroui/drawer").then(mod => mod.DrawerFooter));
 
 interface PropTypes {
   isOpen: boolean;
