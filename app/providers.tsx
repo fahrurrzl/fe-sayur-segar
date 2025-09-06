@@ -38,7 +38,7 @@ export function Providers({ session, children, themeProps }: ProvidersProps) {
 
   return (
     <SessionProvider session={session}>
-      <HeroUIProvider navigate={router.push}>
+      <HeroUIProvider navigate={router.push} skipFramerMotionAnimations={true}>
         <ToastProvider placement="top-center" toastProps={{ timeout: 3000 }} />
         <QueryClientProvider client={queryClient}>
           <NextThemesProvider {...themeProps}>{children}</NextThemesProvider>

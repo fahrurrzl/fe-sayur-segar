@@ -1,3 +1,4 @@
+import { useMemo } from 'react'
 import {Badge, Button, Divider, Spinner} from "@heroui/react";
 import { MdOutlineShoppingCart } from "react-icons/md";
 import { rupiahFormat } from "@/utils/rupiahFormat";
@@ -27,12 +28,12 @@ interface PropTypes {
 const Cart = ({ isOpen, onOpenChange, items }: PropTypes) => {
   const router = useRouter();
   const { dataUser } = useProfile();
-  const subTotal = items?.reduce((total, item) => total + item.price, 0);
+  const subTotal = useMemo(() => items?.reduce((total, item) => total + item.price, 0), [items])
   // const ongkir = 5000;
   const total = subTotal;
 
   return (
-    <Drawer isOpen={isOpen} onOpenChange={onOpenChange} size="xl">
+    <Drawer isOpen={isOpen} onOpenChange={onOpenChange} size="xl" backdrop="transparent" motionProps={{}}>
       <DrawerContent>
         {(onClose) => (
           <>
