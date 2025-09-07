@@ -113,7 +113,7 @@ const Checkout = () => {
                   />
                 ) : (
                   dataCarts?.data?.items?.map((item: TCartItem) => (
-                    <CartItem key={item?.id} item={item} />
+                    <CartItem key={item?.id} item={item} isCheckout />
                   ))
                 )}
 
