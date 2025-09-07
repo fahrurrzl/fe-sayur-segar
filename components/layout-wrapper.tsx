@@ -3,16 +3,12 @@
 import { usePathname } from "next/navigation";
 import { Navbar } from "@/components/navbar";
 import Footer from "@/components/Footer";
-import { Suspense, useRef } from "react";
-import { ScrollProgress } from "./motion-primitives/scroll-progress";
-import LoadingSpinner from "./loading-spinner";
 
 export default function LayoutWrapper({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const containerRef = useRef<HTMLDivElement>(null);
   const params = usePathname();
   const id = params.split("/").pop();
 
@@ -47,22 +43,10 @@ export default function LayoutWrapper({
   const hideLayout = noNavbarPaths.includes(pathname);
 
   return (
-    <Suspense fallback={<LoadingSpinner />}>
-      <main className="overflow-auto" ref={containerRef}>
-        <div className="pointer-events-none absolute bottom-0 left-0 h-12 w-full bg-white to-transparent backdrop-blur-xl [-webkit-mask-image:linear-gradient(to_top,white,transparent)] dark:bg-neutral-900" />
-        <div className="pointer-events-none absolute left-0 top-0 w-full z-50">
-          <div className="absolute left-0 top-0 h-1 w-full bg-[#E6F4FE] dark:bg-[#111927]" />
-          <ScrollProgress
-            containerRef={containerRef}
-            className="absolute top-0 bg-success"
-          />
-        </div>
-        <>
-          {!hideLayout && <Navbar />}
-          {children}
-          {!hideLayout && <Footer />}
-        </>
-      </main>
-    </Suspense>
+    <main>
+      {!hideLayout && <Navbar />}
+      {children}
+      {!hideLayout && <Footer />}
+    </main>
   );
 }
