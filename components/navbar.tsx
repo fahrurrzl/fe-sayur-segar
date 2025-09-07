@@ -33,6 +33,7 @@ import { signOut, useSession } from "next-auth/react";
 import { usePathname, useRouter } from "next/navigation";
 import { FiLogIn, FiLogOut, FiUser } from "react-icons/fi";
 import useCart from "@/hooks/useCart";
+import useProfile from "@/hooks/useProfile";
 
 export const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -41,6 +42,7 @@ export const Navbar = () => {
   const { data: session, status } = useSession();
   const { dataCarts } = useCart();
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
+  const { dataUser } = useProfile();
 
   return (
     <HeroUINavbar
@@ -150,7 +152,9 @@ export const Navbar = () => {
                   as="button"
                   avatarProps={{
                     isBordered: true,
-                    src: `https://ui-avatars.com/api/?name=${session?.user.name}&background=random`,
+                    src: dataUser?.photo
+                      ? dataUser?.photo
+                      : `https://ui-avatars.com/api/?name=${session?.user.name}&background=random`,
                   }}
                   className="transition-transform"
                   description={`@${session?.user.username}`}
@@ -310,7 +314,11 @@ export const Navbar = () => {
                 <div className="flex items-center gap-2 py-2">
                   <Avatar
                     size="sm"
-                    src={`https://ui-avatars.com/api/?name=${session?.user.name}&background=random`}
+                    src={
+                      dataUser?.photo
+                        ? dataUser?.photo
+                        : `https://ui-avatars.com/api/?name=${session?.user.name}&background=random`
+                    }
                   />
                   <div className="flex flex-col">
                     <span className="text-sm font-medium">

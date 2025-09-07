@@ -23,11 +23,13 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { signOut, useSession } from "next-auth/react";
 import AdminDashboardNavbar from "@/components/page/admin/dashboard/admin-dashboard-navbar";
+import useProfile from "@/hooks/useProfile";
 
 const AdminDashboardLayout = ({ children }: { children: React.ReactNode }) => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const router = useRouter();
   const { data: session } = useSession();
+  const { dataUser } = useProfile();
 
   return (
     <div className="h-screen bg-gray-50/50 flex overflow-hidden">
@@ -78,7 +80,11 @@ const AdminDashboardLayout = ({ children }: { children: React.ReactNode }) => {
                       size="sm"
                       name="Admin"
                       className="bg-green-600 text-white"
-                      src={`https://ui-avatars.com/api/?name=${session?.user.name}&background=random`}
+                      src={
+                        dataUser?.photo
+                          ? dataUser?.photo
+                          : `https://ui-avatars.com/api/?name=${session?.user.name}&background=random`
+                      }
                     />
                     <div className="ml-3 text-left">
                       <p className="text-sm font-medium text-gray-700 dark:text-gray-200">

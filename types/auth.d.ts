@@ -1,18 +1,22 @@
 export interface IRegister {
-  name: string;
-  username: string;
-  email: string;
-  address: string;
-  phone: string;
+  name?: string;
+  username?: string;
+  email?: string;
+  address?: string;
+  phone?: string;
   password: string;
   confirmPassword: string;
 }
 
 export interface IUpdateUser
   extends Omit<IRegister, "password" | "confirmPassword"> {
-  gender: string;
-  birthDate: CalendarDate | null;
+  gender?: string;
+  birthDate?: CalendarDate | null;
   photo?: string;
+}
+
+interface IUpdatePhoto {
+  photo: string;
 }
 
 export type TLogin = {

@@ -47,7 +47,11 @@ const Seller = () => {
                 <Avatar
                   className="w-10 h-10 mx-auto border-4 border-emerald-200"
                   name={`${seller?.user?.name}`}
-                  src={`https://ui-avatars.com/api/?name=${seller?.user?.name}&background=random`}
+                  src={
+                    seller?.user?.photo
+                      ? seller?.user?.photo
+                      : `https://ui-avatars.com/api/?name=${seller?.user?.name}&background=random`
+                  }
                   showFallback
                 />
               </div>
