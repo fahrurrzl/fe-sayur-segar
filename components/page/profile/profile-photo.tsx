@@ -13,7 +13,7 @@ import { useSession } from "next-auth/react";
 import { usePathname, useRouter } from "next/navigation";
 import React from "react";
 import { FaAngleRight, FaStore } from "react-icons/fa";
-import { FiCamera, FiShield, FiUser } from "react-icons/fi";
+import { FiCamera, FiShield, FiUser, FiX } from "react-icons/fi";
 import InputFile from "@/components/input-file";
 import cn from "@/utils/cn";
 import { Controller } from "react-hook-form";
@@ -81,10 +81,11 @@ const ProfilePhoto = ({ dataUser }: { dataUser: any }) => {
                 size="sm"
                 variant="light"
                 className="mt-2"
-                startContent={<FiCamera />}
+                color={visibleForm ? "danger" : "default"}
+                startContent={visibleForm ? <FiX /> : <FiCamera />}
                 onPress={handleVisibleForm}
               >
-                Ubah Photo
+                {visibleForm ? "Batal" : "Ubah Photo"}
               </Button>
             </div>
             <div className="lg:text-center text-left mb-2">

@@ -26,12 +26,12 @@ const CartItem = ({ item }: PropTypes) => {
           <Image
             src={item?.product?.imageUrl}
             alt={item?.product?.name}
-            width={80}
-            height={80}
-            className="aspect-square object-cover"
+            width={50}
+            height={50}
+            className="aspect-square object-cover rounded-sm"
           />
           <div>
-            <h3 className="font-medium">{item?.product?.name}</h3>
+            <h3 className="font-medium text-sm">{item?.product?.name}</h3>
             <p className="text-xs text-foreground-500">
               {item?.product?.seller?.storeName}
             </p>
@@ -43,45 +43,35 @@ const CartItem = ({ item }: PropTypes) => {
         <div className="flex flex-col justify-between items-end">
           {/* Counter */}
           <div className="flex items-center space-x-2">
-            <Button
-              isIconOnly
-              variant="bordered"
-              size="sm"
+            <button
+              className="shrink-0 border border-gray-500 rounded-sm w-5 h-5 flex items-center justify-center cursor-pointer disabled:bg-gray-200 disabled:cursor-not-allowed text-gray-500"
               disabled={isPendingDecreaseQuantity}
-              isLoading={isPendingDecreaseQuantity}
-              onPress={() => mutateDecreaseQuantity({ itemId: item?.id })}
+              onClick={() => mutateDecreaseQuantity({ itemId: item?.id })}
             >
-              <FaMinus className="w-3 h-3" />
-            </Button>
+              <FaMinus className="w-2 h-2" />
+            </button>
             <span className="text-sm font-medium w-8 text-center">
               {item?.quantity}
             </span>
-            <Button
-              isIconOnly
-              variant="bordered"
-              size="sm"
+            <button
+              className="shrink-0 border border-gray-500 rounded-sm w-5 h-5 flex items-center justify-center cursor-pointer disabled:bg-gray-200 disabled:cursor-not-allowed text-gray-500"
               disabled={isPendingIncreaseQuantity}
-              isLoading={isPendingIncreaseQuantity}
-              onPress={() => mutateIncreaseQuantity({ itemId: item?.id })}
+              onClick={() => mutateIncreaseQuantity({ itemId: item?.id })}
             >
-              <FaPlus className="w-3 h-3" />
-            </Button>
+              <FaPlus className="w-2 h-2" />
+            </button>
           </div>
-          <Button
-            color="danger"
-            isIconOnly
-            size="md"
-            variant="light"
+          <button
             disabled={
               isPendingDeleteItem ||
               isPendingIncreaseQuantity ||
               isPendingDecreaseQuantity
             }
-            isLoading={isPendingDeleteItem}
-            onPress={() => mutateDeleteItem({ itemId: item?.id })}
+            onClick={() => mutateDeleteItem({ itemId: item?.id })}
+            className="shrink-0 text-danger w-5 h-5 flex items-center justify-center cursor-pointer disabled:cursor-not-allowed disabled:text-danger-300"
           >
             <FaRegTrashAlt />
-          </Button>
+          </button>
         </div>
       </CardBody>
     </Card>

@@ -26,6 +26,7 @@ import {
   Badge,
   Avatar,
   Divider,
+  DropdownSection,
 } from "@heroui/react";
 import { link as linkStyles } from "@heroui/theme";
 import Cart from "./cart";
@@ -110,38 +111,58 @@ export const Navbar = () => {
         </NavbarItem>
 
         {status === "authenticated" ? (
-          <NavbarItem>
-            {dataCarts?.data?._count.items > 0 ? (
-              <Badge
-                content={dataCarts?.data?._count.items}
-                className="bg-success text-white"
-              >
+          <Dropdown radius="md">
+            <Badge
+              isInvisible={dataCarts?.data?._count.items <= 0}
+              content={dataCarts?.data?._count.items}
+              className="bg-success text-white"
+            >
+              <DropdownTrigger>
                 <Button
                   isIconOnly
                   variant="light"
                   className="flex items-center p-2 justify-center cursor-pointer text-slate-600 dark:text-slate-200"
-                  onPress={onOpen}
                 >
                   <MdOutlineShoppingCart size={22} />
                 </Button>
-              </Badge>
-            ) : (
-              <Button
-                isIconOnly
-                variant="light"
-                className="flex items-center p-2 justify-center cursor-pointer text-slate-600 dark:text-slate-200"
-                onPress={onOpen}
+              </DropdownTrigger>
+            </Badge>
+            <DropdownMenu>
+              <DropdownSection
+                aria-label="Cart"
+                className="h-80 overflow-y-auto"
               >
-                <MdOutlineShoppingCart size={22} />
-              </Button>
-            )}
-            {/* Cart */}
-            <Cart
-              isOpen={isOpen}
-              onOpenChange={onOpenChange}
-              items={dataCarts?.data?.items}
-            />
-          </NavbarItem>
+                <DropdownItem
+                  key="cart"
+                  isReadOnly
+                  className="[&[data-hover=true]]:bg-transparent [&[data-focus=true]]:bg-transparent"
+                >
+                  <Cart items={dataCarts?.data?.items} />
+                </DropdownItem>
+              </DropdownSection>
+              <DropdownSection>
+                <DropdownItem
+                  key="Next-button"
+                  className="[&[data-hover=true]]:bg-transparent [&[data-focus=true]]:bg-transparent"
+                >
+                  {dataCarts?.data?.items?.length ? (
+                    <div>
+                      <Button
+                        color="success"
+                        className="w-full text-white"
+                        size="sm"
+                        onPress={() => {
+                          router.push(`/checkout/${dataUser?.id}`);
+                        }}
+                      >
+                        Lanjut ke Pembayaran
+                      </Button>
+                    </div>
+                  ) : null}
+                </DropdownItem>
+              </DropdownSection>
+            </DropdownMenu>
+          </Dropdown>
         ) : null}
 
         <NavbarItem className="hidden lg:flex">
@@ -222,30 +243,58 @@ export const Navbar = () => {
         </NavbarMenuItem>
         <NavbarItem>
           {status === "authenticated" ? (
-            dataCarts?.data?._count.items > 0 ? (
+            <Dropdown radius="md">
               <Badge
+                isInvisible={dataCarts?.data?._count.items <= 0}
                 content={dataCarts?.data?._count.items}
                 className="bg-success text-white"
               >
-                <Button
-                  isIconOnly
-                  variant="light"
-                  className="flex items-center p-2 justify-center cursor-pointer text-slate-600 dark:text-slate-200"
-                  onPress={onOpen}
-                >
-                  <MdOutlineShoppingCart size={22} />
-                </Button>
+                <DropdownTrigger>
+                  <Button
+                    isIconOnly
+                    variant="light"
+                    className="flex items-center p-2 justify-center cursor-pointer text-slate-600 dark:text-slate-200"
+                  >
+                    <MdOutlineShoppingCart size={22} />
+                  </Button>
+                </DropdownTrigger>
               </Badge>
-            ) : (
-              <Button
-                isIconOnly
-                variant="light"
-                className="flex items-center p-2 justify-center cursor-pointer text-slate-600"
-                onPress={onOpen}
-              >
-                <MdOutlineShoppingCart size={22} />
-              </Button>
-            )
+              <DropdownMenu>
+                <DropdownSection
+                  aria-label="Cart"
+                  className="h-80 overflow-y-auto"
+                >
+                  <DropdownItem
+                    key="cart"
+                    isReadOnly
+                    className="[&[data-hover=true]]:bg-transparent [&[data-focus=true]]:bg-transparent"
+                  >
+                    <Cart items={dataCarts?.data?.items} />
+                  </DropdownItem>
+                </DropdownSection>
+                <DropdownSection>
+                  <DropdownItem
+                    key="Next-button"
+                    className="[&[data-hover=true]]:bg-transparent [&[data-focus=true]]:bg-transparent"
+                  >
+                    {dataCarts?.data?.items?.length ? (
+                      <div>
+                        <Button
+                          color="success"
+                          className="w-full text-white"
+                          size="sm"
+                          onPress={() => {
+                            router.push(`/checkout/${dataUser?.id}`);
+                          }}
+                        >
+                          Lanjut ke Pembayaran
+                        </Button>
+                      </div>
+                    ) : null}
+                  </DropdownItem>
+                </DropdownSection>
+              </DropdownMenu>
+            </Dropdown>
           ) : (
             <Button
               size="sm"

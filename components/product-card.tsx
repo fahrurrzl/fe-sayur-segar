@@ -3,10 +3,11 @@
 import useCart from "@/hooks/useCart";
 import { TProductResponse } from "@/types/product";
 import { rupiahFormat } from "@/utils/rupiahFormat";
-import { Card, CardBody } from "@heroui/react";
+import { Card, CardBody, Spinner } from "@heroui/react";
 import Image from "next/image";
 import Link from "next/link";
 import { FaMapPin, FaStar } from "react-icons/fa";
+import { FiShoppingCart } from "react-icons/fi";
 
 const ProductCard = ({ product }: { product: TProductResponse }) => {
   const { name, price, imageUrl, seller } = product;
@@ -40,7 +41,7 @@ const ProductCard = ({ product }: { product: TProductResponse }) => {
         )} */}
       </div>
 
-      <CardBody className="p-4">
+      <CardBody className="p-2">
         <div className="space-y-2">
           <h3 className="font-semibold text-foreground line-clamp-2">{name}</h3>
 
@@ -75,8 +76,8 @@ const ProductCard = ({ product }: { product: TProductResponse }) => {
             </div>
           </div>
 
-          {/* <button
-            className="w-full mt-3 text-white bg-success hover:bg-success-400 transition-colors duration-300 rounded-lg cursor-pointer flex items-center justify-center py-2 px-4 gap-1"
+          <button
+            className="w-full mt-3 text-white bg-success hover:bg-success-400 transition-colors duration-300 rounded-lg cursor-pointer flex items-center justify-center py-2 px-1 lg:px-4 gap-1 text-xs lg:text-sm disabled:bg-success-400 shrinik-0 text-center"
             disabled={isPendingAddToCart}
             onClick={(e) => {
               e.preventDefault();
@@ -93,10 +94,10 @@ const ProductCard = ({ product }: { product: TProductResponse }) => {
             {isPendingAddToCart ? (
               <Spinner size="sm" color="white" />
             ) : (
-              <FiShoppingCart className="w-4 h-4 mr-2" />
+              <FiShoppingCart className="w-4 h-4 mr-2 hidden lg:block" />
             )}
             Tambah ke Keranjang
-          </button> */}
+          </button>
         </div>
       </CardBody>
     </Card>

@@ -6,7 +6,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useSession } from "next-auth/react";
 import { useForm } from "react-hook-form";
-import useMedia from "@/hooks/useMedia";
 
 const useProfile = () => {
   const { data: session, update } = useSession();
