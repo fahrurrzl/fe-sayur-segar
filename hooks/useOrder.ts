@@ -47,8 +47,11 @@ const useOrder = () => {
     useMutation({
       mutationFn: createOrderService,
       onSuccess: (order) => {
-        const paymentUrl = order?.data[0].paymentUrl;
-        router.push(paymentUrl);
+        console.log("Order onSuccess =>", order);
+        const paymentUrl = Array.isArray(order)
+          ? order[0]?.paymentUrl
+          : order?.data?.[0]?.paymentUrl;
+        if (paymentUrl) router.push(paymentUrl);
       },
       onError: (error) => {
         console.log("Error => ", error);
