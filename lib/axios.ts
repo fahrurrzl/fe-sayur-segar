@@ -21,8 +21,7 @@ export function setAuthToken(token: string | null) {
 instance.interceptors.request.use(async (config) => {
   if (typeof window === "undefined") return config; // hanya di client
   const session = await getSession();
-  const token =
-    (session as any)?.accessToken ?? (session as any)?.user?.accessToken;
+  const token = (session as any)?.user?.token ?? (session as any)?.user?.token;
   if (token && config.headers)
     config.headers["Authorization"] = `Bearer ${token}`;
   return config;

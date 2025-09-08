@@ -78,6 +78,7 @@ const useOrder = () => {
   const { data: dataOrderUser, isLoading: isLoadingDataOrderUser } = useQuery({
     queryKey: ["order-user", search, page, limit],
     queryFn: getOrderUserService,
+    enabled: !!session?.user?.token,
   });
 
   // get order seller
