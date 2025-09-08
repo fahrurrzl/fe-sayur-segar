@@ -39,6 +39,7 @@ const useOrder = () => {
       payload,
       session?.user?.token as string
     );
+    console.log("Res => ", res);
     return res.data;
   };
 
@@ -50,7 +51,7 @@ const useOrder = () => {
         router.push(paymentUrl);
       },
       onError: (error) => {
-        console.log(error);
+        console.log("Error => ", error);
         addToast({
           title: "Gagal",
           description: "Gagal membuat order",
