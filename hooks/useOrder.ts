@@ -40,7 +40,6 @@ const useOrder = () => {
       payload,
       session?.user?.token as string
     );
-    console.log("Res => ", res);
     return res.data;
   };
 
@@ -48,12 +47,11 @@ const useOrder = () => {
     useMutation({
       mutationFn: createOrderService,
       onSuccess: (order) => {
-        console.log("Order onSuccess =>", order);
         const paymentUrl = order?.data.paymentUrl;
         router.push(paymentUrl);
       },
       onError: (error) => {
-        console.log("Error => ", error);
+        console.log(error);
         if (axios.isAxiosError(error) && error.code === "ECONNABORTED") {
           addToast({
             timeout: 30000,
