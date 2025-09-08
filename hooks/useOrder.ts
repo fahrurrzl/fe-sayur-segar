@@ -11,6 +11,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import useChangeUrl from "./useChangeUrl";
+import axios from "axios";
 
 const useOrder = () => {
   const [orderId, setOrderId] = useState("");
@@ -48,16 +49,23 @@ const useOrder = () => {
       mutationFn: createOrderService,
       onSuccess: (order) => {
         console.log("Order onSuccess =>", order);
-        // const paymentUrl = order?.data[0]?.paymentUrl;
-        // router.push(paymentUrl);
         const paymentUrl = order?.data.paymentUrl;
         router.push(paymentUrl);
       },
       onError: (error) => {
         console.log("Error => ", error);
+        if (axios.isAxiosError(error) && error.code === "ECONNABORTED") {
+          addToast({
+            timeout: 30000,
+            title: "Gagal",
+            description: "Gagal membuat order" + error,
+            color: "danger",
+          });
+        }
         addToast({
+          timeout: 30000,
           title: "Gagal",
-          description: "Gagal membuat order",
+          description: "Gagal membuat order" + error,
           color: "danger",
         });
       },

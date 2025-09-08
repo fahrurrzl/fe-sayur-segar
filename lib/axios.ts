@@ -3,7 +3,8 @@ import { getSession, signOut } from "next-auth/react";
 
 const instance = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_BASE_URL,
-  timeout: 10000,
+  // timeout 1 minutes
+  timeout: 60000,
   headers: {
     "Content-Type": "application/json",
   },
@@ -30,7 +31,7 @@ instance.interceptors.request.use(async (config) => {
 instance.interceptors.response.use(
   (response) => response,
   async (error) => {
-    if (error.response.status === 401) {
+    if (error?.response?.status === 401) {
       await signOut({ callbackUrl: "/auth/login" });
     }
     return Promise.reject(error);
