@@ -1,53 +1,67 @@
-# Next.js & HeroUI Template
+# 🥬Sayur Segar
 
-This is a template for creating applications using Next.js 14 (app directory) and HeroUI (v2).
+![App Screenshot](./public/images/ss.png)
 
-[Try it on CodeSandbox](https://githubbox.com/heroui-inc/heroui/next-app-template)
+Sebuah website jual beli sayur online yang dirancang untuk memudahkan konsumen membeli sayuran segar langsung dari petani atau supplier. Sistem ini menyediakan katalog produk, fitur transaksi online, serta manajemen data produk dan pesanan.
 
-## Technologies Used
+## 🚀 Tech Stack
 
-- [Next.js 14](https://nextjs.org/docs/getting-started)
-- [HeroUI v2](https://heroui.com/)
-- [Tailwind CSS](https://tailwindcss.com/)
-- [Tailwind Variants](https://tailwind-variants.org)
-- [TypeScript](https://www.typescriptlang.org/)
-- [Framer Motion](https://www.framer.com/motion/)
-- [next-themes](https://github.com/pacocoursey/next-themes)
+- Framework: [NextJS](https://nextjs.org/) 14 (App Router)
+- UI Library: [HeroUI](https://www.heroui.com/)
+- Styling: [Tailwind CSS](https://tailwindcss.com/)
+- Language: [TypeScript](https://www.typescriptlang.org/)
+- State & Data: [TanStack Query](https://tanstack.com/query/docs)
+- Linting & Formatting: ESLint + Prettier
 
-## How to Use
-
-### Use the template with create-next-app
-
-To create a new project based on this template using `create-next-app`, run the following command:
+## 📂 Project Structure
 
 ```bash
-npx create-next-app -e https://github.com/heroui-inc/next-app-template
+fe-sayur-segar/
+│
+├── app/             # Next.js App Router (pages, layouts, routes)
+├── components/      # Reusable UI components
+├── config/          # Konfigurasi aplikasi
+├── hooks/           # Custom React hooks
+├── lib/             # Utility/helper functions
+├── services/        # API services
+├── styles/          # Global styles
+├── types/           # TypeScript types/interfaces
+├── public/          # Static assets
+├── .env.example     # Contoh environment variables
+└── ...
 ```
 
-### Install dependencies
+## 🛠️ Getting Started
 
-You can use one of them `npm`, `yarn`, `pnpm`, `bun`, Example using `npm`:
+### 1. Clone Repository
+
+```bash
+  git clone https://github.com/fahrurrzl/fe-sayur-segar.git
+  cd fe-sayur-segar
+```
+
+### 2. Install Dependencies
 
 ```bash
 npm install
 ```
 
-### Run the development server
+### 3. Setup Environment Variables
+
+Buat file .env.local berdasarkan .env.example
+
+```bash
+cp .env.example .env.local
+```
+
+Lalu isi variabel sesuai kebutuhan (contoh: API base URL).
+
+### 4. Run Development Server
 
 ```bash
 npm run dev
 ```
 
-### Setup pnpm (optional)
+## 🌐 Live Demo
 
-If you are using `pnpm`, you need to add the following code to your `.npmrc` file:
-
-```bash
-public-hoist-pattern[]=*@heroui/*
-```
-
-After modifying the `.npmrc` file, you need to run `pnpm install` again to ensure that the dependencies are installed correctly.
-
-## License
-
-Licensed under the [MIT license](https://github.com/heroui-inc/next-app-template/blob/main/LICENSE).
+[Sayur Segar](https://fe-sayur-segar.vercel.app/)
