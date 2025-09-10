@@ -10,4 +10,5 @@ export default {
   WALLET_TRANSACTION: "/wallet/transaction",
   TRANSFER: "/transfer",
   UNIT: "/unit",
+  USER: "/users",
 };

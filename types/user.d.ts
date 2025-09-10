@@ -4,3 +4,16 @@ export interface User {
   email: string;
   phone: string;
 }
+
+export interface IUserResponse {
+  address: string;
+  createdAt: string;
+  email: string;
+  gender: string;
+  isActive: boolean;
+  name: string;
+  phone: string;
+  photo: string;
+  role: string;
+  username: string;
+}

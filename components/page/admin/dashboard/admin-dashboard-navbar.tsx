@@ -6,7 +6,7 @@ import { usePathname } from "next/navigation";
 import { LuBox, LuWallet } from "react-icons/lu";
 import { MdCategory, MdOutlineDashboard } from "react-icons/md";
 import { TbWeight } from "react-icons/tb";
-import { HiOutlineUsers } from "react-icons/hi2";
+import { HiBuildingStorefront, HiOutlineUsers } from "react-icons/hi2";
 
 const menuItems = [
   {
@@ -25,9 +25,14 @@ const menuItems = [
     icon: TbWeight,
   },
   {
+    name: "Kelola User",
+    href: "/admin/dashboard/user",
+    icon: HiOutlineUsers,
+  },
+  {
     name: "Kelola Penjual",
     href: "/admin/dashboard/seller",
-    icon: HiOutlineUsers,
+    icon: HiBuildingStorefront,
   },
   {
     name: "Kelola Produk",

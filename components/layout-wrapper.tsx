@@ -37,6 +37,7 @@ export default function LayoutWrapper({
     `/admin/dashboard/unit/edit/${id}`,
     "/admin/dashboard/seller",
     "/admin/dashboard/wallet-transaction",
+    "/admin/dashboard/user",
   ];
 
   const pathname = usePathname();
