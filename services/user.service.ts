@@ -7,4 +7,8 @@ export default {
       headers: { Authorization: `Bearer ${token}` },
     }),
   getUser: async (id: string) => instance.get(`${endpoint.USER}/${id}`),
+  deleteUser: async (id: string, token: string) =>
+    instance.delete(`${endpoint.USER}/${id}`, {
+      headers: { Authorization: `Bearer ${token}` },
+    }),
 };

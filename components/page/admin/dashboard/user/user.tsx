@@ -9,17 +9,28 @@ import { Key, useCallback, useEffect } from "react";
 import { FiEye, FiTrash } from "react-icons/fi";
 import { columns } from "./columns";
 import ModalUser from "./modal-user";
+import ModalDelete from "./modal-delete";
 
 const User = () => {
   const {
     dataUsers,
     isLoadingDataUsers,
     setSellectedId,
+    sellectedId,
     dataUser,
     isLoadingDataUser,
   } = useUser();
 
-  const { isOpen, onOpen, onClose } = useDisclosure();
+  const {
+    isOpen: isOpenDetail,
+    onOpen: onOpenDetail,
+    onClose: onCloseDetail,
+  } = useDisclosure();
+  const {
+    isOpen: isOpenDelete,
+    onOpen: onOpenDelete,
+    onClose: onCloseDelete,
+  } = useDisclosure();
 
   const { setUrl } = useChangeUrl();
 
@@ -72,7 +83,7 @@ const User = () => {
         case "actions":
           return (
             <div className="relative flex items-center justify-center gap-2">
-              <Tooltip color="primary" content="Detail Penjual">
+              <Tooltip color="primary" content="Detail User">
                 <Button
                   isIconOnly
                   size="sm"
@@ -80,21 +91,24 @@ const User = () => {
                   color="primary"
                   className="cursor-pointer active:opacity-50"
                   onPress={() => {
-                    onOpen();
+                    onOpenDetail();
                     setSellectedId(user?.id);
                   }}
                 >
                   <FiEye />
                 </Button>
               </Tooltip>
-              <Tooltip color="danger" content="Hapus Penjual">
+              <Tooltip color="danger" content="Hapus User">
                 <Button
                   isIconOnly
                   size="sm"
                   variant="light"
                   color="danger"
                   className="cursor-pointer active:opacity-50"
-                  onPress={() => {}}
+                  onPress={() => {
+                    onOpenDelete();
+                    setSellectedId(user?.id);
+                  }}
                 >
                   <FiTrash />
                 </Button>
@@ -109,9 +123,16 @@ const User = () => {
   );
   return (
     <>
+      <ModalDelete
+        setSelectedUser={setSellectedId}
+        selectedUser={sellectedId}
+        isOpen={isOpenDelete}
+        onClose={onCloseDelete}
+        onOpenChange={onOpenDelete}
+      />
       <ModalUser
-        isOpen={isOpen}
-        onClose={onClose}
+        isOpen={isOpenDetail}
+        onClose={onCloseDetail}
         user={dataUser?.data}
         isLoading={isLoadingDataUser}
       />
